@@ -1,5 +1,5 @@
 
-package javaprojectcmpp264workshop6;
+package workshop6;
 
 /**
  *

@@ -37,10 +37,11 @@ public class addEditPackages extends javax.swing.JFrame {
         txtAddEditPkgBasePrice = new javax.swing.JTextField();
         txtAddEditPkgAgencyCommission = new javax.swing.JTextField();
         txtAddEditPkgDescription = new javax.swing.JTextField();
-        btnAddPackages = new javax.swing.JButton();
-        btnEditPackages = new javax.swing.JButton();
+        Update = new javax.swing.JButton();
+        btnExitPackages = new javax.swing.JButton();
         lblAddEditPackages = new javax.swing.JLabel();
         cmbAddEditPkgStartDate = new datechooser.beans.DateChooserCombo();
+        cmbEndDate = new datechooser.beans.DateChooserCombo();
         cmbAddEditPkgEndDate = new datechooser.beans.DateChooserCombo();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -65,9 +66,9 @@ public class addEditPackages extends javax.swing.JFrame {
 
         txtAddEditPkgDescription.setEnabled(false);
 
-        btnAddPackages.setText("Add");
+        Update.setText("Update");
 
-        btnEditPackages.setText("Edit");
+        btnExitPackages.setText("Exit");
 
         lblAddEditPackages.setText("YOU WILL NOT READ THIS");
 
@@ -82,39 +83,40 @@ public class addEditPackages extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(38, 38, 38)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel12)
-                                    .addComponent(jLabel13)
-                                    .addComponent(jLabel15))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtAddEditPkgBasePrice, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                        .addComponent(cmbAddEditPkgStartDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(31, 31, 31))))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGap(2, 2, 2)
                                 .addComponent(jLabel17)
                                 .addGap(41, 41, 41)
                                 .addComponent(txtAddEditPkgDescription))
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(109, 109, 109)
-                                .addComponent(btnAddPackages)
-                                .addGap(73, 73, 73)
-                                .addComponent(btnEditPackages)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 79, Short.MAX_VALUE))
+                                .addGap(128, 128, 128)
+                                .addComponent(Update)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnExitPackages)
+                                .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGap(19, 19, 19)
                                 .addComponent(jLabel11)
-                                .addGap(54, 54, 54)
-                                .addComponent(txtAddEditPkgName))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(txtAddEditPkgName, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel12)
+                                    .addComponent(jLabel13)
+                                    .addComponent(jLabel15))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 104, Short.MAX_VALUE)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtAddEditPkgAgencyCommission, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(cmbEndDate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(cmbAddEditPkgStartDate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(txtAddEditPkgBasePrice)))
+                                .addGap(31, 31, 31))))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jLabel16)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtAddEditPkgAgencyCommission)))
-                .addGap(60, 60, 60))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addGap(29, 29, 29))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(lblAddEditPackages, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -138,8 +140,10 @@ public class addEditPackages extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jLabel13))
                     .addComponent(cmbAddEditPkgStartDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(13, 13, 13)
-                .addComponent(jLabel15)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel15)
+                    .addComponent(cmbEndDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(16, 16, 16)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel16)
@@ -150,8 +154,8 @@ public class addEditPackages extends javax.swing.JFrame {
                     .addComponent(jLabel17))
                 .addGap(51, 51, 51)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnAddPackages)
-                    .addComponent(btnEditPackages))
+                    .addComponent(btnExitPackages)
+                    .addComponent(Update))
                 .addContainerGap(70, Short.MAX_VALUE))
         );
 
@@ -223,10 +227,11 @@ public class addEditPackages extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAddPackages;
-    private javax.swing.JButton btnEditPackages;
+    private javax.swing.JButton Update;
+    private javax.swing.JButton btnExitPackages;
     private datechooser.beans.DateChooserCombo cmbAddEditPkgEndDate;
     private datechooser.beans.DateChooserCombo cmbAddEditPkgStartDate;
+    private datechooser.beans.DateChooserCombo cmbEndDate;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;

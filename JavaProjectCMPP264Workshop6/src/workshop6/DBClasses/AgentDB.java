@@ -34,9 +34,10 @@ public class AgentDB {
 					agent.setAgtFirstName(rset.getString(2));
 					agent.setAgtMiddleInitial(rset.getString(3));
 					agent.setAgtLastName(rset.getString(4));
-					agent.setAgtEmail(rset.getString(5));
-					agent.setAgtBusPhone(rset.getString(6));
+					agent.setAgtEmail(rset.getString(6));
+					agent.setAgtBusPhone(rset.getString(5));
 					agent.setAgtPosition(rset.getString(7));
+					agent.setActive(rset.getBoolean(8));
 					//add the new agent object to the vector
 					agents.add(agent);
 				}
@@ -74,9 +75,10 @@ public class AgentDB {
 						agent.setAgtFirstName(rset.getString(2));
 						agent.setAgtMiddleInitial(rset.getString(3));
 						agent.setAgtLastName(rset.getString(4));
-						agent.setAgtEmail(rset.getString(5));
-						agent.setAgtBusPhone(rset.getString(6));
+						agent.setAgtEmail(rset.getString(6));
+						agent.setAgtBusPhone(rset.getString(5));
 						agent.setAgtPosition(rset.getString(7));
+						agent.setActive(rset.getBoolean(8));
 						rset.close();
 						return agent;
 					}
@@ -100,7 +102,8 @@ public class AgentDB {
 					+ "AgencyId = ?, AgtFirstName = ?, "
 					+ "AgtMiddleInitial = ?, AgtLastName = ?, "
 					+ "AgtEmail = ?, AgtBusPhone = ?, "
-					+ "AgtPosition = ? "
+					+ "AgtPosition = ?, "
+					+ "isActive = ? "
 					+ "WHERE AgentId = ?";
 			
 			try (Connection conn = DatabaseConnection.GetConnection();
@@ -114,7 +117,8 @@ public class AgentDB {
 				preStatement.setString(5, newAgent.getAgtEmail());
 				preStatement.setString(6, newAgent.getAgtBusPhone());
 				preStatement.setString(7, newAgent.getAgtPosition());
-				preStatement.setInt(8, newAgent.getAgentId());
+				preStatement.setBoolean(8, newAgent.isActive());
+				preStatement.setInt(9, newAgent.getAgentId());
 				
 				int numRows = preStatement.executeUpdate();
 				conn.close();
@@ -127,8 +131,7 @@ public class AgentDB {
 					}
 					
 				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					System.err.println(e);
 					return false;
 				}
 
@@ -140,10 +143,10 @@ public class AgentDB {
 			//create the sql statement
 			String sql = "INSERT Into agents (AgentId, AgtFirstName, "
 					+ "AgtMiddleInitial, AgtLastName, AgtBusPhone, "
-					+ "AgtEmail, AgtPosition, AgencyId) "
+					+ "AgtEmail, AgtPosition, AgencyId, isActive) "
 					+ "Values(?,?, ?, ?," //id, firstname, lastname, initial
 					+ "?,?," //phone, email
-					+ "?, ?)";//position, agency
+					+ "?, ?, ?)";//position, agency, isactive
 			
 			try (Connection conn = DatabaseConnection.GetConnection();
 					PreparedStatement preStatement = conn.prepareStatement(sql))
@@ -157,6 +160,7 @@ public class AgentDB {
 				preStatement.setString(6, agent.getAgtEmail());
 				preStatement.setString(7, agent.getAgtPosition());
 				preStatement.setInt(1, agent.getAgentId());
+				preStatement.setBoolean(9, agent.isActive());
 				
 				preStatement.executeUpdate();
 				return true;

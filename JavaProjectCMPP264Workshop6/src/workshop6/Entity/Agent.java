@@ -1,4 +1,4 @@
-package workshop6.DBClasses;
+package workshop6.Entity;
 
 public class Agent {
 	
@@ -11,17 +11,10 @@ public class Agent {
 	private String AgtEmail;
 	private String AgtPosition;
 	private int AgencyId;
+	private boolean isActive; 
 	
 	//constructor
 	public Agent(){
-		AgentId = 0;
-		AgtFirstName = "";
-		AgtMiddleInitial = "";
-		AgtLastName = "";
-		AgtBusPhone = "";
-		AgtEmail = "";
-		AgtPosition = "";
-		AgencyId = 0;
 	}
 
 	
@@ -73,6 +66,12 @@ public class Agent {
 	}
 	public void setAgencyId(int agencyId) {
 		AgencyId = agencyId;
+	}
+	public boolean isActive() {
+		return isActive;
+	}
+	public void setActive(boolean isActive) {
+		this.isActive = isActive;
 	}
 	
 	

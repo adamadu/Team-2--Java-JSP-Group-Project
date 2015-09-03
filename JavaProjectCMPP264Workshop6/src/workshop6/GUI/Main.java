@@ -59,14 +59,14 @@ public class Main extends javax.swing.JFrame {
         jLabel17 = new javax.swing.JLabel();
         cmbPackageId = new javax.swing.JComboBox();
         txtPkgName = new javax.swing.JTextField();
-        txtPkgBasePrice = new javax.swing.JTextField();
-        txtPkgStartDate = new javax.swing.JTextField();
         txtPkgAgencyCommission = new javax.swing.JTextField();
-        txtPkgEndDate = new javax.swing.JTextField();
+        txtPkgBasePrice = new javax.swing.JTextField();
         txtPkgDescription = new javax.swing.JTextField();
         btnAddPackages = new javax.swing.JButton();
         btnEditPackages = new javax.swing.JButton();
         btnDeletePackages = new javax.swing.JButton();
+        cmbPkgStartDate = new datechooser.beans.DateChooserCombo();
+        cmbPkgEndDate = new datechooser.beans.DateChooserCombo();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -244,13 +244,9 @@ public class Main extends javax.swing.JFrame {
 
         txtPkgName.setEnabled(false);
 
-        txtPkgBasePrice.setEnabled(false);
-
-        txtPkgStartDate.setEnabled(false);
-
         txtPkgAgencyCommission.setEnabled(false);
 
-        txtPkgEndDate.setEnabled(false);
+        txtPkgBasePrice.setEnabled(false);
 
         txtPkgDescription.setEnabled(false);
 
@@ -259,6 +255,10 @@ public class Main extends javax.swing.JFrame {
         btnEditPackages.setText("Edit");
 
         btnDeletePackages.setText("Delete");
+
+        cmbPkgStartDate.setEnabled(false);
+
+        cmbPkgEndDate.setEnabled(false);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -273,25 +273,30 @@ public class Main extends javax.swing.JFrame {
                                 .addGap(19, 19, 19)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addComponent(jLabel11)
-                                        .addGap(54, 54, 54)
-                                        .addComponent(txtPkgName))
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
                                         .addGap(8, 8, 8)
                                         .addComponent(jLabel2)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(cmbPackageId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(75, 75, 75))))
+                                        .addGap(75, 75, 75))
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(jLabel11)
+                                        .addGap(54, 54, 54)
+                                        .addComponent(txtPkgName))))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel12)
                                     .addComponent(jLabel13)
                                     .addComponent(jLabel15))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(txtPkgEndDate, javax.swing.GroupLayout.DEFAULT_SIZE, 213, Short.MAX_VALUE)
-                                    .addComponent(txtPkgStartDate)
-                                    .addComponent(txtPkgBasePrice)))
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                        .addComponent(txtPkgBasePrice, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(12, 12, 12))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(cmbPkgEndDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(cmbPkgStartDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(31, 31, 31))))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGap(2, 2, 2)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -330,13 +335,13 @@ public class Main extends javax.swing.JFrame {
                     .addComponent(jLabel12)
                     .addComponent(txtPkgBasePrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel13)
-                    .addComponent(txtPkgStartDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cmbPkgStartDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtPkgEndDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel15))
+                    .addComponent(jLabel15)
+                    .addComponent(cmbPkgEndDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(10, 10, 10)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel16)
@@ -415,6 +420,8 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JButton btnEditPackages;
     private javax.swing.JComboBox cmbAgentId;
     private javax.swing.JComboBox cmbPackageId;
+    private datechooser.beans.DateChooserCombo cmbPkgEndDate;
+    private datechooser.beans.DateChooserCombo cmbPkgStartDate;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -446,8 +453,6 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JTextField txtPkgAgencyCommission;
     private javax.swing.JTextField txtPkgBasePrice;
     private javax.swing.JTextField txtPkgDescription;
-    private javax.swing.JTextField txtPkgEndDate;
     private javax.swing.JTextField txtPkgName;
-    private javax.swing.JTextField txtPkgStartDate;
     // End of variables declaration//GEN-END:variables
 }

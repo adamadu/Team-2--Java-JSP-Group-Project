@@ -1,4 +1,4 @@
-package workshop3;
+package workshop6.GUI;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -16,6 +16,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.awt.event.ActionEvent;
+import java.awt.Font;
 
 public class testFormAgent extends JFrame {
 
@@ -29,6 +30,7 @@ public class testFormAgent extends JFrame {
 	private static JTextField txtPos;
 	private static JTextField txtAgency;
 	private static Agent agent;
+	private static JTextField txtActive;
 
 	/**
 	 * Launch the application.
@@ -51,7 +53,7 @@ public class testFormAgent extends JFrame {
 	 */
 	public testFormAgent() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 650, 498);
+		setBounds(100, 100, 464, 457);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -62,7 +64,7 @@ public class testFormAgent extends JFrame {
 		contentPane.add(lblAgentid);
 		
 		txtAgentId = new JTextField();
-		txtAgentId.setBounds(170, 43, 457, 22);
+		txtAgentId.setBounds(170, 43, 223, 22);
 		contentPane.add(txtAgentId);
 		txtAgentId.setColumns(10);
 		
@@ -71,7 +73,7 @@ public class testFormAgent extends JFrame {
 		contentPane.add(lblFirstName);
 		
 		txtFirst = new JTextField();
-		txtFirst.setBounds(170, 72, 457, 22);
+		txtFirst.setBounds(170, 72, 223, 22);
 		contentPane.add(txtFirst);
 		txtFirst.setColumns(10);
 		
@@ -80,7 +82,7 @@ public class testFormAgent extends JFrame {
 		contentPane.add(lblInitital);
 		
 		txtIni = new JTextField();
-		txtIni.setBounds(170, 101, 457, 22);
+		txtIni.setBounds(170, 101, 223, 22);
 		contentPane.add(txtIni);
 		txtIni.setColumns(10);
 		
@@ -89,7 +91,7 @@ public class testFormAgent extends JFrame {
 		contentPane.add(lblLastName);
 		
 		txtLast = new JTextField();
-		txtLast.setBounds(170, 130, 457, 22);
+		txtLast.setBounds(170, 130, 223, 22);
 		contentPane.add(txtLast);
 		txtLast.setColumns(10);
 		
@@ -98,7 +100,7 @@ public class testFormAgent extends JFrame {
 		contentPane.add(lblPhone);
 		
 		txtPhone = new JTextField();
-		txtPhone.setBounds(170, 159, 457, 22);
+		txtPhone.setBounds(170, 159, 223, 22);
 		contentPane.add(txtPhone);
 		txtPhone.setColumns(10);
 		
@@ -107,7 +109,7 @@ public class testFormAgent extends JFrame {
 		contentPane.add(lblEmail);
 		
 		txtEmail = new JTextField();
-		txtEmail.setBounds(170, 188, 457, 22);
+		txtEmail.setBounds(170, 188, 223, 22);
 		contentPane.add(txtEmail);
 		txtEmail.setColumns(10);
 		
@@ -116,7 +118,7 @@ public class testFormAgent extends JFrame {
 		contentPane.add(lblPosition);
 		
 		txtPos = new JTextField();
-		txtPos.setBounds(170, 217, 457, 22);
+		txtPos.setBounds(170, 217, 223, 22);
 		contentPane.add(txtPos);
 		txtPos.setColumns(10);
 		
@@ -125,12 +127,12 @@ public class testFormAgent extends JFrame {
 		contentPane.add(lblAgencyid);
 		
 		txtAgency = new JTextField();
-		txtAgency.setBounds(170, 246, 457, 22);
+		txtAgency.setBounds(170, 246, 223, 22);
 		contentPane.add(txtAgency);
 		txtAgency.setColumns(10);
 		
 		JButton btnGetAgent = new JButton("Get Agent");
-		btnGetAgent.setBounds(43, 306, 89, 25);
+		btnGetAgent.setBounds(43, 338, 89, 25);
 		btnGetAgent.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
@@ -146,17 +148,18 @@ public class testFormAgent extends JFrame {
 		contentPane.add(btnGetAgent);
 		
 		JButton btnUpdateAgent = new JButton("Update Agent");
-		btnUpdateAgent.setBounds(170, 306, 457, 25);
+		btnUpdateAgent.setBounds(256, 338, 109, 25);
 		btnUpdateAgent.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				GrabData(agent);
-				AgentDB.UpdateAgent(agent);
+				Agent upAgent = new Agent();
+				GrabData(upAgent);
+				AgentDB.UpdateAgent(upAgent);
 			}
 		});
 		contentPane.add(btnUpdateAgent);
 		
 		JButton btnClear = new JButton("Clear");
-		btnClear.setBounds(43, 338, 89, 25);
+		btnClear.setBounds(100, 376, 89, 25);
 		btnClear.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Clear();
@@ -172,15 +175,26 @@ public class testFormAgent extends JFrame {
 				AgentDB.AddAgent(addedAgent);
 			}
 		});
-		btnAddAgent.setBounds(43, 376, 97, 25);
+		btnAddAgent.setBounds(146, 338, 97, 25);
 		contentPane.add(btnAddAgent);
+		
+		JLabel lblIsactive = new JLabel("isActive");
+		lblIsactive.setBounds(43, 284, 56, 16);
+		contentPane.add(lblIsactive);
+		
+		txtActive = new JTextField();
+		txtActive.setBounds(170, 281, 223, 22);
+		contentPane.add(txtActive);
+		txtActive.setColumns(10);
+		
+		JLabel lblAgentMaintenance = new JLabel("Agent Maintenance");
+		lblAgentMaintenance.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblAgentMaintenance.setBounds(43, 13, 146, 16);
+		contentPane.add(lblAgentMaintenance);
 	}
 	
 	public static void DisplayAgent() throws SQLException{
-		/*
-		int agentID = Integer.parseInt(txtAgentId.getText());
-		Agent agent = new Agent();
-		agent = AgentDB.GetAgentById(agentID);*/
+		
 		txtFirst.setText(agent.getAgtFirstName());
 		txtLast.setText(agent.getAgtLastName());
 		txtIni.setText(agent.getAgtMiddleInitial());
@@ -189,7 +203,12 @@ public class testFormAgent extends JFrame {
 		txtAgency.setText(Integer.toString(agent.getAgencyId()));
 		txtPos.setText(agent.getAgtPosition());
 		
-		
+		if(agent.isActive())
+		{
+			txtActive.setText("Yes");
+		}else{
+			txtActive.setText("No");
+		}
 	}
 	
 	public static void Clear(){
@@ -202,6 +221,7 @@ public class testFormAgent extends JFrame {
 		txtAgency.setText("");
 		txtPos.setText("");
 		txtAgentId.setText("");
+		txtActive.setText("");
 		
 	}
 	
@@ -214,5 +234,14 @@ public class testFormAgent extends JFrame {
 		agent.setAgtLastName(txtLast.getText());
 		agent.setAgtMiddleInitial(txtIni.getText());
 		agent.setAgtPosition(txtPos.getText());
+		//agent.setActive(Boolean.parseBoolean(txtActive.getText()));
+		if(txtActive.getText().equalsIgnoreCase("true") 
+				|| txtActive.getText().equalsIgnoreCase("yes"))
+		{
+			agent.setActive(true);
+		}
+		else{
+			agent.setActive(false);
+		}
 	}
 }

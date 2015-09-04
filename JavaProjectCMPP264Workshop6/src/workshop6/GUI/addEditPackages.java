@@ -72,8 +72,6 @@ public class addEditPackages extends javax.swing.JFrame {
 
         lblAddEditPackages.setText("YOU WILL NOT READ THIS");
 
-        cmbAddEditPkgStartDate.setEnabled(false);
-
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(

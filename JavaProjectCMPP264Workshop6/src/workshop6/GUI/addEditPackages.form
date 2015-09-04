@@ -232,9 +232,6 @@
           </Properties>
         </Component>
         <Component class="datechooser.beans.DateChooserCombo" name="cmbAddEditPkgStartDate">
-          <Properties>
-            <Property name="dch_enabled" type="boolean" value="false"/>
-          </Properties>
         </Component>
         <Component class="datechooser.beans.DateChooserCombo" name="cmbEndDate">
         </Component>

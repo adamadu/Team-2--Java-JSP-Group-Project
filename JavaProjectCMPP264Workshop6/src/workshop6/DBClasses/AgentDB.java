@@ -4,8 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.Vector;
+import workshop6.Entity.Agent;
 
 public class AgentDB {
 
@@ -16,7 +16,7 @@ public class AgentDB {
 			try 
 			(
 					//connect to the database
-					Connection conn = DatabaseConnection.GetConnection();
+					Connection conn = DatabaseConnection.getConnection();
 					//select statement
 					PreparedStatement preStatement =
 							conn.prepareStatement("SELECT * FROM agents "
@@ -58,7 +58,7 @@ public class AgentDB {
 				try 
 				(
 						//connect to the database
-						Connection conn = DatabaseConnection.GetConnection();
+						Connection conn = DatabaseConnection.getConnection();
 						//select statement
 						PreparedStatement preStatement =conn.prepareStatement("SELECT * FROM agents "
 								+ "WHERE AgentId = ?");)
@@ -106,7 +106,7 @@ public class AgentDB {
 					+ "isActive = ? "
 					+ "WHERE AgentId = ?";
 			
-			try (Connection conn = DatabaseConnection.GetConnection();
+			try (Connection conn = DatabaseConnection.getConnection();
 					PreparedStatement preStatement = conn.prepareStatement(sql))
 				{
 				//populate the prepared statement
@@ -148,7 +148,7 @@ public class AgentDB {
 					+ "?,?," //phone, email
 					+ "?, ?, ?)";//position, agency, isactive
 			
-			try (Connection conn = DatabaseConnection.GetConnection();
+			try (Connection conn = DatabaseConnection.getConnection();
 					PreparedStatement preStatement = conn.prepareStatement(sql))
 			{
 				//populate the prepared statement

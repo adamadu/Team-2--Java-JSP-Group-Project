@@ -1,22 +1,22 @@
 package workshop6.GUI;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.forms.layout.ColumnSpec;
-import com.jgoodies.forms.layout.RowSpec;
-import com.jgoodies.forms.layout.FormSpecs;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.awt.event.ActionEvent;
+<<<<<<< HEAD
 import java.awt.Font;
+=======
+import workshop6.DBClasses.AgentDB;
+import workshop6.Entity.Agent;
+>>>>>>> origin/master
 
 public class testFormAgent extends JFrame {
 

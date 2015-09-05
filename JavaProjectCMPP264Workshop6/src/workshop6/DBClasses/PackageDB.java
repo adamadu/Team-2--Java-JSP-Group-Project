@@ -53,7 +53,6 @@ public class PackageDB {
                         rs = stmt.executeQuery("SELECT * FROM Packages where packageId = " + packageId);
                         if(rs.next())
                         {
-                                //Agent agent = new Agent();
                                 pkg = new Package();
                                 pkg.setPackageId(rs.getInt(1));
                                 pkg.setPkgName(rs.getString(2));
@@ -82,7 +81,6 @@ public class PackageDB {
                 {
                         conn = DatabaseConnection.getConnection();
                         stmt =conn.createStatement();
-                        //System.out.println("PackageId : " + pkg.getPackageId());
                         String addPkg = "INSERT INTO Packages"
                                         + "( PkgName"
                                         + ", PkgStartDate"

@@ -4,11 +4,11 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Vector;
 import workshop6.Entity.Package;
 
-
-import workshop6.DBClasses.DatabaseConnection;
 
 public class PackageDB {
 	
@@ -26,7 +26,7 @@ public class PackageDB {
                 {
                         conn = DatabaseConnection.getConnection();
                         stmt =conn.createStatement();
-                        rs = stmt.executeQuery("select packageId from Packages");
+                        rs = stmt.executeQuery("SELECT packageId from Packages");
                         while(rs.next())
                         {
                                 pkgid.add(rs.getString("packageId"));
@@ -50,10 +50,9 @@ public class PackageDB {
                 try{
                         conn = DatabaseConnection.getConnection();
                         stmt =conn.createStatement();
-                        rs = stmt.executeQuery("select * from Packages where packageId = " + packageId);
+                        rs = stmt.executeQuery("SELECT * FROM Packages where packageId = " + packageId);
                         if(rs.next())
                         {
-                                //Agent agent = new Agent();
                                 pkg = new Package();
                                 pkg.setPackageId(rs.getInt(1));
                                 pkg.setPkgName(rs.getString(2));
@@ -82,10 +81,25 @@ public class PackageDB {
                 {
                         conn = DatabaseConnection.getConnection();
                         stmt =conn.createStatement();
-                        System.out.println("PackageId : " + pkg.getPackageId());
-                        String addPackage = "Insert Into Package (PkgName, PkgStartDate, PkgEndDate, PkgDesc, PkgBasePrice, PkgAgencyCommission) Values "
-                                        + "(pkg.getPkgName(), pkg.getPkgStartDate(),pkg.getPkgEndDate(),pkg.getPkgDesc(),pkg.getPkgBasePrice(),pkg.getPkgAgencyCommission())";		
-                        int numRows = stmt.executeUpdate(addPackage);
+                        String addPkg = "INSERT INTO Packages"
+                                        + "( PkgName"
+                                        + ", PkgStartDate"
+                                        + ", PkgEndDate"
+                                        + ", PkgDesc"
+                                        + ", PkgBasePrice"
+                                        + ", PkgAgencyCommission"
+                                        + ") VALUES"
+                                        + "( '" + pkg.getPkgName() + "'" 
+                                        + ", '" + dateToString(pkg.getPkgStartDate()) + "'"
+                                        + ", '" + dateToString(pkg.getPkgEndDate()) + "'"
+                                        + ", '" + pkg.getPkgDesc() + "'"
+                                        + ", " + pkg.getPkgBasePrice()
+                                        + ", " + pkg.getPkgAgencyCommission() 
+                                        + ")";
+                                         	
+                       // System.out.println("addPackage: " + addPkg);
+                        int numRows = stmt.executeUpdate(addPkg);
+                        conn.close();
                         if (numRows == 0)
                         {
                                 System.out.println("Package not inserted");
@@ -93,7 +107,6 @@ public class PackageDB {
                         }
                         else
                             return true;
-                        //conn.close();
                 }
                 catch(SQLException e)
                 {
@@ -101,22 +114,31 @@ public class PackageDB {
                         return false;
                 }
         }
-                
+
+        //Method to convert Date to StringDate
+        public static String dateToString(Date pDate)
+        {
+        	String dateStr;
+        	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        	dateStr = sdf.format(pDate );
+        	return dateStr;
+        } 
+        
         //Method to update Package
         public static boolean updatePackage(Package pkg)
         {
             try
             {
                 conn = DatabaseConnection.getConnection();
-                stmt =conn.createStatement();
-                String updatePackage = "Update Package set " +
-                                        "PkgName='" + pkg.getPkgName() +
-                                        "',PkgStartDate='" + pkg.getPkgStartDate() +
-                                        "',PkgEndDate='" + pkg.getPkgEndDate() +
-                                        "',PkgDesc='" + pkg.getPkgDesc() +
-                                        "',PkgBasePrice='" + pkg.getPkgBasePrice() +
-                                        "',PkgAgencyCommission='" + pkg.getPkgAgencyCommission() +
-                                        "' where packageId='" + pkg.getPackageId()+"'";                
+                stmt = conn.createStatement();                                
+                String updatePackage = "UPDATE Packages SET"
+                                    + " PkgName = '" + pkg.getPkgName() + "'"
+                                    + " ,PkgStartDate = '" + pkg.getPkgStartDate() + "'"
+                                    + " ,PkgEndDate = '" + pkg.getPkgEndDate() + "'"
+                                    + " ,PkgDesc = '" + pkg.getPkgDesc() + "'"
+                                    + " ,PkgBasePrice = " + pkg.getPkgBasePrice()
+                                    + " ,PkgAgencyCommission = " + pkg.getPkgAgencyCommission()
+                                    + " WHERE packageId='" + pkg.getPackageId();
 
                 int numRows = stmt.executeUpdate(updatePackage);
                 conn.close();

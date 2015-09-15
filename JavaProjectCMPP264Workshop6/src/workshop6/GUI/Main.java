@@ -20,7 +20,7 @@ import workshop6.Entity.Package;
 public class Main extends javax.swing.JFrame {
     
     private ComboBoxModel cbPackageIdModel;
-
+    public Package pkg;
     /**
      * Creates new form Main
      */
@@ -278,8 +278,18 @@ public class Main extends javax.swing.JFrame {
         txtPkgDescription.setEnabled(false);
 
         btnAddPackages.setText("Add");
+        btnAddPackages.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddPackagesActionPerformed(evt);
+            }
+        });
 
         btnEditPackages.setText("Edit");
+        btnEditPackages.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditPackagesActionPerformed(evt);
+            }
+        });
 
         btnDeletePackages.setText("Delete");
 
@@ -427,7 +437,7 @@ public class Main extends javax.swing.JFrame {
 
     private void cmbPackageIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbPackageIdActionPerformed
         String packageId = (String) cmbPackageId.getSelectedItem();
-        Package pkg = PackageDB.getPackage(packageId);
+        pkg = PackageDB.getPackage(packageId);
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         NumberFormat currency = NumberFormat.getCurrencyInstance();
         currency.setMinimumFractionDigits(2);
@@ -440,6 +450,21 @@ public class Main extends javax.swing.JFrame {
         
     }//GEN-LAST:event_cmbPackageIdActionPerformed
 
+    private void btnAddPackagesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddPackagesActionPerformed
+        AddEditPackages addEditPackage = new AddEditPackages();
+        addEditPackage.addPackages = true;
+        addEditPackage.setVisible(true);
+    }//GEN-LAST:event_btnAddPackagesActionPerformed
+
+    private void btnEditPackagesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditPackagesActionPerformed
+        AddEditPackages addEditPackage = new AddEditPackages();
+        addEditPackage.addPackages = false;
+        addEditPackage.pkg = pkg;
+        addEditPackage.setVisible(true);
+        addEditPackage.displayPackage(pkg);
+    }//GEN-LAST:event_btnEditPackagesActionPerformed
+    
+    
     /**
      * @param args the command line arguments
      */

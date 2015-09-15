@@ -80,7 +80,7 @@ public class PackageDB {
                 try
                 {
                         conn = DatabaseConnection.getConnection();
-                        stmt =conn.createStatement();
+                        stmt = conn.createStatement();
                         String addPkg = "INSERT INTO Packages"
                                         + "( PkgName"
                                         + ", PkgStartDate"
@@ -125,21 +125,21 @@ public class PackageDB {
         } 
         
         //Method to update Package
-        public static boolean updatePackage(Package pkg)
+        public static boolean updatePackage(Package modPkg)
         {
             try
             {
                 conn = DatabaseConnection.getConnection();
                 stmt = conn.createStatement();                                
                 String updatePackage = "UPDATE Packages SET"
-                                    + " PkgName = '" + pkg.getPkgName() + "'"
-                                    + " ,PkgStartDate = '" + pkg.getPkgStartDate() + "'"
-                                    + " ,PkgEndDate = '" + pkg.getPkgEndDate() + "'"
-                                    + " ,PkgDesc = '" + pkg.getPkgDesc() + "'"
-                                    + " ,PkgBasePrice = " + pkg.getPkgBasePrice()
-                                    + " ,PkgAgencyCommission = " + pkg.getPkgAgencyCommission()
-                                    + " WHERE packageId='" + pkg.getPackageId();
-
+                                    + " PkgName = '" + modPkg.getPkgName() + "'"
+                                    + " ,PkgStartDate = '" + dateToString(modPkg.getPkgStartDate()) + "'"
+                                    + " ,PkgEndDate = '" + dateToString(modPkg.getPkgEndDate()) + "'"
+                                    + " ,PkgDesc = '" + modPkg.getPkgDesc() + "'"
+                                    + " ,PkgBasePrice = " + modPkg.getPkgBasePrice()
+                                    + " ,PkgAgencyCommission = " + modPkg.getPkgAgencyCommission()
+                                    + " WHERE packageId = " + modPkg.getPackageId();
+                System.out.println("update Package sql : " + updatePackage);
                 int numRows = stmt.executeUpdate(updatePackage);
                 conn.close();
                 if (numRows == 0)

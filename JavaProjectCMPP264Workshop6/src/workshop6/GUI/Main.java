@@ -7,6 +7,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import workshop6.DBClasses.AgentDB;
 import workshop6.DBClasses.PackageDB;
+import workshop6.Entity.Agent;
 import workshop6.Entity.Package;
 
 /*
@@ -23,6 +24,7 @@ public class Main extends javax.swing.JFrame {
     private ComboBoxModel cbAgentIdModel;
     private ComboBoxModel cbPackageIdModel;
     public Package pkg;
+    public Agent agt;
     /**
      * Creates new form Main
      */
@@ -59,9 +61,9 @@ public class Main extends javax.swing.JFrame {
         txtAgencyId = new javax.swing.JTextField();
         txtAgentBusPhone = new javax.swing.JTextField();
         txtAgentFirstName = new javax.swing.JTextField();
-        txtAgentLastname = new javax.swing.JTextField();
-        txtAgtMiddleInitial = new javax.swing.JTextField();
-        txtAgtPosition = new javax.swing.JTextField();
+        txtAgentLastName = new javax.swing.JTextField();
+        txtAgentMiddleInitial = new javax.swing.JTextField();
+        txtAgentPosition = new javax.swing.JTextField();
         rbActive = new javax.swing.JRadioButton();
         rbInactive = new javax.swing.JRadioButton();
         txtAgentEmail = new javax.swing.JTextField();
@@ -177,6 +179,11 @@ public class Main extends javax.swing.JFrame {
         agentFieldPanel.add(jLabel25, gridBagConstraints);
 
         cmbAgentId.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbAgentId.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbAgentIdActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridwidth = 2;
@@ -215,7 +222,7 @@ public class Main extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(22, 0, 0, 0);
         agentFieldPanel.add(txtAgentFirstName, gridBagConstraints);
 
-        txtAgentLastname.setEnabled(false);
+        txtAgentLastName.setEnabled(false);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 3;
@@ -223,9 +230,9 @@ public class Main extends javax.swing.JFrame {
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipadx = 61;
         gridBagConstraints.insets = new java.awt.Insets(22, 0, 0, 0);
-        agentFieldPanel.add(txtAgentLastname, gridBagConstraints);
+        agentFieldPanel.add(txtAgentLastName, gridBagConstraints);
 
-        txtAgtMiddleInitial.setEnabled(false);
+        txtAgentMiddleInitial.setEnabled(false);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 2;
@@ -233,9 +240,9 @@ public class Main extends javax.swing.JFrame {
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipadx = 61;
         gridBagConstraints.insets = new java.awt.Insets(22, 0, 0, 0);
-        agentFieldPanel.add(txtAgtMiddleInitial, gridBagConstraints);
+        agentFieldPanel.add(txtAgentMiddleInitial, gridBagConstraints);
 
-        txtAgtPosition.setEnabled(false);
+        txtAgentPosition.setEnabled(false);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 6;
@@ -243,10 +250,16 @@ public class Main extends javax.swing.JFrame {
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipadx = 61;
         gridBagConstraints.insets = new java.awt.Insets(22, 0, 0, 0);
-        agentFieldPanel.add(txtAgtPosition, gridBagConstraints);
+        agentFieldPanel.add(txtAgentPosition, gridBagConstraints);
 
         btngrpAgentStatus.add(rbActive);
         rbActive.setText("Active");
+        rbActive.setEnabled(false);
+        rbActive.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbActiveActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 8;
@@ -257,6 +270,7 @@ public class Main extends javax.swing.JFrame {
 
         btngrpAgentStatus.add(rbInactive);
         rbInactive.setText("Inactive");
+        rbInactive.setEnabled(false);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 8;
@@ -577,6 +591,32 @@ public class Main extends javax.swing.JFrame {
         txtPkgBasePrice.setText(currency.format(pkg.getPkgBasePrice()));
         txtPkgAgencyCommission.setText(currency.format(pkg.getPkgAgencyCommission()));
     }//GEN-LAST:event_cmbPackageIdActionPerformed
+
+    private void cmbAgentIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbAgentIdActionPerformed
+        String agentId = (String)cmbAgentId.getSelectedItem();
+        agt = AgentDB.GetAgentById(agentId); 
+        txtAgentFirstName.setText(agt.getAgtFirstName());
+        txtAgentMiddleInitial.setText(agt.getAgtMiddleInitial());
+        txtAgentLastName.setText(agt.getAgtLastName());
+        txtAgentEmail.setText(agt.getAgtEmail());
+        txtAgentBusPhone.setText(agt.getAgtBusPhone());
+        txtAgentPosition.setText(agt.getAgtPosition());
+        txtAgencyId.setText(Integer.toString(agt.getAgencyId()));
+        
+        if (agt.isActive() == true)
+        {
+            rbActive.setSelected(true);
+        }
+        
+        if (!agt.isActive() == true)
+        {
+            rbInactive.setSelected(true);
+        }
+    }//GEN-LAST:event_cmbAgentIdActionPerformed
+
+    private void rbActiveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbActiveActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_rbActiveActionPerformed
     
     
     /**
@@ -666,9 +706,9 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JTextField txtAgentBusPhone;
     private javax.swing.JTextField txtAgentEmail;
     private javax.swing.JTextField txtAgentFirstName;
-    private javax.swing.JTextField txtAgentLastname;
-    private javax.swing.JTextField txtAgtMiddleInitial;
-    private javax.swing.JTextField txtAgtPosition;
+    private javax.swing.JTextField txtAgentLastName;
+    private javax.swing.JTextField txtAgentMiddleInitial;
+    private javax.swing.JTextField txtAgentPosition;
     private javax.swing.JTextField txtPkgAgencyCommission;
     private javax.swing.JTextField txtPkgBasePrice;
     private javax.swing.JTextField txtPkgDescription;

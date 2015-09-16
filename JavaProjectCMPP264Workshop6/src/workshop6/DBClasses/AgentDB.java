@@ -81,7 +81,7 @@ public class AgentDB {
 		}
 		
 		//method to get agent by id from the database
-		public static Agent GetAgentById(int agentId){
+		public static Agent GetAgentById(String agentId){
 				try 
 				(
 						//connect to the database
@@ -93,7 +93,7 @@ public class AgentDB {
 					ResultSet rset;
 					Agent agent = new Agent();
 					//set the parameter in the statement with the agencyId
-					preStatement.setInt(1, agentId);
+					preStatement.setString(1, agentId);
 					//get the result set
 					rset = preStatement.executeQuery();
 					if (rset.next()) {

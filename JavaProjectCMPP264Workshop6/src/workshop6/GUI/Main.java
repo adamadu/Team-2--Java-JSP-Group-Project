@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
+import workshop6.DBClasses.AgentDB;
 import workshop6.DBClasses.PackageDB;
 import workshop6.Entity.Package;
 
@@ -19,6 +20,7 @@ import workshop6.Entity.Package;
  */
 public class Main extends javax.swing.JFrame {
     
+    private ComboBoxModel cbAgentIdModel;
     private ComboBoxModel cbPackageIdModel;
     public Package pkg;
     /**
@@ -27,6 +29,7 @@ public class Main extends javax.swing.JFrame {
     public Main() {
         initComponents();
         initPackageIdCombo(cmbPackageId);
+        initAgentIdCombo(cmbAgentId);
     }
 
     /**
@@ -573,7 +576,6 @@ public class Main extends javax.swing.JFrame {
         txtPkgEndDate.setText(df.format(pkg.getPkgEndDate()));
         txtPkgBasePrice.setText(currency.format(pkg.getPkgBasePrice()));
         txtPkgAgencyCommission.setText(currency.format(pkg.getPkgAgencyCommission()));
-
     }//GEN-LAST:event_cmbPackageIdActionPerformed
     
     
@@ -617,6 +619,12 @@ public class Main extends javax.swing.JFrame {
     {
         cbPackageIdModel = new DefaultComboBoxModel(PackageDB.getPackageIDs());
         cmbPackageId.setModel(cbPackageIdModel);
+    }
+    
+    private void initAgentIdCombo(JComboBox cmbAgentId)
+    {
+        cbAgentIdModel = new DefaultComboBoxModel(AgentDB.GetAgentIds());
+        cmbAgentId.setModel(cbAgentIdModel);     
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

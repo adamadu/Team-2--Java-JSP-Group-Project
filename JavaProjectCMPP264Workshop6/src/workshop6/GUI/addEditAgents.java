@@ -3,6 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+package workshop6.GUI;
+
+import workshop6.utils.Validator;
 /**
  *
  * @author 692496
@@ -16,6 +19,21 @@ public class addEditAgents extends javax.swing.JFrame {
         initComponents();
     }
 
+    private boolean AllFieldsValid()
+    {
+        return !Validator.isEmptyOrNonSelected(cmbAddEditAgencyId) 
+            && !Validator.isEmptyOrNonSelected(txtAddEditAgtBusPhone)
+                
+            && !Validator.isEmptyOrNonSelected(txtAddEditAgtEmail)
+            && Validator.isValidEmail(txtAddEditAgtEmail.getText())
+                
+            && !Validator.isEmptyOrNonSelected(txtAddEditAgtFirstName)
+            && !Validator.isEmptyOrNonSelected(txtAddEditAgtlastName)
+            && !Validator.isEmptyOrNonSelected(txtAddEditAgtMiddleInitial)
+            && !Validator.isEmptyOrNonSelected(txtAddEditAgtlastName)
+            && !Validator.isEmptyOrNonSelected(txtAddEditAgtPosition);
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -25,6 +43,7 @@ public class addEditAgents extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        btngrpAgentStatus = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -66,17 +85,38 @@ public class addEditAgents extends javax.swing.JFrame {
 
         jLabel10.setText("Agent Status");
 
+        txtAddEditAgtBusPhone.setName("Agent Bisiness Phone"); // NOI18N
+
+        txtAddEditAgtEmail.setName("Agent Email"); // NOI18N
+
+        txtAddEditAgtFirstName.setName("Agent First Name"); // NOI18N
+
+        txtAddEditAgtlastName.setName("Agent Last Name"); // NOI18N
+
+        txtAddEditAgtMiddleInitial.setName("Agent middle Initial"); // NOI18N
+
+        txtAddEditAgtPosition.setName("Agent Position"); // NOI18N
+
         btnUpdateAgents.setText("Update");
+        btnUpdateAgents.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpdateAgentsActionPerformed(evt);
+            }
+        });
 
         btnExitAgents.setText("Exit");
 
         lblAddEditAgents.setText("HAHA YOU WILL NOT READ THIS");
 
+        btngrpAgentStatus.add(rbAddEditActive);
         rbAddEditActive.setText("Active");
 
+        btngrpAgentStatus.add(rbAddEditInactive);
         rbAddEditInactive.setText("Inactive");
 
         cmbAddEditAgencyId.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbAddEditAgencyId.setSelectedIndex(-1);
+        cmbAddEditAgencyId.setName("Agency ID"); // NOI18N
 
         btnChangeCustomers.setText("Change Customers");
 
@@ -209,6 +249,13 @@ public class addEditAgents extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnUpdateAgentsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateAgentsActionPerformed
+        if(AllFieldsValid())
+        {
+            //javax.swing.JOptionPane.showMessageDialog(this, "Field is not valid");
+        }
+    }//GEN-LAST:event_btnUpdateAgentsActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -248,6 +295,7 @@ public class addEditAgents extends javax.swing.JFrame {
     private javax.swing.JButton btnChangeCustomers;
     private javax.swing.JButton btnExitAgents;
     private javax.swing.JButton btnUpdateAgents;
+    private javax.swing.ButtonGroup btngrpAgentStatus;
     private javax.swing.JComboBox cmbAddEditAgencyId;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel3;

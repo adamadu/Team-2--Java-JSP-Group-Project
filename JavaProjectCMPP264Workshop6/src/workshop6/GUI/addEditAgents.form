@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
+  <NonVisualComponents>
+    <Component class="javax.swing.ButtonGroup" name="btngrpAgentStatus">
+    </Component>
+  </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
   </Properties>
@@ -224,21 +228,42 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txtAddEditAgtBusPhone">
+          <Properties>
+            <Property name="name" type="java.lang.String" value="Agent Bisiness Phone" noResource="true"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txtAddEditAgtEmail">
+          <Properties>
+            <Property name="name" type="java.lang.String" value="Agent Email" noResource="true"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txtAddEditAgtFirstName">
+          <Properties>
+            <Property name="name" type="java.lang.String" value="Agent First Name" noResource="true"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txtAddEditAgtlastName">
+          <Properties>
+            <Property name="name" type="java.lang.String" value="Agent Last Name" noResource="true"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txtAddEditAgtMiddleInitial">
+          <Properties>
+            <Property name="name" type="java.lang.String" value="Agent middle Initial" noResource="true"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txtAddEditAgtPosition">
+          <Properties>
+            <Property name="name" type="java.lang.String" value="Agent Position" noResource="true"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="btnUpdateAgents">
           <Properties>
             <Property name="text" type="java.lang.String" value="Update"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnUpdateAgentsActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnExitAgents">
           <Properties>
@@ -252,11 +277,17 @@
         </Component>
         <Component class="javax.swing.JRadioButton" name="rbAddEditActive">
           <Properties>
+            <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+              <ComponentRef name="btngrpAgentStatus"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Active"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JRadioButton" name="rbAddEditInactive">
           <Properties>
+            <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+              <ComponentRef name="btngrpAgentStatus"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Inactive"/>
           </Properties>
         </Component>
@@ -270,6 +301,8 @@
                 <StringItem index="3" value="Item 4"/>
               </StringArray>
             </Property>
+            <Property name="selectedIndex" type="int" value="-1"/>
+            <Property name="name" type="java.lang.String" value="Agency ID" noResource="true"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="btnChangeCustomers">

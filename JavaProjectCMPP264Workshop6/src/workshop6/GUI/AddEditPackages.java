@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import javax.swing.JOptionPane;
 import workshop6.DBClasses.PackageDB;
 import workshop6.Entity.Package;
+import workshop6.utils.Validator;
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -62,7 +63,6 @@ public class AddEditPackages extends javax.swing.JFrame {
         cmbAddEditPkgEndDate = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setAlwaysOnTop(true);
 
         jLabel11.setText("Package Name");
 
@@ -75,6 +75,14 @@ public class AddEditPackages extends javax.swing.JFrame {
         jLabel16.setText("Package Agency Commission");
 
         jLabel17.setText("Package Description");
+
+        txtAddEditPkgName.setName("Package Name"); // NOI18N
+
+        txtAddEditPkgBasePrice.setName("Package Base Price"); // NOI18N
+
+        txtAddEditPkgAgencyCommission.setName("Package Agency Commission"); // NOI18N
+
+        txtAddEditPkgDescription.setName("Package Description"); // NOI18N
 
         btnSavePackage.setText("Save");
         btnSavePackage.addActionListener(new java.awt.event.ActionListener() {
@@ -89,8 +97,10 @@ public class AddEditPackages extends javax.swing.JFrame {
         lblAddEditPackages.setText("Add / Edit Package");
 
         cmbAddEditPkgStartDate.setDateFormatString("yyyy-MM-dd");
+        cmbAddEditPkgStartDate.setName("Package Start Date"); // NOI18N
 
         cmbAddEditPkgEndDate.setDateFormatString("yyyy-MM-dd");
+        cmbAddEditPkgEndDate.setName("Package End Date"); // NOI18N
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -204,21 +214,24 @@ public class AddEditPackages extends javax.swing.JFrame {
 
     //Method to add package and give the Package status
     private void btnSavePackageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSavePackageActionPerformed
-        if(addPackages)
+        if(AllFieldsValid()) //Adam- added the validation here.
         {
-        boolean packageStatus = getAddPackageDetails();
-        if(packageStatus)
-            JOptionPane.showMessageDialog(null, "Package added successfully");
-        }
-        else
-        {
-            Package modPkg = new Package();
-            System.out.println("Package id in modification : " + pkg.getPackageId());
-            modPkg.setPackageId(pkg.getPackageId());
-            getModifiedPackageData(modPkg);
-            boolean modPackageStatus = PackageDB.updatePackage(modPkg);
-            if(modPackageStatus)
-                JOptionPane.showMessageDialog(null, "Package modified successfully");
+            if(addPackages)
+            {
+            boolean packageStatus = getAddPackageDetails();
+            if(packageStatus)
+                JOptionPane.showMessageDialog(null, "Package added successfully");
+            }
+            else
+            {
+                Package modPkg = new Package();
+                System.out.println("Package id in modification : " + pkg.getPackageId());
+                modPkg.setPackageId(pkg.getPackageId());
+                getModifiedPackageData(modPkg);
+                boolean modPackageStatus = PackageDB.updatePackage(modPkg);
+                if(modPackageStatus)
+                    JOptionPane.showMessageDialog(null, "Package modified successfully");
+            }
         }
     }//GEN-LAST:event_btnSavePackageActionPerformed
 
@@ -251,6 +264,51 @@ public class AddEditPackages extends javax.swing.JFrame {
         pkg.setPkgBasePrice(Double.parseDouble(txtAddEditPkgBasePrice.getText()));
         pkg.setPkgAgencyCommission(Double.parseDouble(txtAddEditPkgAgencyCommission.getText()));
         System.out.println();
+    }
+    
+    //Adam - Function to check that the package end date is after the package start date
+    private boolean checkDatesValid()
+    {
+  
+        
+        if(cmbAddEditPkgStartDate.getDate().compareTo(cmbAddEditPkgEndDate.getDate()) > 0)
+        {
+            JOptionPane.showMessageDialog(this, "The package end date cannot be before the package start date.");
+            return false;
+        }
+        else
+            return true;
+    }
+    
+    //Adam- function to check that the package commission is smaller than or equal to the package base price.
+    private boolean checkCommisionValid()
+    {
+        if(Double.parseDouble(txtAddEditPkgAgencyCommission.getText()) > Double.parseDouble(txtAddEditPkgBasePrice.getText()))
+        {
+            JOptionPane.showMessageDialog(this, "The package commission rate cannot be more than the package base price");
+            return false;
+        }
+        else return true;
+    }
+    
+    //Adam - Function to check that all the entered values are valid to be to properly inputted into the database
+    private boolean AllFieldsValid()
+    {
+        return Validator.hasTextOrIsSelected(txtAddEditPkgName) 
+            && Validator.hasTextOrIsSelected(txtAddEditPkgDescription)             
+            && Validator.hasTextOrIsSelected(cmbAddEditPkgStartDate)              
+            && Validator.hasTextOrIsSelected(cmbAddEditPkgEndDate)
+                
+            && Validator.hasTextOrIsSelected(txtAddEditPkgBasePrice)
+            && Validator.isDouble(txtAddEditPkgBasePrice)
+                
+            && Validator.hasTextOrIsSelected(txtAddEditPkgAgencyCommission)
+            && Validator.isDouble(txtAddEditPkgAgencyCommission)
+                
+            && checkDatesValid() 
+            && checkCommisionValid(); //Do not change the location of this checkCommissionValid method call.
+        
+        
     }
     /**
      * @param args the command line arguments

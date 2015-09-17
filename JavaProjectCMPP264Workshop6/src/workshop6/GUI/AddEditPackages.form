@@ -7,7 +7,6 @@
   </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="2"/>
-    <Property name="alwaysOnTop" type="boolean" value="true"/>
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
@@ -198,12 +197,24 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txtAddEditPkgName">
+          <Properties>
+            <Property name="name" type="java.lang.String" value="Package Name" noResource="true"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txtAddEditPkgBasePrice">
+          <Properties>
+            <Property name="name" type="java.lang.String" value="Package Base Price" noResource="true"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txtAddEditPkgAgencyCommission">
+          <Properties>
+            <Property name="name" type="java.lang.String" value="Package Agency Commission" noResource="true"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txtAddEditPkgDescription">
+          <Properties>
+            <Property name="name" type="java.lang.String" value="Package Description" noResource="true"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="btnSavePackage">
           <Properties>
@@ -229,11 +240,13 @@
         <Component class="com.toedter.calendar.JDateChooser" name="cmbAddEditPkgStartDate">
           <Properties>
             <Property name="dateFormatString" type="java.lang.String" value="yyyy-MM-dd"/>
+            <Property name="name" type="java.lang.String" value="Package Start Date" noResource="true"/>
           </Properties>
         </Component>
         <Component class="com.toedter.calendar.JDateChooser" name="cmbAddEditPkgEndDate">
           <Properties>
             <Property name="dateFormatString" type="java.lang.String" value="yyyy-MM-dd"/>
+            <Property name="name" type="java.lang.String" value="Package End Date" noResource="true"/>
           </Properties>
         </Component>
       </SubComponents>

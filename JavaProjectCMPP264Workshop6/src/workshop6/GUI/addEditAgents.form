@@ -229,7 +229,7 @@
         </Component>
         <Component class="javax.swing.JTextField" name="txtAddEditAgtBusPhone">
           <Properties>
-            <Property name="name" type="java.lang.String" value="Agent Bisiness Phone" noResource="true"/>
+            <Property name="name" type="java.lang.String" value="Agent Business Phone" noResource="true"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txtAddEditAgtEmail">

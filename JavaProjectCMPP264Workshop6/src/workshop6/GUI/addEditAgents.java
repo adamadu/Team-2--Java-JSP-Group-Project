@@ -21,17 +21,18 @@ public class addEditAgents extends javax.swing.JFrame {
 
     private boolean AllFieldsValid()
     {
-        return !Validator.isEmptyOrNonSelected(cmbAddEditAgencyId) 
-            && !Validator.isEmptyOrNonSelected(txtAddEditAgtBusPhone)
+        return Validator.hasTextOrIsSelected(cmbAddEditAgencyId) 
+            && Validator.hasTextOrIsSelected(txtAddEditAgtBusPhone)
                 
-            && !Validator.isEmptyOrNonSelected(txtAddEditAgtEmail)
+            && Validator.hasTextOrIsSelected(txtAddEditAgtEmail)
             && Validator.isValidEmail(txtAddEditAgtEmail.getText())
                 
-            && !Validator.isEmptyOrNonSelected(txtAddEditAgtFirstName)
-            && !Validator.isEmptyOrNonSelected(txtAddEditAgtlastName)
-            && !Validator.isEmptyOrNonSelected(txtAddEditAgtMiddleInitial)
-            && !Validator.isEmptyOrNonSelected(txtAddEditAgtlastName)
-            && !Validator.isEmptyOrNonSelected(txtAddEditAgtPosition);
+            && Validator.hasTextOrIsSelected(txtAddEditAgtFirstName)
+            && Validator.hasTextOrIsSelected(txtAddEditAgtlastName)
+            && Validator.hasTextOrIsSelected(txtAddEditAgtMiddleInitial)
+            && Validator.hasTextOrIsSelected(txtAddEditAgtlastName)
+            && Validator.hasTextOrIsSelected(txtAddEditAgtPosition)
+            && Validator.hasTextOrIsSelected(btngrpAgentStatus);
     }
     
     /**
@@ -85,7 +86,7 @@ public class addEditAgents extends javax.swing.JFrame {
 
         jLabel10.setText("Agent Status");
 
-        txtAddEditAgtBusPhone.setName("Agent Bisiness Phone"); // NOI18N
+        txtAddEditAgtBusPhone.setName("Agent Business Phone"); // NOI18N
 
         txtAddEditAgtEmail.setName("Agent Email"); // NOI18N
 
@@ -252,7 +253,7 @@ public class addEditAgents extends javax.swing.JFrame {
     private void btnUpdateAgentsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateAgentsActionPerformed
         if(AllFieldsValid())
         {
-            //javax.swing.JOptionPane.showMessageDialog(this, "Field is not valid");
+            //Add update agents code here.
         }
     }//GEN-LAST:event_btnUpdateAgentsActionPerformed
 

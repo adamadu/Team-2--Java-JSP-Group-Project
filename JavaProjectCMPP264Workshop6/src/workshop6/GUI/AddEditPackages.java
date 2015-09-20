@@ -262,7 +262,8 @@ public class AddEditPackages extends javax.swing.JFrame {
 
     //Method to close the Add or Edit Package frame
     private void btnExitPackagesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitPackagesActionPerformed
-       System.exit(0);
+        this.dispose();
+        //System.exit(0);
     }//GEN-LAST:event_btnExitPackagesActionPerformed
 
     //Geetha - Method to get the modified package details

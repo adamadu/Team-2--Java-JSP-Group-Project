@@ -228,6 +228,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Exit"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnExitPackagesActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="lblAddEditPackages">
           <Properties>
@@ -242,12 +245,18 @@
             <Property name="dateFormatString" type="java.lang.String" value="yyyy-MM-dd"/>
             <Property name="name" type="java.lang.String" value="Package Start Date" noResource="true"/>
           </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="cmbAddEditPkgStartDate.getDateEditor().setEnabled(false);"/>
+          </AuxValues>
         </Component>
         <Component class="com.toedter.calendar.JDateChooser" name="cmbAddEditPkgEndDate">
           <Properties>
             <Property name="dateFormatString" type="java.lang.String" value="yyyy-MM-dd"/>
             <Property name="name" type="java.lang.String" value="Package End Date" noResource="true"/>
           </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="cmbAddEditPkgEndDate.getDateEditor().setEnabled(false);"/>
+          </AuxValues>
         </Component>
       </SubComponents>
     </Container>

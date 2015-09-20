@@ -1,5 +1,8 @@
 package workshop6.GUI;
 
+import com.toedter.calendar.JTextFieldDateEditor;
+import java.text.DecimalFormat;
+import workshop6.GUI.Main;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import javax.swing.JOptionPane;
@@ -20,10 +23,14 @@ public class AddEditPackages extends javax.swing.JFrame {
 
     public boolean addPackages;
     public Package pkg;
+    //public Package modPkg;
+    
     /**
      * Creates new form addEditPackages
      */
-    public AddEditPackages() {
+    Main main;
+    public AddEditPackages(Main m) {
+       
         if(addPackages)
         {
             this.setTitle("Add Package");
@@ -33,7 +40,10 @@ public class AddEditPackages extends javax.swing.JFrame {
             this.setTitle("Modify Package");
         }
         initComponents();
+        main = m;
     }
+
+   
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -92,13 +102,20 @@ public class AddEditPackages extends javax.swing.JFrame {
         });
 
         btnExitPackages.setText("Exit");
+        btnExitPackages.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExitPackagesActionPerformed(evt);
+            }
+        });
 
         lblAddEditPackages.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         lblAddEditPackages.setText("Add / Edit Package");
 
+        cmbAddEditPkgStartDate.getDateEditor().setEnabled(false);
         cmbAddEditPkgStartDate.setDateFormatString("yyyy-MM-dd");
         cmbAddEditPkgStartDate.setName("Package Start Date"); // NOI18N
 
+        cmbAddEditPkgEndDate.getDateEditor().setEnabled(false);
         cmbAddEditPkgEndDate.setDateFormatString("yyyy-MM-dd");
         cmbAddEditPkgEndDate.setName("Package End Date"); // NOI18N
 
@@ -218,44 +235,50 @@ public class AddEditPackages extends javax.swing.JFrame {
         {
             if(addPackages)
             {
-            boolean packageStatus = getAddPackageDetails();
-            if(packageStatus)
-                JOptionPane.showMessageDialog(null, "Package added successfully");
+                pkg = new Package();
+                pkg = putPackageData(pkg);
+                boolean addPackage = PackageDB.addPackage(pkg);
+                if(addPackage)
+                    JOptionPane.showMessageDialog(null, "Package added successfully");
+                main.pkg = pkg;
+                main.postData(pkg);
+                this.setVisible(false);
+            
             }
             else
             {
-                Package modPkg = new Package();
-                System.out.println("Package id in modification : " + pkg.getPackageId());
+                Package modPkg = new Package();               
                 modPkg.setPackageId(pkg.getPackageId());
-                getModifiedPackageData(modPkg);
+                modPkg = getModifiedPackageData(modPkg);
                 boolean modPackageStatus = PackageDB.updatePackage(modPkg);
                 if(modPackageStatus)
-                    JOptionPane.showMessageDialog(null, "Package modified successfully");
+                    JOptionPane.showMessageDialog(null, "Package modified successfully");               
+                main.modPkg = modPkg;
+                main.postData(modPkg);
+                this.setVisible(false);
             }
         }
     }//GEN-LAST:event_btnSavePackageActionPerformed
 
-     public void getModifiedPackageData(Package modPkg)
-    {
+    //Method to close the Add or Edit Package frame
+    private void btnExitPackagesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitPackagesActionPerformed
+       System.exit(0);
+    }//GEN-LAST:event_btnExitPackagesActionPerformed
+
+    //Geetha - Method to get the modified package details
+     public Package getModifiedPackageData(Package modPkg)
+    {      
         modPkg.setPkgName(txtAddEditPkgName.getText());
         modPkg.setPkgDesc(txtAddEditPkgDescription.getText());
         modPkg.setPkgStartDate(cmbAddEditPkgStartDate.getDate());
         modPkg.setPkgEndDate(cmbAddEditPkgEndDate.getDate());
         modPkg.setPkgBasePrice(Double.parseDouble(txtAddEditPkgBasePrice.getText()));
         modPkg.setPkgAgencyCommission(Double.parseDouble(txtAddEditPkgAgencyCommission.getText()));
-        //System.out.println();
+       return modPkg;
     }
      
-    //Method to add package
-    public boolean getAddPackageDetails()
-    {
-        pkg = new Package();
-        putPackageData(pkg);
-        boolean addPackage = PackageDB.addPackage(pkg);
-        return addPackage;
-    }
-    
-    public void putPackageData(Package pkg)
+    //Geetha - Method to get the values from text field and put it in package bean
+    public Package putPackageData(Package pkg)
     {
         pkg.setPkgName(txtAddEditPkgName.getText());
         pkg.setPkgDesc(txtAddEditPkgDescription.getText());
@@ -263,14 +286,12 @@ public class AddEditPackages extends javax.swing.JFrame {
         pkg.setPkgEndDate(cmbAddEditPkgEndDate.getDate());
         pkg.setPkgBasePrice(Double.parseDouble(txtAddEditPkgBasePrice.getText()));
         pkg.setPkgAgencyCommission(Double.parseDouble(txtAddEditPkgAgencyCommission.getText()));
-        System.out.println();
+        return pkg;
     }
     
     //Adam - Function to check that the package end date is after the package start date
     private boolean checkDatesValid()
-    {
-  
-        
+    {        
         if(cmbAddEditPkgStartDate.getDate().compareTo(cmbAddEditPkgEndDate.getDate()) > 0)
         {
             JOptionPane.showMessageDialog(this, "The package end date cannot be before the package start date.");
@@ -341,7 +362,7 @@ public class AddEditPackages extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AddEditPackages().setVisible(true);
+                //new AddEditPackages().setVisible(true);
             }
         });
     }
@@ -366,16 +387,18 @@ public class AddEditPackages extends javax.swing.JFrame {
     private javax.swing.JTextField txtAddEditPkgName;
     // End of variables declaration//GEN-END:variables
 
+    //Geetha - Method to display package details in text fields
     public void displayPackage(Package pkg) {
         //SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         //NumberFormat currency = NumberFormat.getCurrencyInstance();
         //currency.setMinimumFractionDigits(2);
+        //DecimalFormat df = new DecimalFormat("###.##");
         txtAddEditPkgName.setText(pkg.getPkgName());
         txtAddEditPkgDescription.setText(pkg.getPkgDesc());
         cmbAddEditPkgStartDate.setDate(pkg.getPkgStartDate());
         cmbAddEditPkgEndDate.setDate(pkg.getPkgEndDate());
-        txtAddEditPkgBasePrice.setText(String.valueOf(pkg.getPkgBasePrice()));
-        txtAddEditPkgAgencyCommission.setText(String.valueOf(pkg.getPkgAgencyCommission()));
+        txtAddEditPkgBasePrice.setText(String.valueOf(String.format("%.2f",pkg.getPkgBasePrice())));
+        txtAddEditPkgAgencyCommission.setText(String.valueOf(String.format("%.2f",pkg.getPkgAgencyCommission())));
         //txtAddEditPkgBasePrice.setText(currency.format(pkg.getPkgBasePrice()));
         //txtAddEditPkgAgencyCommission.setText(currency.format(pkg.getPkgAgencyCommission()));
     }

@@ -24,7 +24,9 @@ public class Main extends javax.swing.JFrame {
     private ComboBoxModel cbAgentIdModel;
     private ComboBoxModel cbPackageIdModel;
     public Package pkg;
+    public Package modPkg;
     public Agent agt;
+
     /**
      * Creates new form Main
      */
@@ -34,6 +36,18 @@ public class Main extends javax.swing.JFrame {
         initAgentIdCombo(cmbAgentId);
     }
 
+    //Method to retrieve package details from Add or Edit package frame
+    public void postData(Package modPkg)
+    {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        this.txtPkgName.setText(modPkg.getPkgName());
+        this.txtPkgDescription.setText(modPkg.getPkgDesc());
+        this.txtPkgStartDate.setText(sdf.format(modPkg.getPkgStartDate()));
+        this.txtPkgEndDate.setText(sdf.format(modPkg.getPkgEndDate()));
+        this.txtPkgAgencyCommission.setText(Double.toString(modPkg.getPkgAgencyCommission()));
+        this.txtPkgBasePrice.setText(Double.toString(modPkg.getPkgBasePrice()));
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -321,128 +335,47 @@ public class Main extends javax.swing.JFrame {
 
         pnMain.addTab("Agent Maintain", agentMaintainPanel);
 
-        jPanel2.setLayout(new java.awt.GridBagLayout());
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel2.setText("Package ID");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(50, 38, 0, 0);
-        jPanel2.add(jLabel2, gridBagConstraints);
+        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(38, 50, -1, -1));
 
         jLabel11.setText("Package Name");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(21, 39, 0, 0);
-        jPanel2.add(jLabel11, gridBagConstraints);
+        jPanel2.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(39, 90, -1, -1));
 
         jLabel12.setText("Package Base Price");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 12;
-        gridBagConstraints.gridwidth = 6;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(16, 39, 0, 0);
-        jPanel2.add(jLabel12, gridBagConstraints);
+        jPanel2.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(39, 270, -1, -1));
 
         jLabel13.setText("Package Start Date");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 6;
-        gridBagConstraints.gridwidth = 4;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(18, 39, 0, 0);
-        jPanel2.add(jLabel13, gridBagConstraints);
+        jPanel2.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(39, 165, -1, -1));
 
         jLabel15.setText("Package End Date");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 8;
-        gridBagConstraints.gridwidth = 3;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(13, 39, 0, 0);
-        jPanel2.add(jLabel15, gridBagConstraints);
+        jPanel2.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(39, 200, -1, -1));
 
         jLabel16.setText("Package Agency Commission");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 10;
-        gridBagConstraints.gridwidth = 14;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(16, 39, 0, 0);
-        jPanel2.add(jLabel16, gridBagConstraints);
+        jPanel2.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(39, 235, -1, -1));
 
         jLabel17.setText("Package Description");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 4;
-        gridBagConstraints.gridwidth = 9;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(16, 39, 0, 0);
-        jPanel2.add(jLabel17, gridBagConstraints);
+        jPanel2.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(39, 125, -1, -1));
 
-        cmbPackageId.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmbPackageIdActionPerformed(evt);
+        cmbPackageId.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cmbPackageIdItemStateChanged(evt);
             }
         });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 15;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridwidth = 4;
-        gridBagConstraints.gridheight = 2;
-        gridBagConstraints.ipadx = 147;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(47, 20, 0, 0);
-        jPanel2.add(cmbPackageId, gridBagConstraints);
+        jPanel2.add(cmbPackageId, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 47, 178, -1));
 
         txtPkgName.setEnabled(false);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 15;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.gridwidth = 5;
-        gridBagConstraints.gridheight = 2;
-        gridBagConstraints.ipadx = 235;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(18, 20, 0, 0);
-        jPanel2.add(txtPkgName, gridBagConstraints);
+        jPanel2.add(txtPkgName, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 87, 241, -1));
 
         txtPkgAgencyCommission.setEnabled(false);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 15;
-        gridBagConstraints.gridy = 10;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.gridheight = 2;
-        gridBagConstraints.ipadx = 149;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(13, 20, 0, 0);
-        jPanel2.add(txtPkgAgencyCommission, gridBagConstraints);
+        jPanel2.add(txtPkgAgencyCommission, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 232, 155, -1));
 
         txtPkgBasePrice.setEnabled(false);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 15;
-        gridBagConstraints.gridy = 12;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.gridheight = 2;
-        gridBagConstraints.ipadx = 149;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(13, 20, 0, 0);
-        jPanel2.add(txtPkgBasePrice, gridBagConstraints);
+        jPanel2.add(txtPkgBasePrice, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 267, 155, -1));
 
         txtPkgDescription.setEnabled(false);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 15;
-        gridBagConstraints.gridy = 4;
-        gridBagConstraints.gridwidth = 5;
-        gridBagConstraints.gridheight = 2;
-        gridBagConstraints.ipadx = 227;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(16, 28, 0, 0);
-        jPanel2.add(txtPkgDescription, gridBagConstraints);
+        jPanel2.add(txtPkgDescription, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 120, 233, -1));
 
         btnAddPackages.setText("Add");
         btnAddPackages.addActionListener(new java.awt.event.ActionListener() {
@@ -450,13 +383,7 @@ public class Main extends javax.swing.JFrame {
                 btnAddPackagesActionPerformed(evt);
             }
         });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 14;
-        gridBagConstraints.gridwidth = 10;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(18, 5, 0, 0);
-        jPanel2.add(btnAddPackages, gridBagConstraints);
+        jPanel2.add(btnAddPackages, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 310, -1, -1));
 
         btnEditPackages.setText("Edit");
         btnEditPackages.addActionListener(new java.awt.event.ActionListener() {
@@ -464,21 +391,10 @@ public class Main extends javax.swing.JFrame {
                 btnEditPackagesActionPerformed(evt);
             }
         });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 15;
-        gridBagConstraints.gridy = 14;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(18, 64, 0, 0);
-        jPanel2.add(btnEditPackages, gridBagConstraints);
+        jPanel2.add(btnEditPackages, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 310, -1, -1));
 
         btnDeletePackages.setText("Delete");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 19;
-        gridBagConstraints.gridy = 14;
-        gridBagConstraints.gridwidth = 6;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(18, 8, 0, 0);
-        jPanel2.add(btnDeletePackages, gridBagConstraints);
+        jPanel2.add(btnDeletePackages, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 310, -1, -1));
 
         listProducts.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
@@ -487,18 +403,7 @@ public class Main extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(listProducts);
 
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 15;
-        gridBagConstraints.gridwidth = 15;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.ipadx = 143;
-        gridBagConstraints.ipady = 119;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.weighty = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(7, 50, 13, 0);
-        jPanel2.add(jScrollPane1, gridBagConstraints);
+        jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 339, 170, 197));
 
         listSuppliers.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
@@ -507,42 +412,15 @@ public class Main extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(listSuppliers);
 
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 15;
-        gridBagConstraints.gridy = 15;
-        gridBagConstraints.gridwidth = 11;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.ipadx = 198;
-        gridBagConstraints.ipady = 119;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.weighty = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(7, 62, 13, 12);
-        jPanel2.add(jScrollPane2, gridBagConstraints);
+        jPanel2.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(282, 339, 225, 197));
 
         txtPkgStartDate.setEditable(false);
         txtPkgStartDate.setEnabled(false);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 15;
-        gridBagConstraints.gridy = 6;
-        gridBagConstraints.gridwidth = 3;
-        gridBagConstraints.gridheight = 2;
-        gridBagConstraints.ipadx = 149;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(18, 28, 0, 0);
-        jPanel2.add(txtPkgStartDate, gridBagConstraints);
+        jPanel2.add(txtPkgStartDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 160, 155, -1));
 
         txtPkgEndDate.setEditable(false);
         txtPkgEndDate.setEnabled(false);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 15;
-        gridBagConstraints.gridy = 8;
-        gridBagConstraints.gridwidth = 3;
-        gridBagConstraints.gridheight = 2;
-        gridBagConstraints.ipadx = 149;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(10, 28, 0, 0);
-        jPanel2.add(txtPkgEndDate, gridBagConstraints);
+        jPanel2.add(txtPkgEndDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 200, 155, -1));
 
         pnMain.addTab("Packages", jPanel2);
 
@@ -550,7 +428,7 @@ public class Main extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnMain, javax.swing.GroupLayout.DEFAULT_SIZE, 524, Short.MAX_VALUE)
+            .addComponent(pnMain)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -564,33 +442,21 @@ public class Main extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    //Geetha - Method to call the edit package frame and edit the existing package
     private void btnEditPackagesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditPackagesActionPerformed
-        AddEditPackages addEditPackage = new AddEditPackages();
+        AddEditPackages addEditPackage = new AddEditPackages(this);
         addEditPackage.addPackages = false;
         addEditPackage.pkg = pkg;
         addEditPackage.setVisible(true);
         addEditPackage.displayPackage(pkg);
     }//GEN-LAST:event_btnEditPackagesActionPerformed
 
+    //Geetha - Method to call Add Package frame to add the new package
     private void btnAddPackagesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddPackagesActionPerformed
-        AddEditPackages addEditPackage = new AddEditPackages();
+        AddEditPackages addEditPackage = new AddEditPackages(this);
         addEditPackage.addPackages = true;
         addEditPackage.setVisible(true);
     }//GEN-LAST:event_btnAddPackagesActionPerformed
-
-    private void cmbPackageIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbPackageIdActionPerformed
-        String packageId = (String) cmbPackageId.getSelectedItem();
-        pkg = PackageDB.getPackage(packageId);
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-        NumberFormat currency = NumberFormat.getCurrencyInstance();
-        currency.setMinimumFractionDigits(2);
-        txtPkgName.setText(pkg.getPkgName());
-        txtPkgDescription.setText(pkg.getPkgDesc());
-        txtPkgStartDate.setText(df.format(pkg.getPkgStartDate()));
-        txtPkgEndDate.setText(df.format(pkg.getPkgEndDate()));
-        txtPkgBasePrice.setText(currency.format(pkg.getPkgBasePrice()));
-        txtPkgAgencyCommission.setText(currency.format(pkg.getPkgAgencyCommission()));
-    }//GEN-LAST:event_cmbPackageIdActionPerformed
 
     private void cmbAgentIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbAgentIdActionPerformed
         String agentId = (String)cmbAgentId.getSelectedItem();
@@ -617,6 +483,21 @@ public class Main extends javax.swing.JFrame {
     private void rbActiveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbActiveActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_rbActiveActionPerformed
+
+    //Geetha - Method to display the package details on select of packageId 
+    private void cmbPackageIdItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbPackageIdItemStateChanged
+        String packageId = (String) cmbPackageId.getSelectedItem();
+        pkg = PackageDB.getPackage(packageId);
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        NumberFormat currency = NumberFormat.getCurrencyInstance();
+        currency.setMinimumFractionDigits(2);
+        txtPkgName.setText(pkg.getPkgName());
+        txtPkgDescription.setText(pkg.getPkgDesc());
+        txtPkgStartDate.setText(df.format(pkg.getPkgStartDate()));
+        txtPkgEndDate.setText(df.format(pkg.getPkgEndDate()));
+        txtPkgBasePrice.setText(currency.format(pkg.getPkgBasePrice()));
+        txtPkgAgencyCommission.setText(currency.format(pkg.getPkgAgencyCommission()));
+    }//GEN-LAST:event_cmbPackageIdItemStateChanged
     
     
     /**
@@ -655,6 +536,7 @@ public class Main extends javax.swing.JFrame {
         });
     }
     
+    //Geetha - Method to retrieve all packageid from the database and load it in combo box
     private void initPackageIdCombo(JComboBox cmbPackageId)
     {
         cbPackageIdModel = new DefaultComboBoxModel(PackageDB.getPackageIDs());

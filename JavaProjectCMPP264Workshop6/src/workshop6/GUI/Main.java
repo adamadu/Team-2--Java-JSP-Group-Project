@@ -40,7 +40,7 @@ public class Main extends javax.swing.JFrame {
     public void postData(Package modPkg)
     {    
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        this.cmbPackageId.setSelectedIndex(modPkg.getPackageId());
+        //this.cmbPackageId.setSelectedIndex(modPkg.getPackageId());
         this.txtPkgName.setText(modPkg.getPkgName());
         this.txtPkgDescription.setText(modPkg.getPkgDesc());
         this.txtPkgStartDate.setText(sdf.format(modPkg.getPkgStartDate()));

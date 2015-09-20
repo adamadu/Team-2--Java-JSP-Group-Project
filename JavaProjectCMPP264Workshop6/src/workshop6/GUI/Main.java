@@ -38,14 +38,18 @@ public class Main extends javax.swing.JFrame {
 
     //Method to retrieve package details from Add or Edit package frame
     public void postData(Package modPkg)
-    {
+    {    
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        this.cmbPackageId.setSelectedIndex(modPkg.getPackageId());
         this.txtPkgName.setText(modPkg.getPkgName());
         this.txtPkgDescription.setText(modPkg.getPkgDesc());
         this.txtPkgStartDate.setText(sdf.format(modPkg.getPkgStartDate()));
         this.txtPkgEndDate.setText(sdf.format(modPkg.getPkgEndDate()));
         this.txtPkgAgencyCommission.setText(Double.toString(modPkg.getPkgAgencyCommission()));
-        this.txtPkgBasePrice.setText(Double.toString(modPkg.getPkgBasePrice()));
+        this.txtPkgBasePrice.setText(Double.toString(modPkg.getPkgBasePrice()));      
+        //cmbPackageId.removeAllItems();
+        //initPackageIdCombo(cmbPackageId);
+        pkg = modPkg;
     }
     
     /**
@@ -98,7 +102,6 @@ public class Main extends javax.swing.JFrame {
         txtPkgDescription = new javax.swing.JTextField();
         btnAddPackages = new javax.swing.JButton();
         btnEditPackages = new javax.swing.JButton();
-        btnDeletePackages = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         listProducts = new javax.swing.JList();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -344,23 +347,23 @@ public class Main extends javax.swing.JFrame {
         jPanel2.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(39, 90, -1, -1));
 
         jLabel12.setText("Package Base Price");
-        jPanel2.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(39, 270, -1, -1));
+        jPanel2.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 240, -1, -1));
 
         jLabel13.setText("Package Start Date");
         jPanel2.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(39, 165, -1, -1));
 
         jLabel15.setText("Package End Date");
-        jPanel2.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(39, 200, -1, -1));
+        jPanel2.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 200, -1, -1));
 
         jLabel16.setText("Package Agency Commission");
-        jPanel2.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(39, 235, -1, -1));
+        jPanel2.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 280, -1, -1));
 
         jLabel17.setText("Package Description");
         jPanel2.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(39, 125, -1, -1));
 
-        cmbPackageId.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                cmbPackageIdItemStateChanged(evt);
+        cmbPackageId.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbPackageIdActionPerformed(evt);
             }
         });
         jPanel2.add(cmbPackageId, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 47, 178, -1));
@@ -369,10 +372,10 @@ public class Main extends javax.swing.JFrame {
         jPanel2.add(txtPkgName, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 87, 241, -1));
 
         txtPkgAgencyCommission.setEnabled(false);
-        jPanel2.add(txtPkgAgencyCommission, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 232, 155, -1));
+        jPanel2.add(txtPkgAgencyCommission, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 280, 155, -1));
 
         txtPkgBasePrice.setEnabled(false);
-        jPanel2.add(txtPkgBasePrice, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 267, 155, -1));
+        jPanel2.add(txtPkgBasePrice, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 240, 155, -1));
 
         txtPkgDescription.setEnabled(false);
         jPanel2.add(txtPkgDescription, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 120, 233, -1));
@@ -383,7 +386,7 @@ public class Main extends javax.swing.JFrame {
                 btnAddPackagesActionPerformed(evt);
             }
         });
-        jPanel2.add(btnAddPackages, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 310, -1, -1));
+        jPanel2.add(btnAddPackages, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 310, -1, -1));
 
         btnEditPackages.setText("Edit");
         btnEditPackages.addActionListener(new java.awt.event.ActionListener() {
@@ -391,10 +394,7 @@ public class Main extends javax.swing.JFrame {
                 btnEditPackagesActionPerformed(evt);
             }
         });
-        jPanel2.add(btnEditPackages, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 310, -1, -1));
-
-        btnDeletePackages.setText("Delete");
-        jPanel2.add(btnDeletePackages, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 310, -1, -1));
+        jPanel2.add(btnEditPackages, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 310, -1, -1));
 
         listProducts.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
@@ -484,8 +484,7 @@ public class Main extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_rbActiveActionPerformed
 
-    //Geetha - Method to display the package details on select of packageId 
-    private void cmbPackageIdItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbPackageIdItemStateChanged
+    private void cmbPackageIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbPackageIdActionPerformed
         String packageId = (String) cmbPackageId.getSelectedItem();
         pkg = PackageDB.getPackage(packageId);
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
@@ -497,7 +496,7 @@ public class Main extends javax.swing.JFrame {
         txtPkgEndDate.setText(df.format(pkg.getPkgEndDate()));
         txtPkgBasePrice.setText(currency.format(pkg.getPkgBasePrice()));
         txtPkgAgencyCommission.setText(currency.format(pkg.getPkgAgencyCommission()));
-    }//GEN-LAST:event_cmbPackageIdItemStateChanged
+    }//GEN-LAST:event_cmbPackageIdActionPerformed
     
     
     /**
@@ -554,7 +553,6 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JPanel agentMaintainPanel;
     private javax.swing.JButton btnAddAgent;
     private javax.swing.JButton btnAddPackages;
-    private javax.swing.JButton btnDeletePackages;
     private javax.swing.JButton btnEditAgent;
     private javax.swing.JButton btnEditPackages;
     private javax.swing.ButtonGroup btngrpAgentStatus;

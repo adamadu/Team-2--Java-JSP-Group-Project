@@ -89,4 +89,31 @@ public class ProductDB
         }
         return result;
     }
+    
+    public static List<Product> getProductsForPackageId(int packageid)
+    {
+        List<Product> products = new ArrayList<>();
+        try ( //self-closing try
+            Connection connection = DatabaseConnection.getConnection();
+            Statement statement = connection.createStatement();
+            ResultSet result = statement.executeQuery("SELECT p.ProductId, p.ProdName FROM products p, products_suppliers ps, packages_products_suppliers pps WHERE p.ProductId=ps.ProductId AND ps.ProductSupplierId=pps.ProductSupplierId AND pps.PackageId=" + packageid); 
+        ) {
+            while (result.next())
+            {
+                //Make new product from each entry in the database
+                Product product = new Product();
+                //Set the props
+                product.setProductId(result.getInt("ProductId"));
+                product.setProdName(result.getString("ProdName"));
+                
+                //Add the product to the products list
+                products.add(product);
+            }
+        } 
+        catch (SQLException e)
+        {
+            System.out.println("There was an error while trying to fetch products for a package id. Message: " + e.getMessage());
+        }
+        return products;
+    }
 }

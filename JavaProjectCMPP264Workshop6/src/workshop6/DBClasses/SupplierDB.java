@@ -88,4 +88,31 @@ public class SupplierDB {
         }
         return result;
     }
+    
+    public static List<Supplier> getSuppliersForPackageId(int packageid)
+    {
+        List<Supplier> suppliers = new ArrayList<>();
+        try ( //self-closing try
+            Connection connection = DatabaseConnection.getConnection();
+            Statement statement = connection.createStatement();
+            ResultSet result = statement.executeQuery("SELECT s.SupplierId, s.SupName FROM suppliers s, products_suppliers ps, packages_products_suppliers pps WHERE s.SupplierId=ps.SupplierId AND ps.ProductSupplierId=pps.ProductSupplierId AND pps.PackageId=" + packageid); 
+        ) {
+            while (result.next())
+            {
+                //Make new product from each entry in the database
+                Supplier supplier = new Supplier();
+                //Set the props
+                supplier.setSupplierId(result.getInt("SupplierId"));
+                supplier.setSupName(result.getString("Supname"));
+                
+                //Add the product to the products list
+                suppliers.add(supplier);
+            }
+        } 
+        catch (SQLException e)
+        {
+            System.out.println("There was an error while trying to fetch suppliers for a package id. Message: " + e.getMessage());
+        }
+        return suppliers;
+    }
 }

@@ -18,7 +18,7 @@ import workshop6.Entity.Supplier;
 public class ProductSupplierDB 
 {
     //Function get all product Suppliers from the database
-   public static List<ProductSupplier> getAllProductSupplier()
+    public static List<ProductSupplier> getAllProductSupplier()
     {
         //List that will store all the productsSuppliers
         List<ProductSupplier> productsSuppliers = new ArrayList<>();
@@ -63,7 +63,7 @@ public class ProductSupplierDB
             while (result.next())
             {
                 //Make new product from each entry in the database
-                Supplier supplier = new Supplier();
+                Supplier supplier;
                 //Set the props
                 supplier = SupplierDB.getSupplierById(result.getInt("SupplierId"));
                 

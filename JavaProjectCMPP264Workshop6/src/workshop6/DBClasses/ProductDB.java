@@ -90,6 +90,7 @@ public class ProductDB
         return result;
     }
     
+    //Function that get all the products that are related to a specific package id
     public static List<Product> getProductsForPackageId(int packageid)
     {
         List<Product> products = new ArrayList<>();

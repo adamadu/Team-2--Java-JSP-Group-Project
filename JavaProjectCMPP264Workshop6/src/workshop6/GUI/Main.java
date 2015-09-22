@@ -538,17 +538,17 @@ public class Main extends javax.swing.JFrame {
 
     //Geetha - Method to call the edit package frame and edit the existing package
     private void btnEditPackagesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditPackagesActionPerformed
-        AddEditPackages addEditPackage = new AddEditPackages(this);
-        addEditPackage.addPackages = false;
-        addEditPackage.pkg = pkg;
+        AddEditPackages addEditPackage = new AddEditPackages(this, false, pkg);
+        //addEditPackage.addPackages = false;
+        //addEditPackage.pkg = pkg;
         addEditPackage.setVisible(true);
         addEditPackage.displayPackage(pkg);
     }//GEN-LAST:event_btnEditPackagesActionPerformed
 
     //Geetha - Method to call Add Package frame to add the new package
     private void btnAddPackagesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddPackagesActionPerformed
-        AddEditPackages addEditPackage = new AddEditPackages(this);
-        addEditPackage.addPackages = true;
+        AddEditPackages addEditPackage = new AddEditPackages(this, true, null);
+        //addEditPackage.addPackages = true;
         addEditPackage.setVisible(true);
     }//GEN-LAST:event_btnAddPackagesActionPerformed
 

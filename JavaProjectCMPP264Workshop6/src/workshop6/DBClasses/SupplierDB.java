@@ -89,6 +89,7 @@ public class SupplierDB {
         return result;
     }
     
+    //Function to get all the suppliers that are related to specific package
     public static List<Supplier> getSuppliersForPackageId(int packageid)
     {
         List<Supplier> suppliers = new ArrayList<>();
@@ -111,7 +112,7 @@ public class SupplierDB {
         } 
         catch (SQLException e)
         {
-            System.out.println("There was an error while trying to fetch suppliers for a package id. Message: " + e.getMessage());
+            System.out.println("There was an error in function getSuppliersForPackageId in class suppliersdb. Message: " + e.getMessage());
         }
         return suppliers;
     }

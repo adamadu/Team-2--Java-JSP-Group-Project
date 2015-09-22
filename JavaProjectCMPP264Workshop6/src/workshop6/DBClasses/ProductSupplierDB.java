@@ -79,6 +79,7 @@ public class ProductSupplierDB
         return suppliers;
     }
     
+    //Function to get all the productssuppliers that are related to a specific package id
     public static List<ProductSupplier> getProductSuppliersForPackage(int packageid)
     {
          //List that will store all the productsSuppliers
@@ -103,12 +104,13 @@ public class ProductSupplierDB
         } 
         catch (SQLException e)
         {
-            System.out.println("There was an error while trying to fetch all suppliers for product id. Message: " + e.getMessage());
+            System.out.println("There was an error while trying to fetch all productsuppliers for a package. Message: " + e.getMessage());
         }
         
         return productSuppliers;
     }
     
+    //Fucntion to get the the product id for a specific productsupplier id
     public static int getProductIdForProductSupplierId(int productSupplierId)
     {
         //List that will store all the productsSuppliers 
@@ -125,11 +127,12 @@ public class ProductSupplierDB
         } 
         catch (SQLException e)
         {
-            System.out.println("There was an error while trying to fetch all products_suppliers. Message: " + e.getMessage());
+            System.out.println("There was an error while trying to fetch product id for a specific productsupplier id. Message: " + e.getMessage());
         }
         return productId;
     }
     
+    //Function to get the supplier id for a specific productsupplier id
     public static int getSupplierIdForProductSupplierId(int productSupplierId)
     {
         //List that will store all the productsSuppliers 
@@ -146,11 +149,12 @@ public class ProductSupplierDB
         } 
         catch (SQLException e)
         {
-            System.out.println("There was an error while trying to fetch all products_suppliers. Message: " + e.getMessage());
+            System.out.println("There was an error in function getSupplierIdForProductSupplierId. Message: " + e.getMessage());
         }
         return supplierId;
     }
     
+    //Function to get all the suppliers for a specific product id
     public static List<Supplier> getSuppliersForProduct(int productid)
     {
          //List that will store all the productsSuppliers
@@ -173,12 +177,13 @@ public class ProductSupplierDB
         } 
         catch (SQLException e)
         {
-            System.out.println("There was an error while trying to fetch all suppliers for product id. Message: " + e.getMessage());
+            System.out.println("There was an error in fucntion getSuppliersForProduct. Message: " + e.getMessage());
         }
         
         return suppliers;
     }
     
+    //Function to get the related productsupplier for a speicifc product id and supplier id
     public static ProductSupplier getProductSupplierFromProductIdAndSupplierId(int prodId, int supId)
     {
         ProductSupplier productSupplier = null;
@@ -200,7 +205,7 @@ public class ProductSupplierDB
         } 
         catch (SQLException e)
         {
-            System.out.println("There was an error while trying to fetch all suppliers for product id. Message: " + e.getMessage());
+            System.out.println("There was an error in fuction getProductSupplierFromProductIdAndSupplierId. Message: " + e.getMessage());
         }
         return productSupplier;
     }

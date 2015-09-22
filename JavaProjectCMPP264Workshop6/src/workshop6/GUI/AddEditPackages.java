@@ -29,18 +29,22 @@ public class AddEditPackages extends javax.swing.JFrame {
      * Creates new form addEditPackages
      */
     Main main;
-    public AddEditPackages(Main m) {
-       
+    public AddEditPackages(Main m, boolean addpackages, Package pkg) {
+        initComponents();
+        this.addPackages = addpackages;
+        this.pkg = pkg;
+        main = m;
         if(addPackages)
         {
             this.setTitle("Add Package");
+            btnEditProductSuppliers.setEnabled(false);
         }
         else
         {
             this.setTitle("Modify Package");
         }
-        initComponents();
-        main = m;
+        
+        
     }
 
    
@@ -245,11 +249,14 @@ public class AddEditPackages extends javax.swing.JFrame {
                 pkg = putPackageData(pkg);
                 boolean addPackage = PackageDB.addPackage(pkg);
                 if(addPackage)
-                    JOptionPane.showMessageDialog(null, "Package added successfully");
+                {
+                    JOptionPane.showMessageDialog(null, "Package added successfully. You can now add products and suppliers.");
+                    btnEditProductSuppliers.setEnabled(true);
+                }
                 main.pkg = pkg;
                 main.postData(pkg);
-                this.setVisible(false);
-            
+                //this.setVisible(false);
+                
             }
             else
             {
@@ -261,7 +268,7 @@ public class AddEditPackages extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(null, "Package modified successfully");               
                 main.modPkg = modPkg;
                 main.postData(modPkg);
-                this.setVisible(false);
+                //this.setVisible(false);
             }
         }
     }//GEN-LAST:event_btnSavePackageActionPerformed
@@ -273,8 +280,11 @@ public class AddEditPackages extends javax.swing.JFrame {
     }//GEN-LAST:event_btnExitPackagesActionPerformed
 
     private void btnEditProductSuppliersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditProductSuppliersActionPerformed
-        EditSupplierProduct editSupplierProduct = new EditSupplierProduct(this, true, pkg);
-        editSupplierProduct.setVisible(true);
+        if(pkg != null)
+        {
+            EditSupplierProduct editSupplierProduct = new EditSupplierProduct(this, true, pkg);
+            editSupplierProduct.setVisible(true);
+        }
     }//GEN-LAST:event_btnEditProductSuppliersActionPerformed
 
     //Geetha - Method to get the modified package details

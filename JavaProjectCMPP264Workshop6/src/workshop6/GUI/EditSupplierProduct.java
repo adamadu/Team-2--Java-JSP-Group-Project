@@ -8,7 +8,6 @@ package workshop6.GUI;
 
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import workshop6.DBClasses.PackagesProductsSuppliersDB;
@@ -25,19 +24,29 @@ import workshop6.Entity.Supplier;
  */
 public class EditSupplierProduct extends javax.swing.JDialog {
     
-    DefaultTableModel tablemodel;
-    workshop6.Entity.Package pkg;
-    DefaultComboBoxModel productsModel, supplierModel;
+    //the model that will be used to populate the PtroductsSuppliers Table
+    private DefaultTableModel tablemodel;
+    //The package we are currently working with
+    private workshop6.Entity.Package pkg;
+    //The models that will be used for products and suppliers combo boxes
+    private DefaultComboBoxModel productsModel, supplierModel;
     /**
      * Creates new form EditSupplierProduct
      */
     public EditSupplierProduct(java.awt.Frame parent, boolean modal, workshop6.Entity.Package pkg) {
         super(parent, modal);
         initComponents();
+        //set the local vars
         this.pkg = pkg;    
-        tablemodel = (DefaultTableModel)jTable1.getModel();
-            
+        tablemodel = (DefaultTableModel)tblProductsSuppliers.getModel();
+        
+        //Get the list of productsuppliers that are related to the package we are working with
         List<ProductSupplier> productsSuppliers = ProductSupplierDB.getProductSuppliersForPackage(pkg.getPackageId());
+        //If the productsuppliers list is empty, disable the delete button
+        if(productsSuppliers.isEmpty())
+            btnRemoveProductSupplier.setEnabled(false);
+        
+        //Loop through the list of productsuppliers and it to the table model
         for(ProductSupplier productSupplier : productsSuppliers)
         {
             String prodName = ProductDB.getProductById(productSupplier.getProductId()).getProdName();
@@ -45,9 +54,11 @@ public class EditSupplierProduct extends javax.swing.JDialog {
                 
             tablemodel.addRow(new Object[]{productSupplier.getProductSupplierId(), prodName, suppName});
         }
-            
-        jTable1.setModel(tablemodel);
         
+        //Assign the model to the table
+        tblProductsSuppliers.setModel(tablemodel);
+        
+        //Populate the products combo box model with the list of products
         productsModel = (DefaultComboBoxModel) cmbProducts.getModel();
         List<Product> products = ProductDB.getAllProducts();
         for(Product product : products)
@@ -55,7 +66,8 @@ public class EditSupplierProduct extends javax.swing.JDialog {
             //cmbProducts.addItem(product.getProdName());
             productsModel.addElement(product);
                   
-        }       
+        }
+        //Assign the model to the combo box
         cmbProducts.setModel(productsModel);      
     }
 
@@ -69,7 +81,7 @@ public class EditSupplierProduct extends javax.swing.JDialog {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblProductsSuppliers = new javax.swing.JTable();
         btnRemoveProductSupplier = new javax.swing.JButton();
         cmbProducts = new javax.swing.JComboBox();
         jLabel1 = new javax.swing.JLabel();
@@ -79,7 +91,7 @@ public class EditSupplierProduct extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblProductsSuppliers.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -95,7 +107,7 @@ public class EditSupplierProduct extends javax.swing.JDialog {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tblProductsSuppliers);
 
         btnRemoveProductSupplier.setText("Remove Product Supplier");
         btnRemoveProductSupplier.addActionListener(new java.awt.event.ActionListener() {
@@ -142,8 +154,8 @@ public class EditSupplierProduct extends javax.swing.JDialog {
                                     .addComponent(jLabel2))
                                 .addGap(38, 38, 38)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(cmbProducts, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(cmbSuppliers, 0, 115, Short.MAX_VALUE))))
+                                    .addComponent(cmbSuppliers, 0, 191, Short.MAX_VALUE)
+                                    .addComponent(cmbProducts, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
@@ -173,28 +185,35 @@ public class EditSupplierProduct extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
+    //Function that runs when the user clicks the remove products supplier button
     private void btnRemoveProductSupplierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveProductSupplierActionPerformed
-        if(jTable1.getSelectedRow() != -1)
+        //Make sure we have actaully selected a row in the table
+        if(tblProductsSuppliers.getSelectedRow() != -1)
         {
-            if(PackagesProductsSuppliersDB.deletePackagesProductsSuppliers(pkg.getPackageId(), (int)tablemodel.getValueAt(jTable1.getSelectedRow(), 0)) != -1)
-            {
+            //Attempt to delete the values form the database and update the table
+            if(PackagesProductsSuppliersDB.deletePackagesProductsSuppliers(pkg.getPackageId(), (int)tablemodel.getValueAt(tblProductsSuppliers.getSelectedRow(), 0)) != -1)
+            {            
+                tablemodel.removeRow(tblProductsSuppliers.getSelectedRow());
                 JOptionPane.showMessageDialog(null, "The Product and Supplier has been deleted.");
-                tablemodel.removeRow(jTable1.getSelectedRow());
             }
             else
             {
                 JOptionPane.showMessageDialog(null, "Error deleting ");
             }
         }
-        else
+        else //User did not select a row
         {
             JOptionPane.showMessageDialog(null, "You must select a row you wish you remove first");
         }
     }//GEN-LAST:event_btnRemoveProductSupplierActionPerformed
-
+    
+    //Function that runs when the user makes a selection in the products combo box
     private void cmbProductsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbProductsActionPerformed
+        //Clear the suppliers combo box
         cmbSuppliers.removeAllItems();
+        
+        //Fetch suppliers that are related to this product and populate the suppliers combo box
         supplierModel = (DefaultComboBoxModel) cmbSuppliers.getModel();      
         List<Supplier> suppliers = ProductSupplierDB.getSuppliersForProduct(((Product)productsModel.getSelectedItem()).getProductId());
         for(Supplier supplier : suppliers)
@@ -205,15 +224,19 @@ public class EditSupplierProduct extends javax.swing.JDialog {
         cmbSuppliers.setModel(supplierModel);
     }//GEN-LAST:event_cmbProductsActionPerformed
 
+    //Function that runs when the user clicks the add productsupplier button
     private void btmAddProductSupplierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btmAddProductSupplierActionPerformed
+        //Get the productsupplier obejct based on the product and supplier selection
         ProductSupplier productSupplier = ProductSupplierDB.getProductSupplierFromProductIdAndSupplierId(((Product)productsModel.getSelectedItem()).getProductId(), ((Supplier)(supplierModel.getSelectedItem())).getSupplierId());
         if(productSupplier != null)
         {          
             String prodName = ProductDB.getProductById(productSupplier.getProductId()).getProdName();
             String suppName = SupplierDB.getSupplierById(productSupplier.getSupplierId()).getSupName();
+            //Boolean that is used to check if we can add the selected product and supplier to this package
             boolean canAdd = false;    
             for(int i=0; i<tablemodel.getRowCount();i++)
             {
+                //If we find the matching productsupplier id in the table. the user cannot add this product supplier as it is already link to this package
                 if((int)tablemodel.getValueAt(i, 0) == productSupplier.getProductSupplierId())
                 {
                     JOptionPane.showMessageDialog(null, "This package is already linked to this product and supplier.");
@@ -224,9 +247,26 @@ public class EditSupplierProduct extends javax.swing.JDialog {
             }
             if(canAdd)
             {
-                tablemodel.addRow(new Object[]{productSupplier.getProductSupplierId(), prodName, suppName});
-            }     
+                if(PackagesProductsSuppliersDB.insertNewPackagesProductsSuppliersEntry(pkg.getPackageId(), productSupplier.getProductSupplierId()) != -1)
+                {
+                    tablemodel.addRow(new Object[]{productSupplier.getProductSupplierId(), prodName, suppName});
+                    JOptionPane.showMessageDialog(null, "Successfully added product and supplier");
+                }
+                
+            }
+            //If there is no current productsuppliers linked to this package, we must insert the row
+            //you cannot add a row to a empty table model, only insert
+            if(tablemodel.getRowCount() == 0)
+            {
+                if(PackagesProductsSuppliersDB.insertNewPackagesProductsSuppliersEntry(pkg.getPackageId(), productSupplier.getProductSupplierId()) != -1)
+                {
+                    tablemodel.insertRow(0, new Object[]{productSupplier.getProductSupplierId(), prodName, suppName});
+                    JOptionPane.showMessageDialog(null, "Successfully added product and supplier");
+                }
+            }
         }
+        if(tablemodel.getRowCount()!=0)
+            btnRemoveProductSupplier.setEnabled(true);
     }//GEN-LAST:event_btmAddProductSupplierActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -237,6 +277,6 @@ public class EditSupplierProduct extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tblProductsSuppliers;
     // End of variables declaration//GEN-END:variables
 }

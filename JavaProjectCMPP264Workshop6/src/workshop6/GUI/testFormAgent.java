@@ -11,12 +11,9 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.awt.event.ActionEvent;
-<<<<<<< HEAD
 import java.awt.Font;
-=======
 import workshop6.DBClasses.AgentDB;
 import workshop6.Entity.Agent;
->>>>>>> origin/master
 
 public class testFormAgent extends JFrame {
 
@@ -137,7 +134,7 @@ public class testFormAgent extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
 					int agentId = Integer.parseInt(txtAgentId.getText());
-					agent = AgentDB.GetAgentById(agentId);
+					agent = AgentDB.GetAgentById(""+agentId);
 					DisplayAgent();
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block

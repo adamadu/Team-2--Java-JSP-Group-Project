@@ -8,7 +8,34 @@ import java.util.Vector;
 import workshop6.Entity.Agent;
 
 public class AgentDB {
+                
+                //used to populate combobox with agent ID
+                public static Vector GetAgentIds() {
+                    //declare vector to hold the agent Id's
+                    Vector agentids = new Vector();
+                    try
+                    (
+                        //connect to database
+                        Connection conn = DatabaseConnection.getConnection();
+                        //select statement
+                        PreparedStatement preStatement =
+                                        conn.prepareStatement("SELECT AgentId FROM agents");)
+                    {
 
+                    ResultSet rset;
+
+                    rset = preStatement.executeQuery();
+
+                    while (rset.next()) {
+                        agentids.add(rset.getString("agentid"));
+                    } 
+
+                    } catch (SQLException e) {
+                                            System.err.println(e);
+                                            return null;
+                    }
+                    return agentids;
+                }
 		//method to get all the agents from the database
 		public static Vector<Agent> GetAgents(int agencyId){
 			//declare the vector to hold all the agent objects
@@ -54,7 +81,7 @@ public class AgentDB {
 		}
 		
 		//method to get agent by id from the database
-		public static Agent GetAgentById(int agentId){
+		public static Agent GetAgentById(String agentId){
 				try 
 				(
 						//connect to the database
@@ -66,7 +93,7 @@ public class AgentDB {
 					ResultSet rset;
 					Agent agent = new Agent();
 					//set the parameter in the statement with the agencyId
-					preStatement.setInt(1, agentId);
+					preStatement.setString(1, agentId);
 					//get the result set
 					rset = preStatement.executeQuery();
 					if (rset.next()) {

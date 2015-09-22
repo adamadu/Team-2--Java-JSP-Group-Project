@@ -31,4 +31,10 @@ public class Supplier
     {
         this.SupName = name;          
     }
+    
+    @Override
+    public String toString()
+    {
+        return SupName;
+    }
 }

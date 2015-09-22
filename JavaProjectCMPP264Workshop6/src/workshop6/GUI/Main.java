@@ -1,3 +1,21 @@
+package workshop6.GUI;
+
+import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
+import java.util.List;
+import javax.swing.ComboBoxModel;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListModel;
+import javax.swing.JComboBox;
+import workshop6.DBClasses.AgentDB;
+import workshop6.DBClasses.PackageDB;
+import workshop6.DBClasses.ProductDB;
+import workshop6.DBClasses.SupplierDB;
+import workshop6.Entity.Agent;
+import workshop6.Entity.Package;
+import workshop6.Entity.Product;
+import workshop6.Entity.Supplier;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -8,14 +26,38 @@
  * @author 692496
  */
 public class Main extends javax.swing.JFrame {
+    
+    private ComboBoxModel cbAgentIdModel;
+    private ComboBoxModel cbPackageIdModel;
+    public Package pkg;
+    public Package modPkg;
+    public Agent agt;
 
     /**
      * Creates new form Main
      */
     public Main() {
         initComponents();
+        initPackageIdCombo(cmbPackageId);
+        initAgentIdCombo(cmbAgentId);
     }
 
+    //Method to retrieve package details from Add or Edit package frame
+    public void postData(Package modPkg)
+    {    
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        //this.cmbPackageId.setSelectedIndex(modPkg.getPackageId());
+        this.txtPkgName.setText(modPkg.getPkgName());
+        this.txtPkgDescription.setText(modPkg.getPkgDesc());
+        this.txtPkgStartDate.setText(sdf.format(modPkg.getPkgStartDate()));
+        this.txtPkgEndDate.setText(sdf.format(modPkg.getPkgEndDate()));
+        this.txtPkgAgencyCommission.setText(Double.toString(modPkg.getPkgAgencyCommission()));
+        this.txtPkgBasePrice.setText(Double.toString(modPkg.getPkgBasePrice()));      
+        //cmbPackageId.removeAllItems();
+        //initPackageIdCombo(cmbPackageId);
+        pkg = modPkg;
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -24,339 +66,455 @@ public class Main extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
-        jTabbedPane4 = new javax.swing.JTabbedPane();
+        btngrpAgentStatus = new javax.swing.ButtonGroup();
         pnMain = new javax.swing.JTabbedPane();
-        jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
+        agentMaintainPanel = new javax.swing.JPanel();
+        agentFieldPanel = new javax.swing.JPanel();
+        jLabel14 = new javax.swing.JLabel();
+        jLabel18 = new javax.swing.JLabel();
+        jLabel19 = new javax.swing.JLabel();
+        jLabel20 = new javax.swing.JLabel();
+        jLabel21 = new javax.swing.JLabel();
+        jLabel22 = new javax.swing.JLabel();
+        jLabel23 = new javax.swing.JLabel();
+        jLabel24 = new javax.swing.JLabel();
+        jLabel25 = new javax.swing.JLabel();
         cmbAgentId = new javax.swing.JComboBox();
         txtAgencyId = new javax.swing.JTextField();
-        txtAgtBusPhone = new javax.swing.JTextField();
-        txtAgtEmail = new javax.swing.JTextField();
-        txtAgtFirstName = new javax.swing.JTextField();
-        txtAgtlastName = new javax.swing.JTextField();
-        txtAgtMiddleInitial = new javax.swing.JTextField();
-        txtAgtPosition = new javax.swing.JTextField();
-        txtAgtStatus = new javax.swing.JTextField();
-        btnAddAgent = new javax.swing.JButton();
+        txtAgentBusPhone = new javax.swing.JTextField();
+        txtAgentFirstName = new javax.swing.JTextField();
+        txtAgentLastName = new javax.swing.JTextField();
+        txtAgentMiddleInitial = new javax.swing.JTextField();
+        txtAgentPosition = new javax.swing.JTextField();
+        rbActive = new javax.swing.JRadioButton();
+        rbInactive = new javax.swing.JRadioButton();
+        txtAgentEmail = new javax.swing.JTextField();
         btnEditAgent = new javax.swing.JButton();
-        btnDeleteAgent = new javax.swing.JButton();
+        btnAddAgent = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
-        jLabel13 = new javax.swing.JLabel();
-        jLabel15 = new javax.swing.JLabel();
-        jLabel16 = new javax.swing.JLabel();
-        jLabel17 = new javax.swing.JLabel();
-        cmbPackageId = new javax.swing.JComboBox();
-        txtPkgName = new javax.swing.JTextField();
-        txtPkgAgencyCommission = new javax.swing.JTextField();
-        txtPkgBasePrice = new javax.swing.JTextField();
-        txtPkgDescription = new javax.swing.JTextField();
         btnAddPackages = new javax.swing.JButton();
         btnEditPackages = new javax.swing.JButton();
-        btnDeletePackages = new javax.swing.JButton();
-        cmbPkgStartDate = new datechooser.beans.DateChooserCombo();
-        cmbPkgEndDate = new datechooser.beans.DateChooserCombo();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        listProducts = new javax.swing.JList();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        listSuppliers = new javax.swing.JList();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        cmbPackageId = new javax.swing.JComboBox();
+        jLabel11 = new javax.swing.JLabel();
+        txtPkgName = new javax.swing.JTextField();
+        jLabel17 = new javax.swing.JLabel();
+        txtPkgDescription = new javax.swing.JTextField();
+        jLabel13 = new javax.swing.JLabel();
+        txtPkgStartDate = new javax.swing.JTextField();
+        jLabel15 = new javax.swing.JLabel();
+        txtPkgEndDate = new javax.swing.JTextField();
+        jLabel12 = new javax.swing.JLabel();
+        txtPkgBasePrice = new javax.swing.JTextField();
+        jLabel16 = new javax.swing.JLabel();
+        txtPkgAgencyCommission = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         pnMain.setName("Agents"); // NOI18N
 
-        jLabel1.setText("Agent ID");
-        jLabel1.setName(""); // NOI18N
+        agentFieldPanel.setLayout(new java.awt.GridBagLayout());
 
-        jLabel3.setText("Agency ID");
+        jLabel14.setText("Agent ID");
+        jLabel14.setName(""); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 34;
+        gridBagConstraints.insets = new java.awt.Insets(7, 0, 7, 0);
+        agentFieldPanel.add(jLabel14, gridBagConstraints);
 
-        jLabel4.setText("Agent Email");
+        jLabel18.setText("Agency ID");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 7;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 34;
+        gridBagConstraints.insets = new java.awt.Insets(7, 0, 7, 0);
+        agentFieldPanel.add(jLabel18, gridBagConstraints);
 
-        jLabel5.setText("Agent Business Phone");
+        jLabel19.setText("Agent Email");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 34;
+        gridBagConstraints.insets = new java.awt.Insets(7, 0, 7, 0);
+        agentFieldPanel.add(jLabel19, gridBagConstraints);
 
-        jLabel6.setText("Agent First Name");
+        jLabel20.setText("Agent Business Phone");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 34;
+        gridBagConstraints.insets = new java.awt.Insets(7, 0, 7, 0);
+        agentFieldPanel.add(jLabel20, gridBagConstraints);
 
-        jLabel7.setText("Agent Last Name");
+        jLabel21.setText("Agent First Name");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 34;
+        gridBagConstraints.insets = new java.awt.Insets(7, 0, 7, 0);
+        agentFieldPanel.add(jLabel21, gridBagConstraints);
 
-        jLabel8.setText("Agent Middle Initial");
+        jLabel22.setText("Agent Last Name");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 34;
+        gridBagConstraints.insets = new java.awt.Insets(7, 0, 7, 0);
+        agentFieldPanel.add(jLabel22, gridBagConstraints);
 
-        jLabel9.setText("Agent Position");
+        jLabel23.setText("Agent Middle Initial");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 34;
+        gridBagConstraints.insets = new java.awt.Insets(7, 0, 7, 0);
+        agentFieldPanel.add(jLabel23, gridBagConstraints);
 
-        jLabel10.setText("Agent Status");
+        jLabel24.setText("Agent Position");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 34;
+        gridBagConstraints.insets = new java.awt.Insets(7, 0, 7, 0);
+        agentFieldPanel.add(jLabel24, gridBagConstraints);
+
+        jLabel25.setText("Agent Status");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 8;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 34;
+        gridBagConstraints.insets = new java.awt.Insets(7, 0, 7, 0);
+        agentFieldPanel.add(jLabel25, gridBagConstraints);
 
         cmbAgentId.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbAgentId.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbAgentIdActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 61;
+        gridBagConstraints.insets = new java.awt.Insets(7, 0, 7, 0);
+        agentFieldPanel.add(cmbAgentId, gridBagConstraints);
 
         txtAgencyId.setEnabled(false);
-        txtAgencyId.setName("txt"); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 7;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 61;
+        gridBagConstraints.insets = new java.awt.Insets(7, 0, 7, 0);
+        agentFieldPanel.add(txtAgencyId, gridBagConstraints);
 
-        txtAgtBusPhone.setEnabled(false);
+        txtAgentBusPhone.setEnabled(false);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 61;
+        gridBagConstraints.insets = new java.awt.Insets(7, 0, 7, 0);
+        agentFieldPanel.add(txtAgentBusPhone, gridBagConstraints);
 
-        txtAgtEmail.setEnabled(false);
+        txtAgentFirstName.setEnabled(false);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 61;
+        gridBagConstraints.insets = new java.awt.Insets(7, 0, 7, 0);
+        agentFieldPanel.add(txtAgentFirstName, gridBagConstraints);
 
-        txtAgtFirstName.setEnabled(false);
+        txtAgentLastName.setEnabled(false);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 61;
+        gridBagConstraints.insets = new java.awt.Insets(7, 0, 7, 0);
+        agentFieldPanel.add(txtAgentLastName, gridBagConstraints);
 
-        txtAgtlastName.setEnabled(false);
+        txtAgentMiddleInitial.setEnabled(false);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 61;
+        gridBagConstraints.insets = new java.awt.Insets(7, 0, 7, 0);
+        agentFieldPanel.add(txtAgentMiddleInitial, gridBagConstraints);
 
-        txtAgtMiddleInitial.setEnabled(false);
+        txtAgentPosition.setEnabled(false);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 61;
+        gridBagConstraints.insets = new java.awt.Insets(7, 0, 7, 0);
+        agentFieldPanel.add(txtAgentPosition, gridBagConstraints);
 
-        txtAgtPosition.setEnabled(false);
+        btngrpAgentStatus.add(rbActive);
+        rbActive.setText("Active");
+        rbActive.setEnabled(false);
+        rbActive.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbActiveActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 8;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 61;
+        gridBagConstraints.insets = new java.awt.Insets(7, 0, 7, 0);
+        agentFieldPanel.add(rbActive, gridBagConstraints);
 
-        txtAgtStatus.setEnabled(false);
+        btngrpAgentStatus.add(rbInactive);
+        rbInactive.setText("Inactive");
+        rbInactive.setEnabled(false);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 8;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 61;
+        gridBagConstraints.insets = new java.awt.Insets(7, 0, 7, 1);
+        agentFieldPanel.add(rbInactive, gridBagConstraints);
 
-        btnAddAgent.setText("Add");
+        txtAgentEmail.setEnabled(false);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 61;
+        gridBagConstraints.insets = new java.awt.Insets(7, 0, 7, 0);
+        agentFieldPanel.add(txtAgentEmail, gridBagConstraints);
 
         btnEditAgent.setText("Edit");
 
-        btnDeleteAgent.setText("Delete");
+        btnAddAgent.setText("Add");
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(27, 27, 27)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel6)
-                                    .addComponent(jLabel7)
-                                    .addComponent(jLabel8))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(txtAgtMiddleInitial, javax.swing.GroupLayout.DEFAULT_SIZE, 188, Short.MAX_VALUE)
-                                    .addComponent(txtAgtlastName)
-                                    .addComponent(txtAgtFirstName)))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(10, 10, 10)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel9)
-                                            .addComponent(jLabel10)))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(70, 70, 70)
-                                        .addComponent(btnAddAgent)))
-                                .addGap(59, 59, 59)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(btnEditAgent)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
-                                        .addComponent(btnDeleteAgent)
-                                        .addGap(35, 35, 35))
-                                    .addComponent(txtAgtPosition)
-                                    .addComponent(txtAgtStatus)))))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(44, 44, 44)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(cmbAgentId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(69, 69, 69))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jLabel4))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(txtAgtEmail, javax.swing.GroupLayout.DEFAULT_SIZE, 188, Short.MAX_VALUE)
-                                    .addComponent(txtAgencyId)
-                                    .addComponent(txtAgtBusPhone))))))
-                .addGap(69, 69, 69))
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout agentMaintainPanelLayout = new javax.swing.GroupLayout(agentMaintainPanel);
+        agentMaintainPanel.setLayout(agentMaintainPanelLayout);
+        agentMaintainPanelLayout.setHorizontalGroup(
+            agentMaintainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(agentMaintainPanelLayout.createSequentialGroup()
+                .addGap(62, 62, 62)
+                .addComponent(agentFieldPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 427, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(74, Short.MAX_VALUE))
+            .addGroup(agentMaintainPanelLayout.createSequentialGroup()
+                .addGap(80, 80, 80)
+                .addComponent(btnAddAgent, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnEditAgent, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(96, 96, 96))
+        );
+        agentMaintainPanelLayout.setVerticalGroup(
+            agentMaintainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(agentMaintainPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel5)
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(cmbAgentId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(txtAgencyId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(txtAgtBusPhone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(txtAgtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(txtAgtFirstName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(txtAgtlastName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel8)
-                    .addComponent(txtAgtMiddleInitial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel9)
-                    .addComponent(txtAgtPosition, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel10)
-                    .addComponent(txtAgtStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnEditAgent)
+                .addComponent(agentFieldPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 365, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(47, 47, 47)
+                .addGroup(agentMaintainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAddAgent)
-                    .addComponent(btnDeleteAgent))
-                .addGap(65, 65, 65))
+                    .addComponent(btnEditAgent))
+                .addContainerGap(105, Short.MAX_VALUE))
         );
 
-        pnMain.addTab("Agents", jPanel1);
+        pnMain.addTab("Agent Maintain", agentMaintainPanel);
 
-        jLabel2.setText("Package ID");
-
-        jLabel11.setText("Package Name");
-
-        jLabel12.setText("Package Base Price");
-
-        jLabel13.setText("Package Start Date");
-
-        jLabel15.setText("Package End Date");
-
-        jLabel16.setText("Package Agency Commission");
-
-        jLabel17.setText("Package Description");
-
-        cmbPackageId.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        txtPkgName.setEnabled(false);
-
-        txtPkgAgencyCommission.setEnabled(false);
-
-        txtPkgBasePrice.setEnabled(false);
-
-        txtPkgDescription.setEnabled(false);
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btnAddPackages.setText("Add");
+        btnAddPackages.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddPackagesActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btnAddPackages, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 310, -1, -1));
 
         btnEditPackages.setText("Edit");
+        btnEditPackages.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditPackagesActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btnEditPackages, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 310, -1, -1));
 
-        btnDeletePackages.setText("Delete");
+        jScrollPane1.setViewportView(listProducts);
 
-        cmbPkgStartDate.setEnabled(false);
+        jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 380, 170, 150));
 
-        cmbPkgEndDate.setEnabled(false);
+        jScrollPane2.setViewportView(listSuppliers);
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(38, 38, 38)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(19, 19, 19)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addGap(8, 8, 8)
-                                        .addComponent(jLabel2)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(cmbPackageId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(75, 75, 75))
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addComponent(jLabel11)
-                                        .addGap(54, 54, 54)
-                                        .addComponent(txtPkgName))))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel12)
-                                    .addComponent(jLabel13)
-                                    .addComponent(jLabel15))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                        .addComponent(txtPkgBasePrice, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(12, 12, 12))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(cmbPkgEndDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(cmbPkgStartDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(31, 31, 31))))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(2, 2, 2)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(btnAddPackages)
-                                    .addComponent(jLabel17))
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addGap(41, 41, 41)
-                                        .addComponent(txtPkgDescription))
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addGap(55, 55, 55)
-                                        .addComponent(btnEditPackages)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 70, Short.MAX_VALUE)
-                                        .addComponent(btnDeletePackages)
-                                        .addGap(40, 40, 40))))))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel16)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtPkgAgencyCommission)))
-                .addGap(60, 60, 60))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(47, 47, 47)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(cmbPackageId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel11)
-                    .addComponent(txtPkgName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(13, 13, 13)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel12)
-                    .addComponent(txtPkgBasePrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel13)
-                    .addComponent(cmbPkgStartDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel15)
-                    .addComponent(cmbPkgEndDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(10, 10, 10)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel16)
-                    .addComponent(txtPkgAgencyCommission, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtPkgDescription, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel17))
-                .addGap(70, 70, 70)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnAddPackages)
-                    .addComponent(btnEditPackages)
-                    .addComponent(btnDeletePackages))
-                .addContainerGap(100, Short.MAX_VALUE))
-        );
+        jPanel2.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 380, 170, 150));
+
+        jPanel1.setLayout(new java.awt.GridBagLayout());
+
+        jLabel2.setText("Package ID");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(8, 0, 8, 10);
+        jPanel1.add(jLabel2, gridBagConstraints);
+
+        cmbPackageId.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbPackageIdActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.ipadx = 50;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(8, 0, 8, 0);
+        jPanel1.add(cmbPackageId, gridBagConstraints);
+
+        jLabel11.setText("Package Name");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(8, 0, 8, 10);
+        jPanel1.add(jLabel11, gridBagConstraints);
+
+        txtPkgName.setEnabled(false);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.ipadx = 200;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(8, 0, 8, 0);
+        jPanel1.add(txtPkgName, gridBagConstraints);
+
+        jLabel17.setText("Package Description");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(8, 0, 8, 10);
+        jPanel1.add(jLabel17, gridBagConstraints);
+
+        txtPkgDescription.setEnabled(false);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.ipadx = 300;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(8, 0, 8, 0);
+        jPanel1.add(txtPkgDescription, gridBagConstraints);
+
+        jLabel13.setText("Package Start Date");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(8, 0, 8, 10);
+        jPanel1.add(jLabel13, gridBagConstraints);
+
+        txtPkgStartDate.setEditable(false);
+        txtPkgStartDate.setEnabled(false);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.ipadx = 200;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(8, 0, 8, 0);
+        jPanel1.add(txtPkgStartDate, gridBagConstraints);
+
+        jLabel15.setText("Package End Date");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(8, 0, 8, 10);
+        jPanel1.add(jLabel15, gridBagConstraints);
+
+        txtPkgEndDate.setEditable(false);
+        txtPkgEndDate.setEnabled(false);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.ipadx = 200;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(8, 0, 8, 0);
+        jPanel1.add(txtPkgEndDate, gridBagConstraints);
+
+        jLabel12.setText("Package Base Price");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(8, 0, 8, 10);
+        jPanel1.add(jLabel12, gridBagConstraints);
+
+        txtPkgBasePrice.setEnabled(false);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.ipadx = 200;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(8, 0, 8, 0);
+        jPanel1.add(txtPkgBasePrice, gridBagConstraints);
+
+        jLabel16.setText("Package Agency Commission");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(8, 0, 8, 10);
+        jPanel1.add(jLabel16, gridBagConstraints);
+
+        txtPkgAgencyCommission.setEnabled(false);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.ipadx = 200;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(8, 0, 8, 0);
+        jPanel1.add(txtPkgAgencyCommission, gridBagConstraints);
+
+        jPanel2.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 10, 470, 290));
+
+        jLabel1.setText("Related Suppliers:");
+        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 350, 170, -1));
+
+        jLabel3.setText("Related Products:");
+        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 350, 170, -1));
 
         pnMain.addTab("Packages", jPanel2);
 
@@ -364,11 +522,13 @@ public class Main extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnMain)
+            .addComponent(pnMain, javax.swing.GroupLayout.PREFERRED_SIZE, 568, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnMain)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(pnMain, javax.swing.GroupLayout.PREFERRED_SIZE, 579, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pnMain.getAccessibleContext().setAccessibleName("");
@@ -376,6 +536,85 @@ public class Main extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    //Geetha - Method to call the edit package frame and edit the existing package
+    private void btnEditPackagesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditPackagesActionPerformed
+        AddEditPackages addEditPackage = new AddEditPackages(this);
+        addEditPackage.addPackages = false;
+        addEditPackage.pkg = pkg;
+        addEditPackage.setVisible(true);
+        addEditPackage.displayPackage(pkg);
+    }//GEN-LAST:event_btnEditPackagesActionPerformed
+
+    //Geetha - Method to call Add Package frame to add the new package
+    private void btnAddPackagesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddPackagesActionPerformed
+        AddEditPackages addEditPackage = new AddEditPackages(this);
+        addEditPackage.addPackages = true;
+        addEditPackage.setVisible(true);
+    }//GEN-LAST:event_btnAddPackagesActionPerformed
+
+    private void cmbAgentIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbAgentIdActionPerformed
+        String agentId = (String)cmbAgentId.getSelectedItem();
+        agt = AgentDB.GetAgentById(agentId); 
+        txtAgentFirstName.setText(agt.getAgtFirstName());
+        txtAgentMiddleInitial.setText(agt.getAgtMiddleInitial());
+        txtAgentLastName.setText(agt.getAgtLastName());
+        txtAgentEmail.setText(agt.getAgtEmail());
+        txtAgentBusPhone.setText(agt.getAgtBusPhone());
+        txtAgentPosition.setText(agt.getAgtPosition());
+        txtAgencyId.setText(Integer.toString(agt.getAgencyId()));
+        
+        if (agt.isActive() == true)
+        {
+            rbActive.setSelected(true);
+        }
+        
+        if (!agt.isActive() == true)
+        {
+            rbInactive.setSelected(true);
+        }
+    }//GEN-LAST:event_cmbAgentIdActionPerformed
+
+    private void rbActiveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbActiveActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_rbActiveActionPerformed
+
+    private void cmbPackageIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbPackageIdActionPerformed
+        String packageId = (String) cmbPackageId.getSelectedItem();
+        pkg = PackageDB.getPackage(packageId);
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        NumberFormat currency = NumberFormat.getCurrencyInstance();
+        currency.setMinimumFractionDigits(2);
+        txtPkgName.setText(pkg.getPkgName());
+        txtPkgDescription.setText(pkg.getPkgDesc());
+        txtPkgStartDate.setText(df.format(pkg.getPkgStartDate()));
+        txtPkgEndDate.setText(df.format(pkg.getPkgEndDate()));
+        txtPkgBasePrice.setText(currency.format(pkg.getPkgBasePrice()));
+        txtPkgAgencyCommission.setText(currency.format(pkg.getPkgAgencyCommission()));
+        
+        //Adam - Populate the list of products and suppliers
+        
+        List<Product> products = ProductDB.getProductsForPackageId(pkg.getPackageId());
+        
+        DefaultListModel productListModel = new DefaultListModel();
+        listProducts.setModel(productListModel);
+        
+        for(Product prod : products)
+        {
+            productListModel.addElement(prod.getProdName());
+        }
+        
+        List<Supplier> suppliers = SupplierDB.getSuppliersForPackageId(pkg.getPackageId());
+        
+        DefaultListModel supplierListModel = new DefaultListModel();
+        listSuppliers.setModel(supplierListModel);
+        
+        for(Supplier supp : suppliers)
+        {
+            supplierListModel.addElement(supp.getSupName());
+        }
+    }//GEN-LAST:event_cmbPackageIdActionPerformed
+    
+    
     /**
      * @param args the command line arguments
      */
@@ -407,52 +646,73 @@ public class Main extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Main().setVisible(true);
-            }
+                
+            }          
         });
+    }
+    
+    //Geetha - Method to retrieve all packageid from the database and load it in combo box
+    private void initPackageIdCombo(JComboBox cmbPackageId)
+    {
+        cbPackageIdModel = new DefaultComboBoxModel(PackageDB.getPackageIDs());
+        cmbPackageId.setModel(cbPackageIdModel);
+    }
+    
+    private void initAgentIdCombo(JComboBox cmbAgentId)
+    {
+        cbAgentIdModel = new DefaultComboBoxModel(AgentDB.GetAgentIds());
+        cmbAgentId.setModel(cbAgentIdModel);     
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel agentFieldPanel;
+    private javax.swing.JPanel agentMaintainPanel;
     private javax.swing.JButton btnAddAgent;
     private javax.swing.JButton btnAddPackages;
-    private javax.swing.JButton btnDeleteAgent;
-    private javax.swing.JButton btnDeletePackages;
     private javax.swing.JButton btnEditAgent;
     private javax.swing.JButton btnEditPackages;
+    private javax.swing.ButtonGroup btngrpAgentStatus;
     private javax.swing.JComboBox cmbAgentId;
     private javax.swing.JComboBox cmbPackageId;
-    private datechooser.beans.DateChooserCombo cmbPkgEndDate;
-    private datechooser.beans.DateChooserCombo cmbPkgStartDate;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JTabbedPane jTabbedPane4;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JList listProducts;
+    private javax.swing.JList listSuppliers;
     private javax.swing.JTabbedPane pnMain;
+    private javax.swing.JRadioButton rbActive;
+    private javax.swing.JRadioButton rbInactive;
     private javax.swing.JTextField txtAgencyId;
-    private javax.swing.JTextField txtAgtBusPhone;
-    private javax.swing.JTextField txtAgtEmail;
-    private javax.swing.JTextField txtAgtFirstName;
-    private javax.swing.JTextField txtAgtMiddleInitial;
-    private javax.swing.JTextField txtAgtPosition;
-    private javax.swing.JTextField txtAgtStatus;
-    private javax.swing.JTextField txtAgtlastName;
+    private javax.swing.JTextField txtAgentBusPhone;
+    private javax.swing.JTextField txtAgentEmail;
+    private javax.swing.JTextField txtAgentFirstName;
+    private javax.swing.JTextField txtAgentLastName;
+    private javax.swing.JTextField txtAgentMiddleInitial;
+    private javax.swing.JTextField txtAgentPosition;
     private javax.swing.JTextField txtPkgAgencyCommission;
     private javax.swing.JTextField txtPkgBasePrice;
     private javax.swing.JTextField txtPkgDescription;
+    private javax.swing.JTextField txtPkgEndDate;
     private javax.swing.JTextField txtPkgName;
+    private javax.swing.JTextField txtPkgStartDate;
     // End of variables declaration//GEN-END:variables
 }

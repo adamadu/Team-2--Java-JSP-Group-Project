@@ -1,10 +1,5 @@
 package workshop6.GUI;
 
-import com.toedter.calendar.JTextFieldDateEditor;
-import java.text.DecimalFormat;
-import workshop6.GUI.Main;
-import java.text.NumberFormat;
-import java.text.SimpleDateFormat;
 import javax.swing.JOptionPane;
 import workshop6.DBClasses.PackageDB;
 import workshop6.Entity.Package;
@@ -254,7 +249,7 @@ public class AddEditPackages extends javax.swing.JFrame {
                     btnEditProductSuppliers.setEnabled(true);
                 }
                 main.pkg = pkg;
-                main.postData(pkg);
+                //main.postData(pkg);
                 //this.setVisible(false);
                 
             }
@@ -267,7 +262,7 @@ public class AddEditPackages extends javax.swing.JFrame {
                 if(modPackageStatus)
                     JOptionPane.showMessageDialog(null, "Package modified successfully");               
                 main.modPkg = modPkg;
-                main.postData(modPkg);
+               // main.postData(modPkg);
                 //this.setVisible(false);
             }
         }
@@ -275,6 +270,7 @@ public class AddEditPackages extends javax.swing.JFrame {
 
     //Method to close the Add or Edit Package frame
     private void btnExitPackagesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitPackagesActionPerformed
+        main.initPackageIdCombo();
         this.dispose();
         //System.exit(0);
     }//GEN-LAST:event_btnExitPackagesActionPerformed

@@ -7,6 +7,7 @@ import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JComboBox;
+import javax.swing.JTabbedPane;
 import workshop6.DBClasses.AgentDB;
 import workshop6.DBClasses.PackageDB;
 import workshop6.DBClasses.ProductDB;
@@ -38,7 +39,7 @@ public class Main extends javax.swing.JFrame {
      */
     public Main() {
         initComponents();
-        initPackageIdCombo(cmbPackageId);
+        initPackageIdCombo();
         initAgentIdCombo(cmbAgentId);
     }
 
@@ -121,6 +122,11 @@ public class Main extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         pnMain.setName("Agents"); // NOI18N
+        pnMain.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                pnMainStateChanged(evt);
+            }
+        });
 
         agentFieldPanel.setLayout(new java.awt.GridBagLayout());
 
@@ -613,8 +619,23 @@ public class Main extends javax.swing.JFrame {
             supplierListModel.addElement(supp.getSupName());
         }
     }//GEN-LAST:event_cmbPackageIdActionPerformed
-    
-    
+
+    //Adam- Event that runs when the user swicthes tabs
+    private void pnMainStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_pnMainStateChanged
+        JTabbedPane tabbedPane = (JTabbedPane) evt.getSource();
+        int selectedTabIndex = tabbedPane.getSelectedIndex();
+        switch(selectedTabIndex)
+        {
+            case 0: //Agent tab selected
+                break;
+            case 1: //package tab selected
+                cmbPackageIdActionPerformed(null);
+                break;
+            default:
+                break;               
+        }
+    }//GEN-LAST:event_pnMainStateChanged
+       
     /**
      * @param args the command line arguments
      */
@@ -652,10 +673,12 @@ public class Main extends javax.swing.JFrame {
     }
     
     //Geetha - Method to retrieve all packageid from the database and load it in combo box
-    private void initPackageIdCombo(JComboBox cmbPackageId)
+    public void initPackageIdCombo()
     {
+        System.out.println("initpackages is being called");
         cbPackageIdModel = new DefaultComboBoxModel(PackageDB.getPackageIDs());
         cmbPackageId.setModel(cbPackageIdModel);
+        cmbPackageIdActionPerformed(null);
     }
     
     private void initAgentIdCombo(JComboBox cmbAgentId)

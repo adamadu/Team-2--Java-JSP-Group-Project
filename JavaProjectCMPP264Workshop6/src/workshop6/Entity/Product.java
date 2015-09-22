@@ -32,4 +32,10 @@ public class Product
     {
         this.ProdName = name;          
     }
+    
+    @Override
+    public String toString()
+    {
+        return ProdName;
+    }
 }

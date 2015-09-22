@@ -273,8 +273,8 @@ public class AddEditPackages extends javax.swing.JFrame {
     }//GEN-LAST:event_btnExitPackagesActionPerformed
 
     private void btnEditProductSuppliersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditProductSuppliersActionPerformed
-        EditProductSupplier editProductSupplierForm = new EditProductSupplier(addPackages, pkg);
-        editProductSupplierForm.setVisible(true);
+        EditSupplierProduct editSupplierProduct = new EditSupplierProduct(this, true, pkg);
+        editSupplierProduct.setVisible(true);
     }//GEN-LAST:event_btnEditProductSuppliersActionPerformed
 
     //Geetha - Method to get the modified package details

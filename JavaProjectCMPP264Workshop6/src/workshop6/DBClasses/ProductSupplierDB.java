@@ -78,4 +78,130 @@ public class ProductSupplierDB
         
         return suppliers;
     }
+    
+    public static List<ProductSupplier> getProductSuppliersForPackage(int packageid)
+    {
+         //List that will store all the productsSuppliers
+        List<ProductSupplier> productSuppliers = new ArrayList<>();
+        
+        try ( //self-closing try
+            Connection connection = DatabaseConnection.getConnection();
+            Statement statement = connection.createStatement();
+            ResultSet result = statement.executeQuery("SELECT ProductSupplierId FROM packages_products_suppliers WHERE PackageId=" + packageid); 
+        ) {
+            while (result.next())
+            {
+                //Make new product from each entry in the database
+                ProductSupplier productSupplier = new ProductSupplier();
+                //Set the props
+                productSupplier.setProductSupplierId(result.getInt("ProductSupplierId"));
+                productSupplier.setProductId(getProductIdForProductSupplierId(result.getInt("ProductSupplierId")));
+                productSupplier.setSupplierId(getSupplierIdForProductSupplierId(result.getInt("ProductSupplierId")));
+                //Add the product to the products list
+                productSuppliers.add(productSupplier);
+            }
+        } 
+        catch (SQLException e)
+        {
+            System.out.println("There was an error while trying to fetch all suppliers for product id. Message: " + e.getMessage());
+        }
+        
+        return productSuppliers;
+    }
+    
+    public static int getProductIdForProductSupplierId(int productSupplierId)
+    {
+        //List that will store all the productsSuppliers 
+        int productId = -1;
+        try ( //self-closing try
+            Connection connection = DatabaseConnection.getConnection();
+            Statement statement = connection.createStatement();
+            ResultSet result = statement.executeQuery("SELECT ProductId FROM products_suppliers WHERE ProductSupplierId=" + productSupplierId); 
+        ) {
+            if (result.next())
+            {
+                productId = result.getInt("ProductId");
+            }
+        } 
+        catch (SQLException e)
+        {
+            System.out.println("There was an error while trying to fetch all products_suppliers. Message: " + e.getMessage());
+        }
+        return productId;
+    }
+    
+    public static int getSupplierIdForProductSupplierId(int productSupplierId)
+    {
+        //List that will store all the productsSuppliers 
+        int supplierId = -1;
+        try ( //self-closing try
+            Connection connection = DatabaseConnection.getConnection();
+            Statement statement = connection.createStatement();
+            ResultSet result = statement.executeQuery("SELECT SupplierId FROM products_suppliers WHERE ProductSupplierId=" + productSupplierId); 
+        ) {
+            if (result.next())
+            {
+                supplierId = result.getInt("SupplierId");
+            }
+        } 
+        catch (SQLException e)
+        {
+            System.out.println("There was an error while trying to fetch all products_suppliers. Message: " + e.getMessage());
+        }
+        return supplierId;
+    }
+    
+    public static List<Supplier> getSuppliersForProduct(int productid)
+    {
+         //List that will store all the productsSuppliers
+        List<Supplier> suppliers = new ArrayList<>();
+        
+        try ( //self-closing try
+            Connection connection = DatabaseConnection.getConnection();
+            Statement statement = connection.createStatement();
+            ResultSet result = statement.executeQuery("SELECT SupplierId FROM products_suppliers WHERE ProductId=" + productid); 
+        ) {
+            while (result.next())
+            {
+                //Make new product from each entry in the database
+                Supplier supplier = new Supplier();
+                //Set the props
+                supplier = SupplierDB.getSupplierById(result.getInt("SupplierId"));
+                //Add the product to the products list
+                suppliers.add(supplier);
+            }
+        } 
+        catch (SQLException e)
+        {
+            System.out.println("There was an error while trying to fetch all suppliers for product id. Message: " + e.getMessage());
+        }
+        
+        return suppliers;
+    }
+    
+    public static ProductSupplier getProductSupplierFromProductIdAndSupplierId(int prodId, int supId)
+    {
+        ProductSupplier productSupplier = null;
+        
+        try ( //self-closing try
+            Connection connection = DatabaseConnection.getConnection();
+            Statement statement = connection.createStatement();
+            ResultSet result = statement.executeQuery("SELECT ProductSupplierId FROM products_suppliers WHERE ProductId=" + prodId + " AND SupplierId=" + supId); 
+        ) {
+            if (result.next())
+            {
+                //Make new productsupplier if the productid and supplierid was found
+                productSupplier = new ProductSupplier();
+                //Set the props
+                productSupplier.setProductSupplierId(result.getInt("ProductSupplierId"));
+                productSupplier.setProductId(prodId);
+                productSupplier.setSupplierId(supId);
+            }
+        } 
+        catch (SQLException e)
+        {
+            System.out.println("There was an error while trying to fetch all suppliers for product id. Message: " + e.getMessage());
+        }
+        return productSupplier;
+    }
 }

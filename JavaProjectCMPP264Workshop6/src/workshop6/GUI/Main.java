@@ -1,8 +1,10 @@
 package workshop6.GUI;
 
+import java.awt.Event;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
+import javax.swing.Action;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
@@ -33,6 +35,8 @@ public class Main extends javax.swing.JFrame {
     public Package pkg;
     public Package modPkg;
     public Agent agt;
+    public Event evt;
+    public static Agent editAgt;
 
     /**
      * Creates new form Main
@@ -322,8 +326,18 @@ public class Main extends javax.swing.JFrame {
         agentFieldPanel.add(txtAgentEmail, gridBagConstraints);
 
         btnEditAgent.setText("Edit");
+        btnEditAgent.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditAgentActionPerformed(evt);
+            }
+        });
 
         btnAddAgent.setText("Add");
+        btnAddAgent.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddAgentActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout agentMaintainPanelLayout = new javax.swing.GroupLayout(agentMaintainPanel);
         agentMaintainPanel.setLayout(agentMaintainPanelLayout);
@@ -627,6 +641,7 @@ public class Main extends javax.swing.JFrame {
         switch(selectedTabIndex)
         {
             case 0: //Agent tab selected
+                //cmbAgentIdActionPerformed(null);
                 break;
             case 1: //package tab selected
                 cmbPackageIdActionPerformed(null);
@@ -635,6 +650,21 @@ public class Main extends javax.swing.JFrame {
                 break;               
         }
     }//GEN-LAST:event_pnMainStateChanged
+
+    //open the add/edit agent form - Max 
+    private void btnAddAgentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddAgentActionPerformed
+        addEditAgents.addEditAgent = true; 
+        addEditAgents addEditAgentForm = new addEditAgents();
+        addEditAgentForm.setVisible(true);
+    }//GEN-LAST:event_btnAddAgentActionPerformed
+
+    private void btnEditAgentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditAgentActionPerformed
+        System.out.println(AgentDB.GetAgentById(cmbAgentId.getSelectedItem().toString())); 
+        addEditAgents.addEditAgent = false; 
+        addEditAgents addEditAgentForm = new addEditAgents();
+        addEditAgentForm.setVisible(true);
+        
+    }//GEN-LAST:event_btnEditAgentActionPerformed
        
     /**
      * @param args the command line arguments
@@ -695,7 +725,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JButton btnEditAgent;
     private javax.swing.JButton btnEditPackages;
     private javax.swing.ButtonGroup btngrpAgentStatus;
-    private javax.swing.JComboBox cmbAgentId;
+    public static javax.swing.JComboBox cmbAgentId;
     private javax.swing.JComboBox cmbPackageId;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;

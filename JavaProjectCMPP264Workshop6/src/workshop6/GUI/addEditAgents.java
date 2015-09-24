@@ -5,6 +5,12 @@
  */
 package workshop6.GUI;
 
+import javax.swing.ComboBoxModel;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
+import workshop6.DBClasses.AgentDB;
+import workshop6.Entity.Agent;
 import workshop6.utils.Validator;
 /**
  *
@@ -12,11 +18,47 @@ import workshop6.utils.Validator;
  */
 public class addEditAgents extends javax.swing.JFrame {
 
+    private ComboBoxModel cbAgencyModel;
+    public static Boolean addEditAgent;
     /**
      * Creates new form addEditAgents
      */
     public addEditAgents() {
         initComponents();
+        initAgencyCombo(cmbAddEditAgencyId);
+        if (addEditAgent == true)
+        {
+            lblAddEditAgents.setText("Add an Agent");
+            this.setTitle("Add an Agent");
+        }
+        if (addEditAgent == false)
+        {
+            lblAddEditAgents.setText("Edit an Agent");
+            this.setTitle("Edit an existing Agent");
+            Agent editAgt = new Agent();
+            editAgt = AgentDB.GetAgentById(Main.cmbAgentId.getSelectedItem().toString());
+            cmbAddEditAgencyId.setSelectedItem(Main.editAgt.getAgencyId());
+                if (Main.editAgt.isActive() == true)
+                {
+                    rbAddEditActive.setSelected(true);
+                }
+                if (Main.editAgt.isActive() == false)
+                {
+                    rbAddEditActive.setSelected(false);
+                }
+                txtAddEditAgtBusPhone.setText(editAgt.getAgtBusPhone());
+                txtAddEditAgtEmail.setText(editAgt.getAgtEmail());
+                txtAddEditAgtFirstName.setText(editAgt.getAgtFirstName());
+                txtAddEditAgtLastName.setText(editAgt.getAgtLastName());
+                txtAddEditAgtMiddleInitial.setText(editAgt.getAgtMiddleInitial());
+                txtAddEditAgtPosition.setText(editAgt.getAgtPosition());
+        }
+    }
+    
+    private void initAgencyCombo(JComboBox cmbAgencyId)
+    {
+        cbAgencyModel = new DefaultComboBoxModel(AgentDB.GetAgencyIds());
+        cmbAgencyId.setModel(cbAgencyModel);     
     }
 
     private boolean AllFieldsValid()
@@ -28,9 +70,8 @@ public class addEditAgents extends javax.swing.JFrame {
             && Validator.isValidEmail(txtAddEditAgtEmail.getText())
                 
             && Validator.hasTextOrIsSelected(txtAddEditAgtFirstName)
-            && Validator.hasTextOrIsSelected(txtAddEditAgtlastName)
-            && Validator.hasTextOrIsSelected(txtAddEditAgtMiddleInitial)
-            && Validator.hasTextOrIsSelected(txtAddEditAgtlastName)
+            && Validator.hasTextOrIsSelected(txtAddEditAgtLastName)
+            && Validator.hasTextOrIsSelected(txtAddEditAgtLastName)
             && Validator.hasTextOrIsSelected(txtAddEditAgtPosition)
             && Validator.hasTextOrIsSelected(btngrpAgentStatus);
     }
@@ -57,7 +98,7 @@ public class addEditAgents extends javax.swing.JFrame {
         txtAddEditAgtBusPhone = new javax.swing.JTextField();
         txtAddEditAgtEmail = new javax.swing.JTextField();
         txtAddEditAgtFirstName = new javax.swing.JTextField();
-        txtAddEditAgtlastName = new javax.swing.JTextField();
+        txtAddEditAgtLastName = new javax.swing.JTextField();
         txtAddEditAgtMiddleInitial = new javax.swing.JTextField();
         txtAddEditAgtPosition = new javax.swing.JTextField();
         btnUpdateAgents = new javax.swing.JButton();
@@ -68,7 +109,7 @@ public class addEditAgents extends javax.swing.JFrame {
         cmbAddEditAgencyId = new javax.swing.JComboBox();
         btnChangeCustomers = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel3.setText("Agency ID");
 
@@ -92,7 +133,7 @@ public class addEditAgents extends javax.swing.JFrame {
 
         txtAddEditAgtFirstName.setName("Agent First Name"); // NOI18N
 
-        txtAddEditAgtlastName.setName("Agent Last Name"); // NOI18N
+        txtAddEditAgtLastName.setName("Agent Last Name"); // NOI18N
 
         txtAddEditAgtMiddleInitial.setName("Agent middle Initial"); // NOI18N
 
@@ -166,7 +207,7 @@ public class addEditAgents extends javax.swing.JFrame {
                                 .addGap(0, 0, Short.MAX_VALUE)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(txtAddEditAgtlastName)
+                                        .addComponent(txtAddEditAgtLastName)
                                         .addComponent(txtAddEditAgtFirstName, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(txtAddEditAgtMiddleInitial, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -208,7 +249,7 @@ public class addEditAgents extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
-                    .addComponent(txtAddEditAgtlastName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtAddEditAgtLastName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
@@ -253,7 +294,44 @@ public class addEditAgents extends javax.swing.JFrame {
     private void btnUpdateAgentsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateAgentsActionPerformed
         if(AllFieldsValid())
         {
-            //Add update agents code here.
+            if (addEditAgents.addEditAgent = true)
+            {
+                Agent addAgent = new Agent();
+                addAgent.setAgencyId(Integer.parseInt(cmbAddEditAgencyId.getSelectedItem().toString()));
+                addAgent.setAgtBusPhone(txtAddEditAgtBusPhone.getText());
+                addAgent.setAgtEmail(txtAddEditAgtEmail.getText());
+                addAgent.setAgtFirstName(txtAddEditAgtFirstName.getText());
+                addAgent.setAgtLastName(txtAddEditAgtLastName.getText());
+                addAgent.setAgtMiddleInitial(txtAddEditAgtMiddleInitial.getText());
+                addAgent.setAgtPosition(txtAddEditAgtPosition.getText());
+                if (rbAddEditActive.isSelected())
+                {
+                addAgent.setActive(true);
+                } 
+                else if (rbAddEditActive.isSelected())
+                {
+                    addAgent.setActive(false);
+                }
+                if(AgentDB.AddAgent(addAgent))
+                {
+                AgentDB.AddAgent(addAgent);
+                JOptionPane.showMessageDialog(null, "Agent has been successfully added!");
+                txtAddEditAgtBusPhone.setText("");
+                txtAddEditAgtEmail.setText("");
+                txtAddEditAgtFirstName.setText("");
+                txtAddEditAgtLastName.setText("");
+                txtAddEditAgtMiddleInitial.setText("");
+                txtAddEditAgtPosition.setText("");
+                }
+                else
+                {
+                JOptionPane.showMessageDialog(null, "Agent has not been added!");    
+                }
+            }
+            else if (addEditAgents.addEditAgent == false)
+            {
+                
+            }
         }
     }//GEN-LAST:event_btnUpdateAgentsActionPerformed
 
@@ -313,8 +391,8 @@ public class addEditAgents extends javax.swing.JFrame {
     private javax.swing.JTextField txtAddEditAgtBusPhone;
     private javax.swing.JTextField txtAddEditAgtEmail;
     private javax.swing.JTextField txtAddEditAgtFirstName;
+    private javax.swing.JTextField txtAddEditAgtLastName;
     private javax.swing.JTextField txtAddEditAgtMiddleInitial;
     private javax.swing.JTextField txtAddEditAgtPosition;
-    private javax.swing.JTextField txtAddEditAgtlastName;
     // End of variables declaration//GEN-END:variables
 }

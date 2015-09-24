@@ -1,5 +1,6 @@
 package workshop6.GUI;
 
+import javax.swing.ComboBoxModel;
 import javax.swing.JOptionPane;
 import workshop6.DBClasses.PackageDB;
 import workshop6.Entity.Package;

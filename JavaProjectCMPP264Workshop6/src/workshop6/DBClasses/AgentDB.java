@@ -9,7 +9,35 @@ import workshop6.Entity.Agent;
 
 public class AgentDB {
                 
-                //used to populate combobox with agent ID
+    
+                //used to populate combo box of agency id in the add/edit agency form - Max
+                public static Vector GetAgencyIds() {
+                    //declare vector to hold the agent Id's
+                    Vector agencies = new Vector();
+                    try
+                    (
+                        //connect to database
+                        Connection conn = DatabaseConnection.getConnection();
+                        //select statement
+                        PreparedStatement preStatement =
+                                        conn.prepareStatement("SELECT AgencyId FROM agencies");)
+                    {
+
+                    ResultSet rset;
+
+                    rset = preStatement.executeQuery();
+
+                    while (rset.next()) {
+                        agencies.add(rset.getString("agencyId"));
+                    } 
+
+                    } catch (SQLException e) {
+                                            System.err.println(e);
+                                            return null;
+                    }
+                    return agencies;
+                }
+                //used to populate combobox with agent ID - Max
                 public static Vector GetAgentIds() {
                     //declare vector to hold the agent Id's
                     Vector agentids = new Vector();
@@ -105,7 +133,8 @@ public class AgentDB {
 						agent.setAgtEmail(rset.getString(6));
 						agent.setAgtBusPhone(rset.getString(5));
 						agent.setAgtPosition(rset.getString(7));
-						agent.setActive(rset.getBoolean(8));
+                                                agent.setAgencyId(rset.getInt(8));
+						agent.setActive(rset.getBoolean(9));
 						rset.close();
 						return agent;
 					}

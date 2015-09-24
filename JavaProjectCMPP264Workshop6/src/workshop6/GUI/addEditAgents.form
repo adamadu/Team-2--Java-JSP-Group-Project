@@ -6,7 +6,7 @@
     </Component>
   </NonVisualComponents>
   <Properties>
-    <Property name="defaultCloseOperation" type="int" value="3"/>
+    <Property name="defaultCloseOperation" type="int" value="2"/>
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
@@ -98,7 +98,7 @@
                                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                                   <Group type="103" groupAlignment="1" attributes="0">
                                       <Group type="103" alignment="1" groupAlignment="0" max="-2" attributes="0">
-                                          <Component id="txtAddEditAgtlastName" alignment="0" max="32767" attributes="0"/>
+                                          <Component id="txtAddEditAgtLastName" alignment="0" max="32767" attributes="0"/>
                                           <Component id="txtAddEditAgtFirstName" alignment="0" min="-2" pref="188" max="-2" attributes="0"/>
                                           <Component id="txtAddEditAgtMiddleInitial" alignment="1" min="-2" pref="47" max="-2" attributes="0"/>
                                       </Group>
@@ -155,7 +155,7 @@
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel7" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="txtAddEditAgtlastName" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtAddEditAgtLastName" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
@@ -242,7 +242,7 @@
             <Property name="name" type="java.lang.String" value="Agent First Name" noResource="true"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="txtAddEditAgtlastName">
+        <Component class="javax.swing.JTextField" name="txtAddEditAgtLastName">
           <Properties>
             <Property name="name" type="java.lang.String" value="Agent Last Name" noResource="true"/>
           </Properties>

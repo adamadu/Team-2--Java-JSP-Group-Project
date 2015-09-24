@@ -5,6 +5,7 @@
  */
 package workshop6.GUI;
 
+import java.awt.event.WindowEvent;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
@@ -37,12 +38,12 @@ public class addEditAgents extends javax.swing.JFrame {
             this.setTitle("Edit an existing Agent");
             Agent editAgt = new Agent();
             editAgt = AgentDB.GetAgentById(Main.cmbAgentId.getSelectedItem().toString());
-            cmbAddEditAgencyId.setSelectedItem(Main.editAgt.getAgencyId());
-                if (Main.editAgt.isActive() == true)
+            cmbAddEditAgencyId.setSelectedItem(editAgt.getAgencyId());
+                if (editAgt.isActive() == true)
                 {
                     rbAddEditActive.setSelected(true);
                 }
-                if (Main.editAgt.isActive() == false)
+                if (editAgt.isActive() == false)
                 {
                     rbAddEditActive.setSelected(false);
                 }
@@ -147,6 +148,11 @@ public class addEditAgents extends javax.swing.JFrame {
         });
 
         btnExitAgents.setText("Exit");
+        btnExitAgents.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExitAgentsActionPerformed(evt);
+            }
+        });
 
         lblAddEditAgents.setText("HAHA YOU WILL NOT READ THIS");
 
@@ -294,7 +300,7 @@ public class addEditAgents extends javax.swing.JFrame {
     private void btnUpdateAgentsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateAgentsActionPerformed
         if(AllFieldsValid())
         {
-            if (addEditAgents.addEditAgent = true)
+            if (addEditAgents.addEditAgent == true)
             {
                 Agent addAgent = new Agent();
                 addAgent.setAgencyId(Integer.parseInt(cmbAddEditAgencyId.getSelectedItem().toString()));
@@ -330,10 +336,35 @@ public class addEditAgents extends javax.swing.JFrame {
             }
             else if (addEditAgents.addEditAgent == false)
             {
-                
+                Agent editAgent = new Agent();
+                editAgent.setAgencyId(Integer.parseInt(cmbAddEditAgencyId.getSelectedItem().toString()));
+                editAgent.setAgtBusPhone(txtAddEditAgtBusPhone.getText());
+                editAgent.setAgtEmail(txtAddEditAgtEmail.getText());
+                editAgent.setAgtFirstName(txtAddEditAgtFirstName.getText());
+                editAgent.setAgtLastName(txtAddEditAgtLastName.getText());
+                editAgent.setAgtMiddleInitial(txtAddEditAgtMiddleInitial.getText());
+                editAgent.setAgtPosition(txtAddEditAgtPosition.getText());
+                if (rbAddEditActive.isSelected())
+                {
+                editAgent.setActive(true);
+                } 
+                else if (rbAddEditActive.isSelected())
+                {
+                    editAgent.setActive(false);
+                }
+                    if (AgentDB.UpdateAgent(editAgent) == false)
+                    {
+                        AgentDB.UpdateAgent(editAgent);
+                        JOptionPane.showMessageDialog(null, "Agent has been edited successfully!");
+                    }
             }
+           
         }
     }//GEN-LAST:event_btnUpdateAgentsActionPerformed
+
+    private void btnExitAgentsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitAgentsActionPerformed
+        this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+    }//GEN-LAST:event_btnExitAgentsActionPerformed
 
     /**
      * @param args the command line arguments

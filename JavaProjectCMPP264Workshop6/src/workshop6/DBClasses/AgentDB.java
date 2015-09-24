@@ -176,7 +176,9 @@ public class AgentDB {
 				preStatement.setBoolean(8, newAgent.isActive());
 				preStatement.setInt(9, newAgent.getAgentId());
 				
+                                preStatement.executeUpdate();
 				int numRows = preStatement.executeUpdate();
+                                
 				conn.close();
 				
 					if(numRows > 0){
@@ -190,6 +192,7 @@ public class AgentDB {
 					System.err.println(e);
 					return false;
 				}
+                                
 
 		}
 		

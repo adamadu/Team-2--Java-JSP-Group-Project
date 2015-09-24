@@ -36,7 +36,6 @@ public class Main extends javax.swing.JFrame {
     public Package modPkg;
     public Agent agt;
     public Event evt;
-    public static Agent editAgt;
 
     /**
      * Creates new form Main
@@ -659,7 +658,7 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAddAgentActionPerformed
 
     private void btnEditAgentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditAgentActionPerformed
-        System.out.println(AgentDB.GetAgentById(cmbAgentId.getSelectedItem().toString())); 
+        //System.out.println(AgentDB.GetAgentById(cmbAgentId.getSelectedItem().toString())); 
         addEditAgents.addEditAgent = false; 
         addEditAgents addEditAgentForm = new addEditAgents();
         addEditAgentForm.setVisible(true);

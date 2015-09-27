@@ -28,9 +28,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         AgencyDB agencyDB = new AgencyDB();
         try {
-            //NOTE: USING .GET method  - THIS TURNS THE CALL FROM ASYNC TO SYNC AS IT WILL WAIT FOR THE RESULT
+            //NOTE: USING .GET() method  - THIS TURNS THE CALL FROM ASYNC TO SYNC AS IT WILL WAIT FOR THE RESULT
             //look into adding a contructor and getters to make it truly async
-            agencies = (agencyDB.execute("http://192.168.1.125:8080/Day5AjaxAssignment/GetAgencies")).get();
+            agencies = (agencyDB.execute((getResources().getString(R.string.web_service_url) + "/GetAgencies"))).get();
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
@@ -54,7 +54,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         //Get the agency object that was clicked
         Agency agency = (Agency) parent.getItemAtPosition(position);
         //pass the id to the intent
-        intent.putExtra("agentId", agency.getAgencyId());
+        intent.putExtra("AgencyId", agency.getAgencyId());
+        intent.putExtra("AgncyAddress", agency.getAgncyAddress());
         //Start the activity
         this.startActivity(intent);
     }

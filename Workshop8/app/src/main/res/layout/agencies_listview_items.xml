@@ -55,7 +55,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/tvAgencyAddress"
+        android:id="@+id/tvAgentsAgencyAddress"
         android:layout_row="0"
         android:layout_column="1"
         android:layout_columnSpan="1"
@@ -77,10 +77,10 @@
         android:layout_columnSpan="1"
         android:layout_columnWeight="1"
         android:paddingLeft="20dp"
-        android:layout_below="@+id/tvAgencyAddress"
-        android:layout_alignLeft="@+id/tvAgencyAddress"
-        android:layout_alignStart="@+id/tvAgencyAddress"
-        android:layout_alignRight="@+id/tvAgencyAddress"
-        android:layout_alignEnd="@+id/tvAgencyAddress"
+        android:layout_below="@+id/tvAgentsAgencyAddress"
+        android:layout_alignLeft="@+id/tvAgentsAgencyAddress"
+        android:layout_alignStart="@+id/tvAgentsAgencyAddress"
+        android:layout_alignRight="@+id/tvAgentsAgencyAddress"
+        android:layout_alignEnd="@+id/tvAgentsAgencyAddress"
         android:text="Agency Phone" />
 </RelativeLayout>

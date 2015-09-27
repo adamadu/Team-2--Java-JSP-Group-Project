@@ -46,7 +46,6 @@ public class AgencyDB extends AsyncTask<String, Void, List<Agency>> {
             {
                 JSONArray jsonArray = new JSONArray(next);
                 for (int i = 0; i < jsonArray.length(); i++) {
-                    System.out.println("reading data from stream");
                     JSONObject jo = jsonArray.getJSONObject(i);
                     Agency agency = new Agency();
                     agency.setAgencyId(jo.getInt("AgencyId"));

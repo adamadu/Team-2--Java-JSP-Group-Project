@@ -30,7 +30,7 @@ public class CustomArrayAdaptor extends ArrayAdapter {
 
             // Lookup view for data population
             TextView tvAgencyCity = (TextView) convertView.findViewById(R.id.tvAgencyCity);
-            TextView tvAgencyAddress = (TextView) convertView.findViewById(R.id.tvAgencyAddress);
+            TextView tvAgencyAddress = (TextView) convertView.findViewById(R.id.tvAgentsAgencyAddress);
             TextView tvAgencyPhone = (TextView) convertView.findViewById(R.id.tvAgencyPhone);
 
             // Populate the data into the template view using the data object
@@ -38,7 +38,21 @@ public class CustomArrayAdaptor extends ArrayAdapter {
             tvAgencyCity.setText(agency.getAgncyCity());
             tvAgencyPhone.setText(agency.getAgncyPhone());
         }
+        else if (getItem(position) instanceof Agent)
+        {
+            Agent agent = (Agent) getItem(position);
+            if (convertView == null)
+                convertView = LayoutInflater.from(getContext()).inflate(R.layout.agents_listview_items, parent, false);
 
-            return convertView;
+            // Lookup view for data population
+            TextView tvAgentName = (TextView) convertView.findViewById(R.id.tvAgentName);
+            TextView tvAgentPosition = (TextView) convertView.findViewById(R.id.tvAgentPosition);
+
+            // Populate the data into the template view using the data object
+            tvAgentName.setText(agent.getAgtFirstName() + " " + agent.getAgtMiddleInitial() + " " + agent.getAgtLastName());
+            tvAgentPosition.setText(agent.getAgtPostion());
+        }
+
+        return convertView;
     }
 }

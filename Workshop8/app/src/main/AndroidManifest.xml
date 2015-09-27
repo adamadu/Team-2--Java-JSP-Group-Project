@@ -20,7 +20,13 @@
         </activity>
         <activity
             android:name=".AgentsActivity"
-            android:label="@string/title_activity_agents" >
+            android:label="@string/title_activity_agents"
+            android:parentActivityName=".MainActivity" >
+        </activity>
+        <activity
+            android:name=".AgentDetailsActivity"
+            android:label="@string/title_activity_agent_details"
+            android:parentActivityName=".AgentsActivity">
         </activity>
     </application>
 

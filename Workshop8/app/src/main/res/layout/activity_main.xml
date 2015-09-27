@@ -8,9 +8,19 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World"
+        android:text="Welcome to the Travel Experts location and agent lookup app! Please start by selecting a location below:"
         android:id="@+id/textView"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/listViewAgencies"
+        android:layout_below="@+id/textView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="24dp"
+        tools:listitem="@layout/agencies_listview_items" />
 </RelativeLayout>

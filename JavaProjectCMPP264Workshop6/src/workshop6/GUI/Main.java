@@ -9,6 +9,7 @@ import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 import workshop6.DBClasses.AgentDB;
 import workshop6.DBClasses.PackageDB;
@@ -590,9 +591,27 @@ public class Main extends javax.swing.JFrame {
         if (!agt.isActive() == true)
         {
             rbInactive.setSelected(true);
+            //Darya: if the agents is inactive we need a message to pop up if 
+            //the agent still has assigned customers
+            displayReassignmentDialog();
         }
     }//GEN-LAST:event_cmbAgentIdActionPerformed
 
+    //Darya: this method is work in progress
+    private static void displayReassignmentDialog(){
+        
+            int response = JOptionPane.showConfirmDialog(null, "Would you like to reassign agent's customers?", "Confirm",
+	    JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+	    if (response == JOptionPane.NO_OPTION) {
+	      //System.out.println("No button clicked");
+	    } else if (response == JOptionPane.YES_OPTION) {
+	      System.out.println("Yes button clicked");
+	      //open a new form displaying name of each/any customer and a dropdown list of available agents
+	    } else if (response == JOptionPane.CLOSED_OPTION) {
+	      //System.out.println("JOptionPane closed");
+	    }
+    }
+    
     private void rbActiveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbActiveActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_rbActiveActionPerformed

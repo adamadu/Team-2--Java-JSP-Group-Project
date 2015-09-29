@@ -32,14 +32,17 @@ public class DatabaseConnection
     }
     
     //Function to connect the the datavase and return the connection object
-    public static Connection getConnection() throws SQLException
+    public static Connection getConnection()
     {
         testForConnection();
         try {
             conn = DriverManager.getConnection("jdbc:mysql://"+ MYSQL_HOST +"/" + MYSQL_DB, MYSQL_USER, MYSQL_PASS);
-            return conn;
+            
         } catch (SQLException ex) {
-            throw new SQLException("ERROR: Driver Mannger cannot get MYSQL Connection. Message:" + ex.getMessage());
+            System.out.println(">>>>>>>>>Error connecting to database. Check Databse Connection<<<<<<<<<<<<<<<<<");
+            System.exit(0);
+            //throw new SQLException("ERROR: Driver Mannger cannot get MYSQL Connection. Message:" + ex.getMessage());
         }
+        return conn;
     }
 }

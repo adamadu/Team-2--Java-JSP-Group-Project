@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Vector;
 import workshop6.Entity.Agent;
 
@@ -152,9 +153,9 @@ public class AgentDB {
 		
 		//method to update agent data
 		public static boolean UpdateAgent(Agent newAgent){
-			
+
 			//create the sql statement
-			String sql = "UPDATE agents set "
+			String sql = "UPDATE agents SET "
 					+ "AgencyId = ?, AgtFirstName = ?, "
 					+ "AgtMiddleInitial = ?, AgtLastName = ?, "
 					+ "AgtEmail = ?, AgtBusPhone = ?, "
@@ -175,8 +176,6 @@ public class AgentDB {
 				preStatement.setString(7, newAgent.getAgtPosition());
 				preStatement.setBoolean(8, newAgent.isActive());
 				preStatement.setInt(9, newAgent.getAgentId());
-				
-                                preStatement.executeUpdate();
 				int numRows = preStatement.executeUpdate();
                                 
 				conn.close();

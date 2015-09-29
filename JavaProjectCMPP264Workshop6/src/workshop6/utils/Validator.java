@@ -100,4 +100,16 @@ public class Validator {
         }
     }
     
+    //Function to check that the maximum number of characteres that are allowed to be entered in a text field.
+    public static boolean checkNotMoreThanMaxAllow(JTextField input, int max)
+    {
+        String inputText = input.getText();
+        if(inputText.length() > max)
+        {
+            JOptionPane.showMessageDialog(null, "The maximum amount of characteres allow for text field " + input.getName() + " is " + max + ". Please edit this field and try again.");
+            return false;
+        }
+        return true;
+    }
+    
 }

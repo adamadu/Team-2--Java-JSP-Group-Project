@@ -21,6 +21,7 @@ public class addEditAgents extends javax.swing.JFrame {
 
     private ComboBoxModel cbAgencyModel;
     public static Boolean addEditAgent;
+     Agent editAgt;
     /**
      * Creates new form addEditAgents
      */
@@ -36,7 +37,7 @@ public class addEditAgents extends javax.swing.JFrame {
         {
             lblAddEditAgents.setText("Edit an Agent");
             this.setTitle("Edit an existing Agent");
-            Agent editAgt = new Agent();
+            editAgt = new Agent();
             editAgt = AgentDB.GetAgentById(Main.cmbAgentId.getSelectedItem().toString());
             cmbAddEditAgencyId.setSelectedItem(editAgt.getAgencyId());
                 if (editAgt.isActive() == true)
@@ -72,7 +73,7 @@ public class addEditAgents extends javax.swing.JFrame {
                 
             && Validator.hasTextOrIsSelected(txtAddEditAgtFirstName)
             && Validator.hasTextOrIsSelected(txtAddEditAgtLastName)
-            && Validator.hasTextOrIsSelected(txtAddEditAgtLastName)
+            && Validator.checkNotMoreThanMaxAllow(txtAddEditAgtMiddleInitial, 5)
             && Validator.hasTextOrIsSelected(txtAddEditAgtPosition)
             && Validator.hasTextOrIsSelected(btngrpAgentStatus);
     }
@@ -302,6 +303,7 @@ public class addEditAgents extends javax.swing.JFrame {
         {
             if (addEditAgents.addEditAgent == true)
             {
+                System.out.println("Doing steps for Add Agent");
                 Agent addAgent = new Agent();
                 addAgent.setAgencyId(Integer.parseInt(cmbAddEditAgencyId.getSelectedItem().toString()));
                 addAgent.setAgtBusPhone(txtAddEditAgtBusPhone.getText());
@@ -336,7 +338,9 @@ public class addEditAgents extends javax.swing.JFrame {
             }
             else if (addEditAgents.addEditAgent == false)
             {
+                System.out.println("Doing steps for UPDATE Agent");
                 Agent editAgent = new Agent();
+                editAgent.setAgentId(editAgt.getAgentId());
                 editAgent.setAgencyId(Integer.parseInt(cmbAddEditAgencyId.getSelectedItem().toString()));
                 editAgent.setAgtBusPhone(txtAddEditAgtBusPhone.getText());
                 editAgent.setAgtEmail(txtAddEditAgtEmail.getText());
@@ -352,9 +356,9 @@ public class addEditAgents extends javax.swing.JFrame {
                 {
                     editAgent.setActive(false);
                 }
-                    if (AgentDB.UpdateAgent(editAgent) == false)
+                    if (AgentDB.UpdateAgent(editAgent) != false)
                     {
-                        AgentDB.UpdateAgent(editAgent);
+                        //AgentDB.UpdateAgent(editAgent);
                         JOptionPane.showMessageDialog(null, "Agent has been edited successfully!");
                     }
             }

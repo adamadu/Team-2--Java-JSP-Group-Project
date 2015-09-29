@@ -593,20 +593,22 @@ public class Main extends javax.swing.JFrame {
             rbInactive.setSelected(true);
             //Darya: if the agents is inactive we need a message to pop up if 
             //the agent still has assigned customers
-            displayReassignmentDialog();
+            displayReassignmentDialog(agt.getAgentId());
         }
     }//GEN-LAST:event_cmbAgentIdActionPerformed
 
     //Darya: this method is work in progress
-    private static void displayReassignmentDialog(){
+    private static void displayReassignmentDialog(int agentId){
         
             int response = JOptionPane.showConfirmDialog(null, "Would you like to reassign agent's customers?", "Confirm",
 	    JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 	    if (response == JOptionPane.NO_OPTION) {
 	      //System.out.println("No button clicked");
+                //close dialog window
 	    } else if (response == JOptionPane.YES_OPTION) {
 	      System.out.println("Yes button clicked");
-	      //open a new form displaying name of each/any customer and a dropdown list of available agents
+              //open the AssignNewAgent form and pass in the agentId parameter
+              
 	    } else if (response == JOptionPane.CLOSED_OPTION) {
 	      //System.out.println("JOptionPane closed");
 	    }

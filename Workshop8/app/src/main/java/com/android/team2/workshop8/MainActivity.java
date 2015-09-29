@@ -10,11 +10,15 @@ import android.widget.ListView;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
+/**
+ * Created by Adam on 9/28/2015
+ * Function: The entry point (main activity) of this application.
+ */
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
     //List that will hold all the agencies
     private List<Agency> agencies;
-
+    //The list view to display all the agencies
     private ListView listViewAgencies;
 
     @Override
@@ -26,10 +30,11 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         listViewAgencies = (ListView) findViewById(R.id.listViewAgencies);
         listViewAgencies.setOnItemClickListener(this);
 
+        //Instantiate a new agencydb object to send and recieve data from the web service
         AgencyDB agencyDB = new AgencyDB();
         try {
             //NOTE: USING .GET() method  - THIS TURNS THE CALL FROM ASYNC TO SYNC AS IT WILL WAIT FOR THE RESULT
-            //look into adding a contructor and getters to make it truly async
+            //look into adding a contructor and getters to make it truly async or do this in the onpostexecute
             agencies = (agencyDB.execute((getResources().getString(R.string.web_service_url) + "/GetAgencies"))).get();
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -37,12 +42,14 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             e.printStackTrace();
         }
 
+        //If our agencies list contains data, then we will display it in the list view
         if(agencies.size() > 0)
         {
             CustomArrayAdaptor agencyArrayAdaptor = new CustomArrayAdaptor(this, agencies);
             listViewAgencies.setAdapter(agencyArrayAdaptor);
         }
         else {
+            //temp error reporting for now.
             System.out.println("ARRAY LIST IS EMPTY");
         }
     }

@@ -2,6 +2,7 @@ package com.android.team2.workshop8;
 
 /**
  * Created by Adam on 9/26/2015.
+ * Agency Entitiy class which provides a layout for an Agency Object
  */
 public class Agency {
     private int AgencyId;

@@ -7,15 +7,19 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+/**
+ * Created by Adam on 9/27/2015
+ * Function: The activity for displaying the individual agent detail.
+ */
 public class AgentDetailsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_agent_details);
-
+        //get the intent from the activity
         Intent intent = getIntent();
-
+        //Set the textviews to the correct data.
         ((TextView)findViewById(R.id.tvAgtDetailFirstName)).setText(intent.getStringExtra("AgtFirstName"));
         ((TextView)findViewById(R.id.tvAgtDetailMiddleInitial)).setText(intent.getStringExtra("AgtMiddleInitial"));
         ((TextView)findViewById(R.id.tvAgtDetailLastName)).setText(intent.getStringExtra("AgtLastName"));

@@ -2,6 +2,7 @@ package com.android.team2.workshop8;
 
 /**
  * Created by Adam on 9/27/2015.
+ * Agennt Entitiy class which provides a layout for an Agent Object
  */
 public class Agent {
 

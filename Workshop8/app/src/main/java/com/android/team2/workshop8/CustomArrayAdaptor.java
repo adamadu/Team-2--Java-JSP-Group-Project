@@ -11,6 +11,7 @@ import java.util.List;
 
 /**
  * Created by Adam on 9/26/2015.
+ * Fucntion: A custom array adaptor that will be used for passing object information and displaying it in the correct fields
  */
 public class CustomArrayAdaptor extends ArrayAdapter {
 

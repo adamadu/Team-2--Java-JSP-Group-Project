@@ -20,31 +20,35 @@ import java.util.List;
 
 /**
  * Created by Adam on 9/27/2015.
+ * Function: The AgentDB class responsible for sending a request fetching the response from the web service
  */
 public class AgentDB extends AsyncTask<String, Void, List<Agent>>{
     @Override
     protected List<Agent> doInBackground(String... params) {
+        //Create the list for all our retured agents to be stored
         List<Agent> agents = new ArrayList<>();
         try {
+            //Open an httpurlconnection to the url provided in the parameter[0]
             URL url = new URL(params[0]);
-
             HttpURLConnection httpConn = (HttpURLConnection) url.openConnection();
+            //set request headers and send the request to the web service
             httpConn.setRequestMethod("POST");
             //httpConn.setRequestProperty("Content-length", "0");
             httpConn.setUseCaches(false);
             httpConn.setAllowUserInteraction(false);
-            //httpConn.setConnectTimeout(timeout);
-            //httpConn.setReadTimeout(timeout);
             httpConn.connect();
 
+            //Write the request data (in params[1]) that is going to be send to the webservice
             OutputStream outputStream = httpConn.getOutputStream();
             BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
             writer.write(params[1]);
             writer.close();
             outputStream.close();
 
+            // Read the response from the service
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(httpConn.getInputStream()));
 
+            // While we have a new response line, fetch the JSON data and create a new Agent Object.
             String next;
             while((next = bufferedReader.readLine()) != null)
             {
@@ -62,6 +66,7 @@ public class AgentDB extends AsyncTask<String, Void, List<Agent>>{
                     else
                         agent.setAgtMiddleInitial("");
                     agent.setAgtPostion(jo.getString("AgtPosition"));
+                    //Add the agennt object to the agents list
                     agents.add(agent);
                 }
             }

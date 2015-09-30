@@ -4,6 +4,7 @@ import java.awt.Event;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Vector;
 import javax.swing.Action;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
@@ -12,10 +13,12 @@ import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 import workshop6.DBClasses.AgentDB;
+import workshop6.DBClasses.CustomerDB;
 import workshop6.DBClasses.PackageDB;
 import workshop6.DBClasses.ProductDB;
 import workshop6.DBClasses.SupplierDB;
 import workshop6.Entity.Agent;
+import workshop6.Entity.Customer;
 import workshop6.Entity.Package;
 import workshop6.Entity.Product;
 import workshop6.Entity.Supplier;
@@ -248,6 +251,7 @@ public class Main extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(7, 0, 7, 0);
         agentFieldPanel.add(txtAgentBusPhone, gridBagConstraints);
 
+        txtAgentFirstName.setEditable(false);
         txtAgentFirstName.setEnabled(false);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
@@ -587,8 +591,8 @@ public class Main extends javax.swing.JFrame {
         {
             rbActive.setSelected(true);
         }
-        
-        if (!agt.isActive() == true)
+        //Darya: chekcing if we have an inactive agent with customers
+        if (!agt.isActive() == true && agentHasCustomers(Integer.parseInt(agentId)))
         {
             rbInactive.setSelected(true);
             //Darya: if the agents is inactive we need a message to pop up if 
@@ -597,6 +601,16 @@ public class Main extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_cmbAgentIdActionPerformed
 
+    //Darya: method to check if agent has any customers
+    public static boolean agentHasCustomers(int agentId)
+    {
+        Vector<Customer> customers = new Vector<Customer>();
+        customers = CustomerDB.GetCustomersByAgentId(agentId);
+        if(!customers.isEmpty())
+            return true;
+        else
+            return false;
+    }
     //Darya: this method is work in progress
     private static void displayReassignmentDialog(int agentId){
         

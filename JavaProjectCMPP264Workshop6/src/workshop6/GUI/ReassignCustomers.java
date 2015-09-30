@@ -6,8 +6,10 @@
 package workshop6.GUI;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 import workshop6.DBClasses.AgentDB;
 import workshop6.DBClasses.CustomerDB;
 import workshop6.Entity.Agent;
@@ -21,25 +23,36 @@ public class ReassignCustomers extends javax.swing.JFrame {
 
     private Vector<Customer> customers;
     private Vector<Agent> agents;
+    private int agent;
+    private int cust;
+    private int agentId;
     /**
      * Creates new form ReassignCustomers
      */
-    public ReassignCustomers(int agentId) {
+    public ReassignCustomers(int agentID) {
         initComponents();
-        //initialize the iist of customers
+        agentId = agentID;
+        updateCustomerList(agentId);
+        updateAgentComboBox();
+    }
+
+    private void updateAgentComboBox() {
+        //populate the combo box
+        agents = AgentDB.GetAllAgents();
+        for(Agent a : agents)
+            cbAgents.addItem(a.getAgtLastName() + ", " + a.getAgtFirstName()
+                    + " (Agent ID: " + a.getAgentId() + ")");
+    }
+
+    private void updateCustomerList(int agentId) {
+        //populate the iist of customers
         customers = CustomerDB.GetCustomersByAgentId(agentId);
         DefaultListModel<String> model = new DefaultListModel<>();
         for(Customer c : customers)
             model.addElement(c.getCustFirstName() + " " + c.getCustLastName()
-            + " (Customer ID: " + c.getCustomerId() + ")");
+                    + " (Customer ID: " + c.getCustomerId() + ")");
         lsCustomers.setModel(model);
         lsCustomers.setSelectedIndex(0);
-        
-        agents = AgentDB.GetAllAgents();
-        for(Agent a : agents)
-            cbAgents.addItem(a.getAgtLastName() + ", " + a.getAgtFirstName() 
-            + " (Agent ID: " + a.getAgentId() + ")");
-        
     }
 
     ReassignCustomers() {
@@ -66,6 +79,11 @@ public class ReassignCustomers extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         btnAccept.setText("Accept");
+        btnAccept.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAcceptActionPerformed(evt);
+            }
+        });
 
         btnCancel.setText("Cancel");
         btnCancel.addActionListener(new java.awt.event.ActionListener() {
@@ -117,7 +135,6 @@ public class ReassignCustomers extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnCancel)
                         .addGap(8, 8, 8)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cbAgents, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnAccept))
@@ -128,9 +145,31 @@ public class ReassignCustomers extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
-        // TODO add your handling code here:
+
         this.dispose();
     }//GEN-LAST:event_btnCancelActionPerformed
+
+    private void btnAcceptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAcceptActionPerformed
+       
+        int i = cbAgents.getSelectedIndex();
+        Agent a = agents.get(i);
+        
+        int[] indices = lsCustomers.getSelectedIndices();
+        boolean isChangeSuccessful = false;
+                
+        for(int ind : indices)
+        {
+            Customer selectedCustomer = customers.get(ind);
+            Agent selectedAgent = agents.get(i);
+            isChangeSuccessful = CustomerDB.UpdateCustomerAgentId(selectedCustomer.getCustomerId(), selectedAgent.getAgentId());
+        }
+        
+        if(isChangeSuccessful){
+            JOptionPane.showConfirmDialog(null, "Successful change", "Customer reassigned", JOptionPane.PLAIN_MESSAGE);
+            updateCustomerList(agentId);
+            
+        }
+    }//GEN-LAST:event_btnAcceptActionPerformed
 
     /**
      * @param args the command line arguments

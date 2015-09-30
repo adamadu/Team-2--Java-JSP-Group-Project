@@ -20,7 +20,7 @@ import workshop6.Entity.Customer;
  */
 public class CustomerDB {
     
-    public static Vector<Customer> GetCustomersByAgentId(String agentId){
+    public static Vector<Customer> GetCustomersByAgentId(int agentId){
         Vector<Customer> customers = new Vector<Customer>();
         //connect to database
         try (
@@ -34,7 +34,7 @@ public class CustomerDB {
 					ResultSet rset;
 					
 					//set the parameter in the statement with the agencyId
-					preStatement.setString(1, agentId);
+					preStatement.setInt(1, agentId);
 					//get the result set
 					rset = preStatement.executeQuery();
 					while (rset.next()) {

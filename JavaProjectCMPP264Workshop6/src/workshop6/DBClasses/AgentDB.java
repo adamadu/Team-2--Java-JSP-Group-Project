@@ -108,8 +108,49 @@ public class AgentDB {
 			
 			return agents;
 		}
+                
+                //method to get all the agents from the database
+		public static Vector<Agent> GetAllAgents(){
+			//declare the vector to hold all the agent objects
+			Vector<Agent> agents = new Vector<>();
+			try 
+			(
+					//connect to the database
+					Connection conn = DatabaseConnection.getConnection();
+					//select statement
+					PreparedStatement preStatement =
+							conn.prepareStatement("SELECT * FROM agents");)
+			{
+				ResultSet rset;
+				//get the result set
+				rset = preStatement.executeQuery();
+				while (rset.next()) {
+					Agent agent = new Agent();
+					//set properties of agent from the result set
+					agent.setAgentId(rset.getInt(1));
+					agent.setAgtFirstName(rset.getString(2));
+					agent.setAgtMiddleInitial(rset.getString(3));
+					agent.setAgtLastName(rset.getString(4));
+					agent.setAgtEmail(rset.getString(6));
+					agent.setAgtBusPhone(rset.getString(5));
+					agent.setAgtPosition(rset.getString(7));
+					agent.setActive(rset.getBoolean(8));
+					//add the new agent object to the vector
+					agents.add(agent);
+				}
+			
+			} catch (SQLException e) {
+				System.err.println(e);
+				return null;
+			}
+			
+			//for testing
+			//agents.forEach(agent -> System.out.println(agent.getAgtFirstName()));
+			
+			return agents;
+		}
 		
-		//method to get agent by id from the database
+		//method to get ALL available 
 		public static Agent GetAgentById(String agentId){
 				try 
 				(

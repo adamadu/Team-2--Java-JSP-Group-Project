@@ -600,7 +600,7 @@ public class Main extends javax.swing.JFrame {
     //Darya: this method is work in progress
     private static void displayReassignmentDialog(int agentId){
         
-            int response = JOptionPane.showConfirmDialog(null, "Would you like to reassign agent's customers?", "Confirm",
+            int response = JOptionPane.showConfirmDialog(null, "Would you like to reassign agent's customers?", "Agent is Inactive",
 	    JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 	    if (response == JOptionPane.NO_OPTION) {
 	      //System.out.println("No button clicked");
@@ -608,6 +608,7 @@ public class Main extends javax.swing.JFrame {
 	    } else if (response == JOptionPane.YES_OPTION) {
 	      System.out.println("Yes button clicked");
               //open the AssignNewAgent form and pass in the agentId parameter
+              new ReassignCustomers(agentId).setVisible(true);
               
 	    } else if (response == JOptionPane.CLOSED_OPTION) {
 	      //System.out.println("JOptionPane closed");
@@ -728,7 +729,7 @@ public class Main extends javax.swing.JFrame {
         System.out.println("initpackages is being called");
         cbPackageIdModel = new DefaultComboBoxModel(PackageDB.getPackageIDs());
         cmbPackageId.setModel(cbPackageIdModel);
-        cmbPackageIdActionPerformed(null);
+//        cmbPackageIdActionPerformed(null);
     }
     
     private void initAgentIdCombo(JComboBox cmbAgentId)

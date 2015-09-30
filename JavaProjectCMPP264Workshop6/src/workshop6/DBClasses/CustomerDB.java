@@ -63,4 +63,37 @@ public class CustomerDB {
             return customers;            
     }
     
+    //method to update agent data
+		public static boolean UpdateCustomerAgentId(int custId, int agentId){
+			
+			//create the sql statement
+			String sql = "UPDATE customers set AgentId = ? "
+					+ "WHERE CustomerId = ?";
+			
+			try (Connection conn = DatabaseConnection.getConnection();
+					PreparedStatement preStatement = conn.prepareStatement(sql))
+				{
+				//populate the prepared statement
+				preStatement.setInt(1, agentId);
+				preStatement.setInt(2, custId);
+				
+                                preStatement.executeUpdate();
+				int numRows = preStatement.executeUpdate();
+                                
+				conn.close();
+				
+					if(numRows > 0){
+					return true;
+					}
+					else{
+					return false;
+					}
+					
+				} catch (SQLException e) {
+					System.err.println(e);
+					return false;
+				}
+                                
+
+		}
 }

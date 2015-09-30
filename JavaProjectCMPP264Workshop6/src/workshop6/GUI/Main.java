@@ -607,7 +607,7 @@ public class Main extends javax.swing.JFrame {
                 //close dialog window
 	    } else if (response == JOptionPane.YES_OPTION) {
 	      System.out.println("Yes button clicked");
-              //open the AssignNewAgent form and pass in the agentId parameter
+              //open the ReassignCustomers form and pass in the agentId parameter
               new ReassignCustomers(agentId).setVisible(true);
               
 	    } else if (response == JOptionPane.CLOSED_OPTION) {

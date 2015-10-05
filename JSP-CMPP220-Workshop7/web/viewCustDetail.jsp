@@ -28,82 +28,57 @@
 		<input type="hidden" name="pagename" value="viewCustDetail" />
 		<table align="center">
 			<tr>
-				<td>First Name</td>
-				<td><input type="text" name="fname"
-					value="<%=cust.getCustFirstName() == null? "" : cust.getCustFirstName() %>"
-					disabled="disabled" /></td>
+				<td>First Name :</td>
+				<td><%=cust.getCustFirstName() == null? "" : cust.getCustFirstName() %></td>
 			</tr>
 			<tr>
-				<td>Last Name</td>
-				<td><input type="text" name="lname"
-					value="<%=cust.getCustLastName() == null ? "" : cust.getCustLastName() %>"
-					disabled="disabled" /></td>
+				<td>Last Name :</td>
+				<td><%=cust.getCustLastName() == null ? "" : cust.getCustLastName() %></td>
 			</tr>
 			<tr>
-				<td>Address</td>
-				<td><input type="text" name="address"
-					value="<%=cust.getCustAddress() == null ? "" : cust.getCustAddress() %>"
-					disabled="disabled" /></td>
+				<td>Address :</td>
+				<td><%=cust.getCustAddress() == null ? "" : cust.getCustAddress() %></td>
 			</tr>
 			<tr>
-				<td>City</td>
-				<td><input type="text" name="city"
-					value="<%=cust.getCustCity() == null ? "" : cust.getCustCity() %>"
-					disabled="disabled" /></td>
+				<td>City :</td>
+				<td><%=cust.getCustCity() == null ? "" : cust.getCustCity() %></td>
 			</tr>
 			<tr>
-				<td>Province</td>
-				<td><input type="text" name="province"
-					value="<%=cust.getCustProv() == null ? "" : cust.getCustProv() %>"
-					disabled="disabled" /></td>
+				<td>Province :</td>
+				<td><%=cust.getCustProv() == null ? "" : cust.getCustProv() %></td>
 			</tr>
 			<tr>
-				<td>Postal</td>
-				<td><input type="text" name="postal"
-					value="<%=cust.getCustPostal() == null ? "" : cust.getCustPostal() %>"
-					disabled="disabled" /></td>
+				<td>Postal :</td>
+				<td><%=cust.getCustPostal() == null ? "" : cust.getCustPostal() %></td>
 			</tr>
 			<tr>
-				<td>Country</td>
-				<td><input type="text" name="country"
-					value="<%=cust.getCustCountry() == null ? "" : cust.getCustCountry() %>"
-					disabled="disabled" /></td>
+				<td>Country :</td>
+				<td><%=cust.getCustCountry() == null ? "" : cust.getCustCountry() %></td>
 			</tr>
 			<tr>
-				<td>Home Phone</td>
-				<td><input type="text" name="homephone"
-					value="<%=cust.getCustHomePhone() == null ? "" : cust.getCustHomePhone() %>"
-					disabled="disabled" /></td>
+				<td>Home Phone :</td>
+				<td><%=cust.getCustHomePhone() == null ? "" : cust.getCustHomePhone() %></td>
 			</tr>
 			<tr>
-				<td>Business Phone</td>
-				<td><input type="text" name="busphone"
-					value="<%=cust.getCustBusPhone() == null ? "" : cust.getCustBusPhone() %>" /></td>
+				<td>Business Phone :</td>
+				<td><%=cust.getCustBusPhone() == null ? "" : cust.getCustBusPhone() %></td>
 			</tr>
 			<tr>
-				<td>Email</td>
-				<td><input type="text" name="email"
-					value="<%=cust.getCustEmail() == null ? "" : cust.getCustEmail() %>"
-					disabled="disabled" /></td>
+				<td>Email :</td>
+				<td><%=cust.getCustEmail() == null ? "" : cust.getCustEmail() %></td>
 			</tr>
 			<tr>
-				<td>AgentId</td>
-				<td><input type="text" name="agentid"
-					value="<%=cust.getAgentId() == 0 ? 0 : cust.getAgentId() %>"
-					disabled="disabled" /></td>
+				<td>AgentId :</td>
+				<td><%=cust.getAgentId() == 0 ? 0 : cust.getAgentId() %></td>
 			</tr>
 			<tr>
-				<td>UserName</td>
-				<td><input type="text" name="username"
-					value="<%=cust.getUserName() == null ? "" : cust.getUserName() %>"
-					disabled="disabled" /></td>
+				<td>UserName :</td>
+				<td><%=cust.getUserName() == null ? "" : cust.getUserName() %></td>
 			</tr>
-			<tr>
-				<td>Password</td>
-				<td><input type="password" name="password"
-					value="<%=cust.getPassword() == null ? "" : cust.getPassword() %>"
-					disabled="disabled" /></td>
-			</tr>
+			<%-- <tr>
+				<td>Password :</td>
+				<td><%=cust.getPassword() == null ? "" : cust.getPassword() %></td>
+			</tr> --%>
 		</table>
 	</form>
 	<% 

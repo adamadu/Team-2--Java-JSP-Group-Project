@@ -6,6 +6,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<link rel="stylesheet" type="text/css" href="css/main.css">
+<script></script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Test JSP</title>
 </head>
@@ -22,21 +24,49 @@
 	}
 	%> 
 	</h1>
-	<form name="login" action="CustomerServlet" method="post">
+	<form name="login" id="login" action="CustomerServlet" method="post">
 	<input type="hidden" name="pagename" value="login"/>
 		<table>
 			<tr>
-				<td> UserName : </td>
+				<td><label>UserName <span class="mandatory"> * </span></label>  </td>
 				<td><input type="text" name="txtUserName" />
+					<span id="usererr" class="mandatory"></span>
+				</td>
 			</tr>
 			<tr>
-				<td> Password : </td>
+				<td> <label>Password <span class="mandatory"> * </span></label></td>
 				<td><input type="password" name="txtPassword" />
+					<span id="passworderr" class="mandatory"></span>
 			</tr>
 			<tr>
-				<td colspan="2" align="center"><button type="submit" value="Login">Login</button>
+				<td colspan="2" align="center"><button type="submit" value="Login" onclick="return validateForm();">Login</button>
 			</tr>
 		</table>
 	</form>
+	<script>
+		function validateForm()
+		{
+			var errormsg = false;
+			var usererror,passerror;
+			var username = document.login.txtUserName.value;
+			var password = document.login.txtPassword.value;
+			if(username == "")
+			{
+				usererror = "UserName is required";
+				document.getElementById("usererr").innerHTML = usererror;
+				errormsg = true;
+			}
+			if(password == "" && password.length<6)
+			{
+				passerror = "Password is required";
+				document.getElementById("passworderr").innerHTML = passerror;
+				errormsg = true;
+			}
+			if(errormsg)
+				return false;
+			else
+				return true;
+		}
+	</script>
 </body>
 </html>

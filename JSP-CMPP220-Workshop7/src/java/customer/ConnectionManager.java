@@ -1,9 +1,10 @@
 /*
-Author : Geetha Muniswamy
-Date: September 29, 2015
-File: Database connection manager
+Author: Geetha
+Date: Sep 29, 2015
+File: File to get database connection
 */
 package customer;
+
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -58,6 +59,7 @@ public class ConnectionManager {
 		return conn;
 	}
 	
+        //Method to close database connection
 	public void close()
 	{
 		System.out.println("Connection closed");

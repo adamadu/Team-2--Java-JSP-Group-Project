@@ -1,9 +1,10 @@
 /*
-Author : Geetha Muniswamy
-Date: September 29, 2015
-File: Plain Old Java Class for Customer
+Author: Geetha
+Date: Sep 29, 2015
+File: Plain old java object for Customer
 */
 package customer;
+
 
 public class Customer {
 	

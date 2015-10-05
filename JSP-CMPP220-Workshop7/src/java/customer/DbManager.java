@@ -1,10 +1,11 @@
 /*
-Author : Geetha Muniswamy
-Date: September 29, 2015
-File: Database functions based on Customer
+Author: Geetha
+Date: Sep 29, 2015
+File: Database operation on Customer
 */
 package customer;
 
+import customer.ConnectionManager;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,9 +15,9 @@ public class DbManager {
 	
 	private static Connection conn = ConnectionManager.getInstance().getConnection();
 	private static Customer cust;
-        
-        //Method to check user credential
-	public static boolean getUserCredential(Customer cust) 
+
+	//Method to check user credential
+        public static boolean getUserCredential(Customer cust) 
 	{
 		System.out.println("Inside getUserCredential");
 		boolean checkUser = false;
@@ -24,7 +25,8 @@ public class DbManager {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 		
-			//Connection conn = ConnectionManager.getInstance().getConnection();
+			Connection conn = ConnectionManager.getInstance().getConnection();
+			
 			String sql = "SELECT * from customers where UserName=? AND Password=?";
 			
 			PreparedStatement stmt = conn.prepareStatement(sql);
@@ -38,7 +40,8 @@ public class DbManager {
 				cust.setCustomerId(rs.getInt("CustomerId"));
 				checkUser = true;
 				
-			}		
+			}
+			//rs.close();
 			//ConnectionManager.getInstance().close();
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
@@ -48,12 +51,13 @@ public class DbManager {
 		return checkUser;
 	}
 	
-        //Method to get the details of customer
+        //Method to cust customer details
 	public static Customer getCustomer(int customerId)
 	{
 		try{
 			System.out.println("Inside getCustomer");
 			Class.forName("com.mysql.jdbc.Driver");
+			conn = ConnectionManager.getInstance().getConnection();
 			String getCust = "SELECT * from customers where CustomerId=?";
 			PreparedStatement stmt = conn.prepareStatement(getCust);
 			stmt.setInt(1, customerId);
@@ -78,6 +82,7 @@ public class DbManager {
 				return cust;
 				
 			}
+			//rs.close();
 			ConnectionManager.getInstance().close();
 			
 		}catch (ClassNotFoundException e) {
@@ -88,51 +93,67 @@ public class DbManager {
 		return cust;
 	}
 	
-        //Method to update the customer details
-	public static boolean updateCustomer(Customer cust) throws ClassNotFoundException, SQLException
+        //Method to update Customer
+	public static boolean updateCustomer(Customer updateCustomer)
 	{
-		System.out.println("Inside updateCustomer");
-		Class.forName("com.mysql.jdbc.Driver");
-		String updateCust = "UPDATE customers SET " 
-                                        + "CustFirstName = ? ," 
-                                        + "CustLastName = ? , " 
-                                        + "CustAddress = ? ," 
-                                        + "CustCity = ? ," 
-                                        + "CustProv = ? ,"
-                                        + "CustPostal = ? ,"
-                                        + "CustCountry = ? ,"
-                                        + "CustHomePhone = ? ,"
-                                        + "CustBusPhone = ? ,"
-                                        + "CustEmail = ? ,"
-                                        + "AgentId = ? ,"
-                                        + "UserName = ? ,"
-                                        + "Password = ? "
-                                        + "WHERE CustomerId = ?";
-		PreparedStatement stmt = conn.prepareStatement(updateCust);
-		stmt.setString(1, cust.getCustFirstName());
-		stmt.setString(2, cust.getCustLastName());
-		stmt.setString(3, cust.getCustAddress());
-		stmt.setString(4, cust.getCustCity());
-		stmt.setString(5, cust.getCustProv());
-		stmt.setString(6, cust.getCustPostal());
-		stmt.setString(7, cust.getCustCountry());
-		stmt.setString(8, cust.getCustHomePhone());
-		stmt.setString(9, cust.getCustBusPhone());
-		stmt.setString(10, cust.getCustEmail());
-		stmt.setInt(11, cust.getAgentId());
-		stmt.setString(12, cust.getUserName());
-		stmt.setString(13, cust.getPassword());
-		stmt.setInt(14, cust.getCustomerId());
-		
-		int rows = stmt.executeUpdate();
-		
-		ConnectionManager.getInstance().close();
-		
-		if(rows > 0){
-			return true;
+		try
+		{
+                    try
+                    {
+                            System.out.println("Inside updateCustomer");
+                            Class.forName("com.mysql.jdbc.Driver");
+                            conn = ConnectionManager.getInstance().getConnection();
+                            String updateCust = "UPDATE customers SET " 
+                                                        + "CustFirstName = ? ," 
+                                                        + "CustLastName = ? , " 
+                                                        + "CustAddress = ? ," 
+                                                        + "CustCity = ? ," 
+                                                        + "CustProv = ? ,"
+                                                        + "CustPostal = ? ,"
+                                                        + "CustCountry = ? ,"
+                                                        + "CustHomePhone = ? ,"
+                                                        + "CustBusPhone = ? ,"
+                                                        + "CustEmail = ? ,"
+                                                        + "AgentId = ? ,"
+                                                        + "UserName = ? ,"
+                                                        + "Password = ? "
+                                                        + "WHERE CustomerId = ?";
+                            PreparedStatement stmt = conn.prepareStatement(updateCust);
+                            stmt.setString(1, updateCustomer.getCustFirstName());
+                            stmt.setString(2, updateCustomer.getCustLastName());
+                            stmt.setString(3, updateCustomer.getCustAddress());
+                            stmt.setString(4, updateCustomer.getCustCity());
+                            stmt.setString(5, updateCustomer.getCustProv());
+                            stmt.setString(6, updateCustomer.getCustPostal());
+                            stmt.setString(7, updateCustomer.getCustCountry());
+                            stmt.setString(8, updateCustomer.getCustHomePhone());
+                            stmt.setString(9, updateCustomer.getCustBusPhone());
+                            stmt.setString(10, updateCustomer.getCustEmail());
+                            stmt.setInt(11, updateCustomer.getAgentId());
+                            stmt.setString(12, updateCustomer.getUserName());
+                            stmt.setString(13, updateCustomer.getPassword());
+                            stmt.setInt(14, updateCustomer.getCustomerId());
+
+                            int rows = stmt.executeUpdate();
+
+                            //ConnectionManager.getInstance().close();
+
+                            if(rows > 0){
+                                    return true;
+                            }
+                            else{
+                                    return false;
+                            }
+                    }
+                    catch(Exception ex)
+                    {
+                            ex.printStackTrace();
+                            return false;
+                    }
 		}
-		else{
-			return false;
+		finally
+		{
+			ConnectionManager.getInstance().close();
 		}
 		
 	}

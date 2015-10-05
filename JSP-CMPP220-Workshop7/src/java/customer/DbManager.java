@@ -5,11 +5,12 @@ File: Database operation on Customer
 */
 package customer;
 
-import customer.ConnectionManager;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DbManager {
 	
@@ -49,7 +50,6 @@ public class DbManager {
 	public static Customer getCustomer(int customerId)
 	{
 		try{
-			System.out.println("Inside getCustomer");
 			Connection conn = ConnectionManager.getConnection();
 			String getCust = "SELECT * from customers where CustomerId=?";
 			PreparedStatement stmt = conn.prepareStatement(getCust);
@@ -91,7 +91,6 @@ public class DbManager {
 		
 		try
 		{
-			System.out.println("Inside updateCustomer");
 			Connection conn = ConnectionManager.getConnection();
 			String updateCust = "UPDATE customers SET " 
 									+ "CustFirstName = ? ," 
@@ -140,6 +139,64 @@ public class DbManager {
 			return false;
 		}
 		
-		
 	}
+	
+	//Method to get the list of booking details of registered customer
+	public static List<BookingDetail> getBookingDetails(int customerId)
+	{
+		List<BookingDetail> bkdtlList = new ArrayList<>();
+		try
+		{
+			Connection conn = ConnectionManager.getConnection();
+			String getBookingDetails = "SELECT * FROM bookings WHERE customerId=?";
+			PreparedStatement stmt = conn.prepareStatement(getBookingDetails);
+			stmt.setInt(1, customerId);
+			ResultSet rs = stmt.executeQuery();
+			
+			while(rs.next())
+			{
+				BookingDetail bkdtl = new BookingDetail();
+				bkdtl.setBookingId(rs.getInt("BookingId"));
+				bkdtl.setBookingNo(rs.getString("BookingNo"));
+				bkdtl.setPackageId(rs.getInt("PackageId"));
+				bkdtl.setTravelerCount(rs.getInt("TravelerCount"));
+				bkdtlList.add(bkdtl);
+			}
+		}
+		catch(Exception ex)
+		{
+			ex.printStackTrace();
+		}
+		return bkdtlList;
+	}
+
+	//Method to get the package details
+	public static Package getPackageDetails(int packageId)
+	{
+		Package pkg = null;
+		try
+		{
+			Connection conn = ConnectionManager.getConnection();
+			String getPackageDetail = "SELECT * FROM packages WHERE packageId=?";
+			PreparedStatement stmt = conn.prepareStatement(getPackageDetail);
+			stmt.setInt(1, packageId);
+			ResultSet rs = stmt.executeQuery();
+			if(rs.next())
+			{
+				pkg = new Package();
+				pkg.setPkgName(rs.getString("PkgName"));
+				pkg.setPkgDesc(rs.getString("PkgDesc"));
+				pkg.setPkgStartDate(rs.getDate("PkgStartDate"));
+				pkg.setPkgEndDate(rs.getDate("pkgEndDate"));
+				pkg.setPkgBasePrice(rs.getDouble("pkgBasePrice"));
+				pkg.setPkgAgencyCommission(rs.getDouble("pkgAgencyCommission"));
+			}
+		}
+		catch(Exception ex)
+		{
+			ex.printStackTrace();
+		}
+		return pkg;
+	}
+	
 }

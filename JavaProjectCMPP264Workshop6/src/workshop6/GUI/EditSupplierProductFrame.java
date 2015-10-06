@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package workshop6.GUI;
 
 import java.util.List;
@@ -20,11 +19,11 @@ import workshop6.Entity.Supplier;
 
 /**
  *
- * @author Adam
+ * 
  */
-public class EditSupplierProduct extends javax.swing.JDialog {
-    
-    //the model that will be used to populate the PtroductsSuppliers Table
+public class EditSupplierProductFrame extends javax.swing.JInternalFrame {
+
+     //the model that will be used to populate the PtroductsSuppliers Table
     private DefaultTableModel tablemodel;
     //The package we are currently working with
     private workshop6.Entity.Package pkg;
@@ -33,10 +32,12 @@ public class EditSupplierProduct extends javax.swing.JDialog {
     /**
      * Creates new form EditSupplierProduct
      */
-    public EditSupplierProduct(java.awt.Frame parent, boolean modal, workshop6.Entity.Package pkg) {
-        super(parent, modal);
+    public EditSupplierProductFrame(workshop6.Entity.Package pkg) {
         initComponents();
-        //set the local vars
+        
+        this.setTitle("Editing Product/Suppliers for Paackage ID: " + pkg.getPackageId());
+        lblCurrtlyEditing.setText("Currently editing Products/Suppliers for PackageID: " + pkg.getPackageId());
+         //set the local vars
         this.pkg = pkg;    
         tablemodel = (DefaultTableModel)tblProductsSuppliers.getModel();
         
@@ -68,7 +69,8 @@ public class EditSupplierProduct extends javax.swing.JDialog {
                   
         }
         //Assign the model to the combo box
-        cmbProducts.setModel(productsModel);      
+        cmbProducts.setModel(productsModel);    
+        
     }
 
     /**
@@ -83,13 +85,15 @@ public class EditSupplierProduct extends javax.swing.JDialog {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblProductsSuppliers = new javax.swing.JTable();
         btnRemoveProductSupplier = new javax.swing.JButton();
-        cmbProducts = new javax.swing.JComboBox();
         jLabel1 = new javax.swing.JLabel();
+        cmbProducts = new javax.swing.JComboBox();
         jLabel2 = new javax.swing.JLabel();
         cmbSuppliers = new javax.swing.JComboBox();
         btmAddProductSupplier = new javax.swing.JButton();
+        lblCurrtlyEditing = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setClosable(true);
+        setIconifiable(true);
 
         tblProductsSuppliers.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -116,13 +120,13 @@ public class EditSupplierProduct extends javax.swing.JDialog {
             }
         });
 
+        jLabel1.setText("Products:");
+
         cmbProducts.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cmbProductsActionPerformed(evt);
             }
         });
-
-        jLabel1.setText("Products:");
 
         jLabel2.setText("Suppliers:");
 
@@ -133,15 +137,14 @@ public class EditSupplierProduct extends javax.swing.JDialog {
             }
         });
 
+        lblCurrtlyEditing.setText("jLabel3");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap(15, Short.MAX_VALUE)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 448, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -155,18 +158,24 @@ public class EditSupplierProduct extends javax.swing.JDialog {
                                 .addGap(38, 38, 38)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(cmbSuppliers, 0, 191, Short.MAX_VALUE)
-                                    .addComponent(cmbProducts, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                                    .addComponent(cmbProducts, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(151, 151, 151)
+                                .addComponent(btmAddProductSupplier)))
+                        .addGap(0, 130, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(lblCurrtlyEditing, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 448, Short.MAX_VALUE))))
                 .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(151, 151, 151)
-                .addComponent(btmAddProductSupplier)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(61, 61, 61)
+                .addContainerGap()
+                .addComponent(lblCurrtlyEditing)
+                .addGap(32, 32, 32)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(37, 37, 37)
                 .addComponent(btnRemoveProductSupplier)
@@ -180,20 +189,19 @@ public class EditSupplierProduct extends javax.swing.JDialog {
                     .addComponent(cmbSuppliers, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(34, 34, 34)
                 .addComponent(btmAddProductSupplier)
-                .addContainerGap(119, Short.MAX_VALUE))
+                .addContainerGap(75, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    
-    //Function that runs when the user clicks the remove products supplier button
+
     private void btnRemoveProductSupplierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveProductSupplierActionPerformed
         //Make sure we have actaully selected a row in the table
         if(tblProductsSuppliers.getSelectedRow() != -1)
         {
             //Attempt to delete the values form the database and update the table
             if(PackagesProductsSuppliersDB.deletePackagesProductsSuppliers(pkg.getPackageId(), (int)tablemodel.getValueAt(tblProductsSuppliers.getSelectedRow(), 0)) != -1)
-            {            
+            {
                 tablemodel.removeRow(tblProductsSuppliers.getSelectedRow());
                 JOptionPane.showMessageDialog(null, "The Product and Supplier has been deleted.");
             }
@@ -207,14 +215,13 @@ public class EditSupplierProduct extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(null, "You must select a row you wish you remove first");
         }
     }//GEN-LAST:event_btnRemoveProductSupplierActionPerformed
-    
-    //Function that runs when the user makes a selection in the products combo box
+
     private void cmbProductsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbProductsActionPerformed
         //Clear the suppliers combo box
         cmbSuppliers.removeAllItems();
-        
+
         //Fetch suppliers that are related to this product and populate the suppliers combo box
-        supplierModel = (DefaultComboBoxModel) cmbSuppliers.getModel();      
+        supplierModel = (DefaultComboBoxModel) cmbSuppliers.getModel();
         List<Supplier> suppliers = ProductSupplierDB.getSuppliersForProduct(((Product)productsModel.getSelectedItem()).getProductId());
         for(Supplier supplier : suppliers)
         {
@@ -224,16 +231,15 @@ public class EditSupplierProduct extends javax.swing.JDialog {
         cmbSuppliers.setModel(supplierModel);
     }//GEN-LAST:event_cmbProductsActionPerformed
 
-    //Function that runs when the user clicks the add productsupplier button
     private void btmAddProductSupplierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btmAddProductSupplierActionPerformed
         //Get the productsupplier obejct based on the product and supplier selection
         ProductSupplier productSupplier = ProductSupplierDB.getProductSupplierFromProductIdAndSupplierId(((Product)productsModel.getSelectedItem()).getProductId(), ((Supplier)(supplierModel.getSelectedItem())).getSupplierId());
         if(productSupplier != null)
-        {          
+        {
             String prodName = ProductDB.getProductById(productSupplier.getProductId()).getProdName();
             String suppName = SupplierDB.getSupplierById(productSupplier.getSupplierId()).getSupName();
             //Boolean that is used to check if we can add the selected product and supplier to this package
-            boolean canAdd = false;    
+            boolean canAdd = false;
             for(int i=0; i<tablemodel.getRowCount();i++)
             {
                 //If we find the matching productsupplier id in the table. the user cannot add this product supplier as it is already link to this package
@@ -242,8 +248,8 @@ public class EditSupplierProduct extends javax.swing.JDialog {
                     JOptionPane.showMessageDialog(null, "This package is already linked to this product and supplier.");
                     canAdd = false;
                     break;
-                }             
-                canAdd = true;             
+                }
+                canAdd = true;
             }
             if(canAdd)
             {
@@ -252,7 +258,7 @@ public class EditSupplierProduct extends javax.swing.JDialog {
                     tablemodel.addRow(new Object[]{productSupplier.getProductSupplierId(), prodName, suppName});
                     JOptionPane.showMessageDialog(null, "Successfully added product and supplier");
                 }
-                
+
             }
             //If there is no current productsuppliers linked to this package, we must insert the row
             //you cannot add a row to a empty table model, only insert
@@ -266,8 +272,9 @@ public class EditSupplierProduct extends javax.swing.JDialog {
             }
         }
         if(tablemodel.getRowCount()!=0)
-            btnRemoveProductSupplier.setEnabled(true);
+        btnRemoveProductSupplier.setEnabled(true);
     }//GEN-LAST:event_btmAddProductSupplierActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btmAddProductSupplier;
@@ -277,6 +284,7 @@ public class EditSupplierProduct extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblCurrtlyEditing;
     private javax.swing.JTable tblProductsSuppliers;
     // End of variables declaration//GEN-END:variables
 }

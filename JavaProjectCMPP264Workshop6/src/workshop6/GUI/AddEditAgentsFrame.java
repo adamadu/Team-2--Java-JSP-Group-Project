@@ -5,48 +5,58 @@
  */
 package workshop6.GUI;
 
-import java.awt.event.WindowEvent;
+import java.util.Vector;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import workshop6.DBClasses.AgentDB;
+import workshop6.DBClasses.CustomerDB;
 import workshop6.Entity.Agent;
+import workshop6.Entity.Customer;
 import workshop6.utils.Validator;
+
 /**
  *
- * @author 692496
+ * 
  */
-public class addEditAgents extends javax.swing.JFrame {
+public class AddEditAgentsFrame extends javax.swing.JInternalFrame {
 
+    
     private ComboBoxModel cbAgencyModel;
-    public static Boolean addEditAgent;
-     Agent editAgt;
+    public static boolean addEditAgent;
+    Agent editAgt;
     /**
-     * Creates new form addEditAgents
+     * Creates new form AddEditAgentsFrame
      */
-    public addEditAgents() {
+    public AddEditAgentsFrame() {
         initComponents();
         initAgencyCombo(cmbAddEditAgencyId);
         if (addEditAgent == true)
         {
             lblAddEditAgents.setText("Add an Agent");
+            btnReassignCustomers.setVisible(false);
             this.setTitle("Add an Agent");
         }
         if (addEditAgent == false)
         {
-            lblAddEditAgents.setText("Edit an Agent");
-            this.setTitle("Edit an existing Agent");
+            
+            
             editAgt = new Agent();
-            editAgt = AgentDB.GetAgentById(Main.cmbAgentId.getSelectedItem().toString());
+            //editAgt = AgentDB.GetAgentById(Main.cmbAgentId.getSelectedItem().toString());
+            editAgt = AgentDB.GetAgentById(AgentMainFrame.cmbAgentId.getSelectedItem().toString());
+            this.setTitle("Currently Editing Agent ID: " + editAgt.getAgentId());
+            lblAddEditAgents.setText("Currently editing Agent ID: " + editAgt.getAgentId());
             cmbAddEditAgencyId.setSelectedItem(editAgt.getAgencyId());
                 if (editAgt.isActive() == true)
                 {
                     rbAddEditActive.setSelected(true);
+                    rbAddEditInactive.setSelected(false);
                 }
                 if (editAgt.isActive() == false)
                 {
                     rbAddEditActive.setSelected(false);
+                    rbAddEditInactive.setSelected(true);
                 }
                 txtAddEditAgtBusPhone.setText(editAgt.getAgtBusPhone());
                 txtAddEditAgtEmail.setText(editAgt.getAgtEmail());
@@ -56,28 +66,7 @@ public class addEditAgents extends javax.swing.JFrame {
                 txtAddEditAgtPosition.setText(editAgt.getAgtPosition());
         }
     }
-    
-    private void initAgencyCombo(JComboBox cmbAgencyId)
-    {
-        cbAgencyModel = new DefaultComboBoxModel(AgentDB.GetAgencyIds());
-        cmbAgencyId.setModel(cbAgencyModel);     
-    }
 
-    private boolean AllFieldsValid()
-    {
-        return Validator.hasTextOrIsSelected(cmbAddEditAgencyId) 
-            && Validator.hasTextOrIsSelected(txtAddEditAgtBusPhone)
-                
-            && Validator.hasTextOrIsSelected(txtAddEditAgtEmail)
-            && Validator.isValidEmail(txtAddEditAgtEmail.getText())
-                
-            && Validator.hasTextOrIsSelected(txtAddEditAgtFirstName)
-            && Validator.hasTextOrIsSelected(txtAddEditAgtLastName)
-            && Validator.checkNotMoreThanMaxAllow(txtAddEditAgtMiddleInitial, 5)
-            && Validator.hasTextOrIsSelected(txtAddEditAgtPosition)
-            && Validator.hasTextOrIsSelected(btngrpAgentStatus);
-    }
-    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -109,8 +98,10 @@ public class addEditAgents extends javax.swing.JFrame {
         rbAddEditInactive = new javax.swing.JRadioButton();
         cmbAddEditAgencyId = new javax.swing.JComboBox();
         lblAddEditAgents = new javax.swing.JLabel();
+        btnReassignCustomers = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setClosable(true);
+        setIconifiable(true);
 
         jLabel3.setText("Agency ID");
 
@@ -163,9 +154,21 @@ public class addEditAgents extends javax.swing.JFrame {
         cmbAddEditAgencyId.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cmbAddEditAgencyId.setSelectedIndex(-1);
         cmbAddEditAgencyId.setName("Agency ID"); // NOI18N
+        cmbAddEditAgencyId.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbAddEditAgencyIdActionPerformed(evt);
+            }
+        });
 
         lblAddEditAgents.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lblAddEditAgents.setText("Dynamic Title");
+
+        btnReassignCustomers.setText("Reassign Customers");
+        btnReassignCustomers.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReassignCustomersActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -175,7 +178,8 @@ public class addEditAgents extends javax.swing.JFrame {
                 .addGap(37, 37, 37)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel9)
-                    .addComponent(jLabel10))
+                    .addComponent(jLabel10)
+                    .addComponent(btnReassignCustomers, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(35, 35, 35)
@@ -268,7 +272,8 @@ public class addEditAgents extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnExitAgents)
-                    .addComponent(btnUpdateAgents))
+                    .addComponent(btnUpdateAgents)
+                    .addComponent(btnReassignCustomers))
                 .addGap(33, 33, 33))
         );
 
@@ -276,25 +281,46 @@ public class addEditAgents extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 12, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+    private void initAgencyCombo(JComboBox cmbAgencyId)
+    {
+        cbAgencyModel = new DefaultComboBoxModel(AgentDB.GetAgencyIds());
+        cmbAgencyId.setModel(cbAgencyModel);     
+    }
+    
+      private boolean AllFieldsValid()
+    {
+        return Validator.hasTextOrIsSelected(cmbAddEditAgencyId) 
+            && Validator.hasTextOrIsSelected(txtAddEditAgtBusPhone)
+                
+            && Validator.hasTextOrIsSelected(txtAddEditAgtEmail)
+            && Validator.isValidEmail(txtAddEditAgtEmail.getText())
+                
+            && Validator.hasTextOrIsSelected(txtAddEditAgtFirstName)
+            && Validator.hasTextOrIsSelected(txtAddEditAgtLastName)
+            && Validator.checkNotMoreThanMaxAllow(txtAddEditAgtMiddleInitial, 5)
+            && Validator.hasTextOrIsSelected(txtAddEditAgtPosition)
+            && Validator.hasTextOrIsSelected(btngrpAgentStatus);
+    }
+    
 
     private void btnUpdateAgentsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateAgentsActionPerformed
         if(AllFieldsValid())
         {
-            if (addEditAgents.addEditAgent == true)
+            if (addEditAgent == true)
             {
                 System.out.println("Doing steps for Add Agent");
                 Agent addAgent = new Agent();
@@ -307,29 +333,30 @@ public class addEditAgents extends javax.swing.JFrame {
                 addAgent.setAgtPosition(txtAddEditAgtPosition.getText());
                 if (rbAddEditActive.isSelected())
                 {
-                addAgent.setActive(true);
-                } 
+                    addAgent.setActive(true);
+                }
                 else if (rbAddEditActive.isSelected())
                 {
                     addAgent.setActive(false);
                 }
                 if(AgentDB.AddAgent(addAgent))
                 {
-                AgentDB.AddAgent(addAgent);
-                JOptionPane.showMessageDialog(null, "Agent has been successfully added!");
-                txtAddEditAgtBusPhone.setText("");
-                txtAddEditAgtEmail.setText("");
-                txtAddEditAgtFirstName.setText("");
-                txtAddEditAgtLastName.setText("");
-                txtAddEditAgtMiddleInitial.setText("");
-                txtAddEditAgtPosition.setText("");
+                    //AgentDB.AddAgent(addAgent);
+                    JOptionPane.showMessageDialog(null, "Agent has been successfully added!");
+                    txtAddEditAgtBusPhone.setText("");
+                    txtAddEditAgtEmail.setText("");
+                    txtAddEditAgtFirstName.setText("");
+                    txtAddEditAgtLastName.setText("");
+                    txtAddEditAgtMiddleInitial.setText("");
+                    txtAddEditAgtPosition.setText("");
+                    AgentMainFrame.UpdateAgentsList();
                 }
                 else
                 {
-                JOptionPane.showMessageDialog(null, "Agent has not been added!");    
+                    JOptionPane.showMessageDialog(null, "Agent has not been added!");
                 }
             }
-            else if (addEditAgents.addEditAgent == false)
+            else if (addEditAgent == false)
             {
                 System.out.println("Doing steps for UPDATE Agent");
                 Agent editAgent = new Agent();
@@ -343,63 +370,89 @@ public class addEditAgents extends javax.swing.JFrame {
                 editAgent.setAgtPosition(txtAddEditAgtPosition.getText());
                 if (rbAddEditActive.isSelected())
                 {
-                editAgent.setActive(true);
-                } 
+                    editAgent.setActive(true);
+                }
                 else if (rbAddEditActive.isSelected())
                 {
                     editAgent.setActive(false);
                 }
+                
+                 //Darya: chekcing if we have an inactive agent with customers
+                if (!editAgent.isActive() == true && agentHasCustomers(editAgent.getAgentId()))
+                {
+                    displayReassignmentDialog(editAgent.getAgentId());
+                }
+                else
+                {
                     if (AgentDB.UpdateAgent(editAgent) != false)
                     {
-                        //AgentDB.UpdateAgent(editAgent);
+                        AgentMainFrame.UpdateAgentsList();
                         JOptionPane.showMessageDialog(null, "Agent has been edited successfully!");
                     }
+                }               
             }
-           
+
         }
     }//GEN-LAST:event_btnUpdateAgentsActionPerformed
 
+    //Darya: method to check if agent has any customers
+    public static boolean agentHasCustomers(int agentId)
+    {
+        Vector<Customer> customers = new Vector<Customer>();
+        customers = CustomerDB.GetCustomersByAgentId(agentId);
+        if(!customers.isEmpty())
+            return true;
+        else
+            return false;
+    }
+    
+    //Darya: this method is work in progress
+    private void displayReassignmentDialog(int agentId){
+        
+            int response = JOptionPane.showConfirmDialog(null, "You must re-assign this agent's customers if you wish to make this agent inactive", "Agent is Inactive",
+	    JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+	    if (response == JOptionPane.NO_OPTION) {
+	      //System.out.println("No button clicked");
+                //close dialog window
+	    } else if (response == JOptionPane.YES_OPTION) {
+              //open the ReassignCustomers form and pass in the agentId parameter
+                if(!Main.checkIfFrameAlreadyOpen(ReassignCustomersForm.class))
+                {
+                    ReassignCustomersForm  reassignCustomersForm = new  ReassignCustomersForm(agentId);
+                    getDesktopPane().add(reassignCustomersForm);
+                    reassignCustomersForm.setVisible(true);
+                }
+                else
+                {
+                    JOptionPane.showMessageDialog(this, "You are currently already editing customers for an agent. Please close this window to open another editor.");
+                }
+              
+	    } else if (response == JOptionPane.CLOSED_OPTION) {
+	      //System.out.println("JOptionPane closed");
+	    }
+    }
+    
     private void btnExitAgentsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitAgentsActionPerformed
-        this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+        dispose();
     }//GEN-LAST:event_btnExitAgentsActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(addEditAgents.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(addEditAgents.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(addEditAgents.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(addEditAgents.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+    private void cmbAddEditAgencyIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbAddEditAgencyIdActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbAddEditAgencyIdActionPerformed
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new addEditAgents().setVisible(true);
-            }
-        });
-    }
+    private void btnReassignCustomersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReassignCustomersActionPerformed
+        if(!Main.checkIfFrameAlreadyOpen(ReassignCustomersForm.class))
+        {
+            ReassignCustomersForm  reassignCustomersForm = new  ReassignCustomersForm(editAgt.getAgentId());
+            getDesktopPane().add(reassignCustomersForm);
+            reassignCustomersForm.setVisible(true);
+        }
+    }//GEN-LAST:event_btnReassignCustomersActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnExitAgents;
+    private javax.swing.JButton btnReassignCustomers;
     private javax.swing.JButton btnUpdateAgents;
     private javax.swing.ButtonGroup btngrpAgentStatus;
     private javax.swing.JComboBox cmbAddEditAgencyId;

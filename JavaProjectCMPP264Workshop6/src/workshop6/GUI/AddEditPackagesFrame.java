@@ -1,31 +1,33 @@
-package workshop6.GUI;
-
-import javax.swing.ComboBoxModel;
-import javax.swing.JOptionPane;
-import workshop6.DBClasses.PackageDB;
-import workshop6.Entity.Package;
-import workshop6.utils.Validator;
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+package workshop6.GUI;
+
+import java.beans.PropertyVetoException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import workshop6.DBClasses.PackageDB;
+import workshop6.utils.Validator;
+import workshop6.Entity.Package;
 
 /**
  *
- * @author 692496
+ *
  */
-public class AddEditPackages extends javax.swing.JFrame {
+public class AddEditPackagesFrame extends javax.swing.JInternalFrame {
 
-    public boolean addPackages;
-    public Package pkg;
+    public static boolean addPackages;
+    public workshop6.Entity.Package pkg;
+    PackageMainFrame main;
     //public Package modPkg;
     
     /**
-     * Creates new form addEditPackages
+     * Creates new form AddEditPackagesFrame
      */
-    Main main;
-    public AddEditPackages(Main m, boolean addpackages, Package pkg) {
+    public AddEditPackagesFrame(PackageMainFrame m, boolean addpackages, workshop6.Entity.Package pkg) {
         initComponents();
         this.addPackages = addpackages;
         this.pkg = pkg;
@@ -38,12 +40,9 @@ public class AddEditPackages extends javax.swing.JFrame {
         else
         {
             this.setTitle("Modify Package");
+            lblAddEditPackages.setText("Currently editing Package ID: " + pkg.getPackageId());
         }
-        
-        
     }
-
-   
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -73,7 +72,8 @@ public class AddEditPackages extends javax.swing.JFrame {
         cmbAddEditPkgEndDate = new com.toedter.calendar.JDateChooser();
         btnEditProductSuppliers = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setClosable(true);
+        setIconifiable(true);
 
         jLabel11.setText("Package Name");
 
@@ -110,7 +110,7 @@ public class AddEditPackages extends javax.swing.JFrame {
         });
 
         lblAddEditPackages.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
-        lblAddEditPackages.setText("Add / Edit Package");
+        lblAddEditPackages.setText("Add Package");
 
         cmbAddEditPkgStartDate.getDateEditor().setEnabled(false);
         cmbAddEditPkgStartDate.setDateFormatString("yyyy-MM-dd");
@@ -131,10 +131,6 @@ public class AddEditPackages extends javax.swing.JFrame {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGap(0, 157, Short.MAX_VALUE)
-                .addComponent(lblAddEditPackages, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(148, 148, 148))
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(38, 38, 38)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -144,7 +140,7 @@ public class AddEditPackages extends javax.swing.JFrame {
                         .addComponent(btnExitPackages)
                         .addGap(64, 64, 64)
                         .addComponent(btnEditProductSuppliers)
-                        .addContainerGap())
+                        .addContainerGap(59, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel16)
@@ -170,7 +166,8 @@ public class AddEditPackages extends javax.swing.JFrame {
                                     .addComponent(cmbAddEditPkgStartDate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(cmbAddEditPkgEndDate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(txtAddEditPkgDescription))
-                                .addContainerGap())))))
+                                .addContainerGap())))
+                    .addComponent(lblAddEditPackages, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -219,23 +216,19 @@ public class AddEditPackages extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(0, 17, Short.MAX_VALUE)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 17, Short.MAX_VALUE))
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(0, 26, Short.MAX_VALUE)
+                .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 27, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    //Method to add package and give the Package status
     private void btnSavePackageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSavePackageActionPerformed
         if(AllFieldsValid()) //Adam- added the validation here.
         {
@@ -244,34 +237,38 @@ public class AddEditPackages extends javax.swing.JFrame {
                 pkg = new Package();
                 pkg = putPackageData(pkg);
                 boolean addPackage = PackageDB.addPackage(pkg);
+                pkg = PackageDB.getPackage(PackageDB.getPackageIDs().lastElement());
+                main.pkg = pkg;
                 if(addPackage)
                 {
+                    PackageMainFrame.UpdatePackagesList();
                     JOptionPane.showMessageDialog(null, "Package added successfully. You can now add products and suppliers.");
                     btnEditProductSuppliers.setEnabled(true);
                 }
-                main.pkg = pkg;
+                
+                
                 //main.postData(pkg);
                 //this.setVisible(false);
-                
+
             }
             else
             {
-                Package modPkg = new Package();               
+                Package modPkg = new Package();
                 modPkg.setPackageId(pkg.getPackageId());
                 modPkg = getModifiedPackageData(modPkg);
                 boolean modPackageStatus = PackageDB.updatePackage(modPkg);
                 if(modPackageStatus)
-                    JOptionPane.showMessageDialog(null, "Package modified successfully");               
+                JOptionPane.showMessageDialog(null, "Package modified successfully");
                 main.modPkg = modPkg;
-               // main.postData(modPkg);
+                PackageMainFrame.UpdatePackagesList();
+                // main.postData(modPkg);
                 //this.setVisible(false);
             }
         }
     }//GEN-LAST:event_btnSavePackageActionPerformed
 
-    //Method to close the Add or Edit Package frame
     private void btnExitPackagesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitPackagesActionPerformed
-        main.initPackageIdCombo();
+        //main.initPackageIdCombo();
         this.dispose();
         //System.exit(0);
     }//GEN-LAST:event_btnExitPackagesActionPerformed
@@ -279,13 +276,28 @@ public class AddEditPackages extends javax.swing.JFrame {
     private void btnEditProductSuppliersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditProductSuppliersActionPerformed
         if(pkg != null)
         {
-            EditSupplierProduct editSupplierProduct = new EditSupplierProduct(this, true, pkg);
-            editSupplierProduct.setVisible(true);
+            if(!Main.checkIfFrameAlreadyOpen(EditSupplierProductFrame.class))
+            {  
+                EditSupplierProductFrame editSupplierProduct = new EditSupplierProductFrame(pkg);
+                getDesktopPane().add(editSupplierProduct);
+                editSupplierProduct.setVisible(true);
+                try {
+                    editSupplierProduct.setSelected(true);
+                } catch (PropertyVetoException ex) {
+                    Logger.getLogger(AgentMainFrame.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(this, "You are currenly already editng Product/Supplier informatino from a package. Please close this window to open a new editor");
+            }
+           // EditSupplierProduct editSupplierProduct = new EditSupplierProduct(this, true, pkg);
+           // editSupplierProduct.setVisible(true);
         }
     }//GEN-LAST:event_btnEditProductSuppliersActionPerformed
 
     //Geetha - Method to get the modified package details
-     public Package getModifiedPackageData(Package modPkg)
+     public workshop6.Entity.Package getModifiedPackageData(workshop6.Entity.Package modPkg)
     {      
         modPkg.setPkgName(txtAddEditPkgName.getText());
         modPkg.setPkgDesc(txtAddEditPkgDescription.getText());
@@ -295,9 +307,8 @@ public class AddEditPackages extends javax.swing.JFrame {
         modPkg.setPkgAgencyCommission(Double.parseDouble(txtAddEditPkgAgencyCommission.getText()));
        return modPkg;
     }
-     
-    //Geetha - Method to get the values from text field and put it in package bean
-    public Package putPackageData(Package pkg)
+      //Geetha - Method to get the values from text field and put it in package bean
+    public workshop6.Entity.Package putPackageData(workshop6.Entity.Package pkg)
     {
         pkg.setPkgName(txtAddEditPkgName.getText());
         pkg.setPkgDesc(txtAddEditPkgDescription.getText());
@@ -306,6 +317,22 @@ public class AddEditPackages extends javax.swing.JFrame {
         pkg.setPkgBasePrice(Double.parseDouble(txtAddEditPkgBasePrice.getText()));
         pkg.setPkgAgencyCommission(Double.parseDouble(txtAddEditPkgAgencyCommission.getText()));
         return pkg;
+    }
+    
+     //Geetha - Method to display package details in text fields
+    public void displayPackage(Package pkg) {
+        //SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        //NumberFormat currency = NumberFormat.getCurrencyInstance();
+        //currency.setMinimumFractionDigits(2);
+        //DecimalFormat df = new DecimalFormat("###.##");
+        txtAddEditPkgName.setText(pkg.getPkgName());
+        txtAddEditPkgDescription.setText(pkg.getPkgDesc());
+        cmbAddEditPkgStartDate.setDate(pkg.getPkgStartDate());
+        cmbAddEditPkgEndDate.setDate(pkg.getPkgEndDate());
+        txtAddEditPkgBasePrice.setText(String.valueOf(String.format("%.2f",pkg.getPkgBasePrice())));
+        txtAddEditPkgAgencyCommission.setText(String.valueOf(String.format("%.2f",pkg.getPkgAgencyCommission())));
+        //txtAddEditPkgBasePrice.setText(currency.format(pkg.getPkgBasePrice()));
+        //txtAddEditPkgAgencyCommission.setText(currency.format(pkg.getPkgAgencyCommission()));
     }
     
     //Adam - Function to check that the package end date is after the package start date
@@ -350,41 +377,6 @@ public class AddEditPackages extends javax.swing.JFrame {
         
         
     }
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AddEditPackages.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AddEditPackages.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AddEditPackages.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AddEditPackages.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                //new AddEditPackages().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEditProductSuppliers;
@@ -406,20 +398,4 @@ public class AddEditPackages extends javax.swing.JFrame {
     private javax.swing.JTextField txtAddEditPkgDescription;
     private javax.swing.JTextField txtAddEditPkgName;
     // End of variables declaration//GEN-END:variables
-
-    //Geetha - Method to display package details in text fields
-    public void displayPackage(Package pkg) {
-        //SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-        //NumberFormat currency = NumberFormat.getCurrencyInstance();
-        //currency.setMinimumFractionDigits(2);
-        //DecimalFormat df = new DecimalFormat("###.##");
-        txtAddEditPkgName.setText(pkg.getPkgName());
-        txtAddEditPkgDescription.setText(pkg.getPkgDesc());
-        cmbAddEditPkgStartDate.setDate(pkg.getPkgStartDate());
-        cmbAddEditPkgEndDate.setDate(pkg.getPkgEndDate());
-        txtAddEditPkgBasePrice.setText(String.valueOf(String.format("%.2f",pkg.getPkgBasePrice())));
-        txtAddEditPkgAgencyCommission.setText(String.valueOf(String.format("%.2f",pkg.getPkgAgencyCommission())));
-        //txtAddEditPkgBasePrice.setText(currency.format(pkg.getPkgBasePrice()));
-        //txtAddEditPkgAgencyCommission.setText(currency.format(pkg.getPkgAgencyCommission()));
-    }
 }

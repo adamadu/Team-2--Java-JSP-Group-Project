@@ -26,7 +26,7 @@ public class DbManager {
 		
 		try {
 			Connection conn = ConnectionManager.getConnection();
-			String sql = "SELECT * from customers where UserName=? AND Password=?";
+			String sql = "SELECT * FROM customers WHERE UserName=? AND Password=?";
 			
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			stmt.setString(1, cust.getUserName());
@@ -197,6 +197,67 @@ public class DbManager {
 			ex.printStackTrace();
 		}
 		return pkg;
+	}
+	
+	//Method to check the user availability before registration
+	public static boolean checkUserAvailablity(Customer cust)
+	{
+		boolean useravailability = false;
+		try
+		{
+			Connection conn = ConnectionManager.getConnection();
+			String checkusername = "SELECT * FROM customers WHERE UserName=?";
+			PreparedStatement stmt = conn.prepareStatement(checkusername);
+			stmt.setString(1, cust.getUserName());
+			ResultSet rs = stmt.executeQuery();
+			if(rs.next() && rs.getString("UserName").equals(cust.getUserName()))
+			{
+				useravailability = true;
+			}
+		}
+		catch(Exception ex)
+		{
+			ex.printStackTrace();
+		}
+		
+		return useravailability;
+	}
+	
+	//Method to register new customer
+	public static boolean registerCustomer(Customer cust)
+	{
+		try
+		{
+			Connection conn = ConnectionManager.getConnection();
+			String registerCustomer = "INSERT INTO customers (CustFirstName, CustLastName,CustAddress, CustCity, CustProv, "
+										+ "CustPostal, CustCountry, CustHomePhone, CustBusPhone, CustEmail, AgentId, UserName, Password) "
+										+ "Values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			PreparedStatement stmt = conn.prepareStatement(registerCustomer);
+			stmt.setString(1, cust.getCustFirstName());
+			stmt.setString(2, cust.getCustLastName());
+			stmt.setString(3, cust.getCustAddress());
+			stmt.setString(4, cust.getCustCity());
+			stmt.setString(5, cust.getCustProv());
+			stmt.setString(6, cust.getCustPostal());
+			stmt.setString(7, cust.getCustCountry());
+			stmt.setString(8, cust.getCustHomePhone());
+			stmt.setString(9, cust.getCustBusPhone());
+			stmt.setString(10, cust.getCustEmail());
+			stmt.setInt(11, cust.getAgentId());
+			stmt.setString(12, cust.getUserName());
+			stmt.setString(13, cust.getPassword());
+			int rows = stmt.executeUpdate();
+			if(rows>0)
+				return true;
+			else
+				return false;
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			return false;
+		}
+		
 	}
 	
 }

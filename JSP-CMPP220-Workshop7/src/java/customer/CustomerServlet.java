@@ -51,11 +51,11 @@ public class CustomerServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		//doGet(request, response);
-		
+		response.setContentType("text/plain;charset=UTF-8");
 		PrintWriter out = response.getWriter();
 		String hdnParam = request.getParameter("pagename");
 		Customer cust = null;
-		if(hdnParam.equals("login"))
+		if(hdnParam.equals("login"))	//Customer Login 
 		{
 			String username = request.getParameter("txtUserName");
 			String password = request.getParameter("txtPassword");
@@ -86,7 +86,7 @@ public class CustomerServlet extends HttpServlet {
 			}
 			
 		}
-		else if(hdnParam.equals("editCustDetail"))
+		else if(hdnParam.equals("editCustDetail"))	//Edit Customer Details
 		{
 			String fname = request.getParameter("fname");
 			String lname = request.getParameter("lname");
@@ -130,6 +130,58 @@ public class CustomerServlet extends HttpServlet {
 			catch(Exception ex)
 			{
 				ex.printStackTrace();
+			}
+		}
+		else if(hdnParam.equals("registerCustDetail"))	//Register customer
+		{
+			String fname = request.getParameter("fname");
+			String lname = request.getParameter("lname");
+			String address = request.getParameter("address");
+			String city = request.getParameter("city");
+			String province = request.getParameter("province");
+			String postal = request.getParameter("postal");
+			String country = request.getParameter("country");
+			String homephone = request.getParameter("homephone");
+			String busphone = request.getParameter("busphone");
+			String email = request.getParameter("email");
+			int agentId = Integer.parseInt(request.getParameter("agentid"));
+			String username = request.getParameter("username");
+			String password = request.getParameter("password");
+			
+			cust = new Customer();
+			cust.setCustFirstName(fname);
+			cust.setCustLastName(lname);
+			cust.setCustAddress(address);
+			cust.setCustCity(city);
+			cust.setCustProv(province);
+			cust.setCustPostal(postal);
+			cust.setCustCountry(country);
+			cust.setCustHomePhone(homephone);
+			cust.setCustBusPhone(busphone);
+			cust.setCustEmail(email);
+			cust.setAgentId(agentId);
+			cust.setUserName(username);
+			cust.setPassword(password);
+			//customer.setCustomerId((Integer)request.getSession().getAttribute("CustomerId"));
+			boolean useravailability = DbManager.checkUserAvailablity(cust);
+			if(useravailability)
+			{
+				String message = "UserName already available. Try another!";
+				response.sendRedirect("register.jsp?message=" + message);
+			}
+			else
+			{
+				 boolean registerstatus = DbManager.registerCustomer(cust);
+				 if(registerstatus)
+				 {
+					 boolean getUser = DbManager.getUserCredential(cust);
+					if(getUser)
+					{
+						request.getSession().setAttribute("loginStatus", "true");
+						request.getSession().setAttribute("CustomerId", cust.getCustomerId());
+						response.sendRedirect("viewCustDetail.jsp");
+					}
+				 }
 			}
 		}
 	}

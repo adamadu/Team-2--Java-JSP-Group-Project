@@ -12,7 +12,7 @@
 <title>Test JSP</title>
 </head>
 <body>
-	<h1 style="color:red">
+	<h5 style="color:red">
 	<% 
 	if(message == null)
 	{
@@ -23,7 +23,7 @@
 	  out.print(message);
 	}
 	%> 
-	</h1>
+	</h5>
 	<form name="login" id="login" action="CustomerServlet" method="post">
 	<input type="hidden" name="pagename" value="login"/>
 		<table>
@@ -42,6 +42,7 @@
 				<td colspan="2" align="center"><button type="submit" value="Login" 
 								onclick="return validateForm();">Login</button>
 			</tr>
+			<tr><td colspan="2"><a href="register.jsp" align="center">Register here!</a></td></tr>
 		</table>
 	</form>
 	<script>

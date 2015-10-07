@@ -44,7 +44,7 @@ public class PackageServlet extends HttpServlet {
             List<Package> packages;
             packages = PackageDB.listPackages();
             request.setAttribute("packages", packages);
-            request.getRequestDispatcher("/packages.jsp").forward(request, response);
+            request.getRequestDispatcher("/viewPackages.jsp").forward(request, response);
             
         } catch (SQLException ex) {
             Logger.getLogger(PackageServlet.class.getName()).log(Level.SEVERE, null, ex);

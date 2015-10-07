@@ -3,10 +3,7 @@
 	import="java.sql.*,customer.Customer,customer.DbManager"%>
 <%
      String loginStatus = (String)session.getAttribute("loginStatus");
-     Integer custId = (Integer)session.getAttribute("CustomerId");
-     int customerId = custId.intValue();
-     //Customer cust = null;
-     System.out.println("Customer id in view jsp is : " + customerId);
+     
     %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -19,6 +16,8 @@
 	<%
 	if((loginStatus != null) && (loginStatus.equals("true")))
      {
+     	Integer custId = (Integer)session.getAttribute("CustomerId");
+     	int customerId = custId.intValue();
      	Customer cust = DbManager.getCustomer(customerId);
      	
       %>

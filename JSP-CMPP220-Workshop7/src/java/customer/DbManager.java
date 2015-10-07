@@ -5,10 +5,12 @@ File: Database operation on Customer
 */
 package customer;
 
+import customer.ConnectionManager;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +22,6 @@ public class DbManager {
 	//Method to check user credential
 	public static boolean getUserCredential(Customer cust) 
 	{
-		System.out.println("Inside getUserCredential");
 		boolean checkUser = false;
 		
 		try {
@@ -34,7 +35,6 @@ public class DbManager {
 			if(rs.next() && rs.getString("UserName").equals(cust.getUserName()) && 
 							rs.getString("Password").equals(cust.getPassword())) 
 			{
-				System.out.println("Customer name : " + rs.getString("CustFirstName"));
 				cust.setCustomerId(rs.getInt("CustomerId"));
 				checkUser = true;
 				

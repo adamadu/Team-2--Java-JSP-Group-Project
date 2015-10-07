@@ -51,9 +51,9 @@ public class CustomerServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		//doGet(request, response);
+		
 		PrintWriter out = response.getWriter();
 		String hdnParam = request.getParameter("pagename");
-		System.out.println("hdnParam : " + hdnParam);
 		Customer cust = null;
 		if(hdnParam.equals("login"))
 		{
@@ -63,24 +63,18 @@ public class CustomerServlet extends HttpServlet {
 			cust = new Customer();
 			cust.setUserName(username);
 			cust.setPassword(password);
-			System.out.println("Customer username : " + cust.getUserName());
-			System.out.println("Customer password : " + cust.getPassword());
 			try
 			{
 				
 				boolean checkUser = DbManager.getUserCredential(cust);
 				if(checkUser)
 				{
-					System.out.println("Valid customer");
 					request.getSession().setAttribute("loginStatus", "true");
 					request.getSession().setAttribute("CustomerId", cust.getCustomerId());
-					System.out.println("CustomerId : " + cust.getCustomerId());
-					//response.sendRedirect("viewCustDetail.jsp");
-					response.sendRedirect("home.jsp");
+					response.sendRedirect("bookingDetails.jsp");
 				}
 				else
 				{
-				//	conn.close();
 					String message = "User ID or Password is incorrect. Try again.";
 					response.sendRedirect("login.jsp?message=" + message);
 					out.print(message);
@@ -107,7 +101,6 @@ public class CustomerServlet extends HttpServlet {
 			int agentId = Integer.parseInt(request.getParameter("agentid"));
 			String username = request.getParameter("username");
 			String password = request.getParameter("password");
-			System.out.println("username : " + username);
 			
 			Customer updateCustomer = new Customer();
 			updateCustomer.setCustFirstName(fname);
@@ -124,15 +117,20 @@ public class CustomerServlet extends HttpServlet {
 			updateCustomer.setUserName(username);
 			updateCustomer.setPassword(password);
 			updateCustomer.setCustomerId((Integer)request.getSession().getAttribute("CustomerId"));
-			
-			boolean updateStatus = DbManager.updateCustomer(updateCustomer);
-			System.out.println("UpdateStatus : " + updateStatus);
-			if(updateStatus)
+			try
 			{
-				response.sendRedirect("viewCustDetail.jsp");
-				//RequestDispatcher rd = request.getRequestDispatcher("viewCustDetail.jsp");
-				//rd.forward(request, response);
-			}			
+				boolean updateStatus = DbManager.updateCustomer(updateCustomer);
+				if(updateStatus)
+				{
+					response.sendRedirect("viewCustDetail.jsp");
+					//RequestDispatcher rd = request.getRequestDispatcher("viewCustDetail.jsp");
+					//rd.forward(request, response);
+				}
+			}
+			catch(Exception ex)
+			{
+				ex.printStackTrace();
+			}
 		}
 	}
 

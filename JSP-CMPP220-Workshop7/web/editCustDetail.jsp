@@ -2,16 +2,24 @@
     pageEncoding="UTF-8" import="java.sql.*,customer.Customer,customer.DbManager"%>
     <%
      String loginStatus = (String)session.getAttribute("loginStatus");
-     Integer custId = (Integer)session.getAttribute("CustomerId");
-     int customerId = custId.intValue();
-     //Customer cust = null;
-     System.out.println("Customer id in view jsp is : " + customerId);
+     
+    if(loginStatus == null)
+    {
+    	response.sendRedirect("login.jsp");
+    }
+    else
+    {
+     	Integer custId = (Integer)session.getAttribute("CustomerId");
+     	int customerId = custId.intValue();
     %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+<script type="text/javascript" src="js/jquery-1.11.3.js"></script>
+<script type="text/javascript" src="js/customerValidation.js"></script>
+<link rel="stylesheet" type="text/css" href="css/main.css">
 </head>
 <body>
 	<%
@@ -21,52 +29,74 @@
      	
     %>
       Hello <%=cust.getCustFirstName() + "" + cust.getCustLastName()%>!
-     <form name="editCustDetail" method="post" action="CustomerServlet">
+     <form name="editCustDetail" id="editCustDetail" method="post" action="CustomerServlet">
        <input type="hidden" name="pagename" value="editCustDetail"/>
        	<table align="center">
        		<tr>
        			<td>First Name  </td>
-       			<td><input type="text" name="fname" value="<%=cust.getCustFirstName() == null? "" : cust.getCustFirstName() %>" /></td>
+       			<td><input type="text" name="fname" value="<%=cust.getCustFirstName() == null? "" : cust.getCustFirstName() %>" />
+       				<span class="error" id="fnameErr"></span>
+       			</td>
        		</tr>
        		<tr>
        			<td>Last Name  </td>
-       			<td><input type="text" name="lname" value="<%=cust.getCustLastName() == null ? "" : cust.getCustLastName() %>" /></td>
+       			<td><input type="text" name="lname" value="<%=cust.getCustLastName() == null ? "" : cust.getCustLastName() %>" />
+       				<span class="error" id="lnameErr"></span>
+       			</td>
        		</tr>
        		<tr>
        			<td>Address </td>
-       			<td><input type="text" name="address" value="<%=cust.getCustAddress() == null ? "" : cust.getCustAddress() %>" /></td>
+       			<td><input type="text" name="address" value="<%=cust.getCustAddress() == null ? "" : cust.getCustAddress() %>" />
+       				<span class="error" id="addressErr"></span>
+       			</td>
        		</tr>
        		<tr>
        			<td>City </td>
-       			<td><input type="text" name="city" value="<%=cust.getCustCity() == null ? "" : cust.getCustCity() %>" /></td>
+       			<td><input type="text" name="city" value="<%=cust.getCustCity() == null ? "" : cust.getCustCity() %>" />
+       				<span class="error" id="cityErr"></span>
+       			</td>
        		</tr>
        		<tr>
        			<td>Province </td>
-       			<td><input type="text" name="province" value="<%=cust.getCustProv() == null ? "" : cust.getCustProv() %>" /></td>
+       			<td><input type="text" name="province" value="<%=cust.getCustProv() == null ? "" : cust.getCustProv() %>" />
+       				<span class="error" id="provinceErr"></span>
+       			</td>
        		</tr>
        		<tr>
        			<td>Postal </td>
-       			<td><input type="text" name="postal" value="<%=cust.getCustPostal() == null ? "" : cust.getCustPostal() %>" /></td>
+       			<td><input type="text" name="postal" value="<%=cust.getCustPostal() == null ? "" : cust.getCustPostal() %>" />
+       				<span class="error" id="postalErr"></span>
+       			</td>
        		</tr>
        		<tr>
        			<td>Country </td>
-       			<td><input type="text" name="country" value="<%=cust.getCustCountry() == null ? "" : cust.getCustCountry() %>" /></td>
+       			<td><input type="text" name="country" value="<%=cust.getCustCountry() == null ? "" : cust.getCustCountry() %>" />
+       				<span class="error" id="countryErr"></span>
+       			</td>
        		</tr>
        		<tr>
        			<td>Home Phone </td>
-       			<td><input type="text" name="homephone" value="<%=cust.getCustHomePhone() == null ? "" : cust.getCustHomePhone() %>" /></td>
+       			<td><input type="text" name="homephone" value="<%=cust.getCustHomePhone() == null ? "" : cust.getCustHomePhone() %>" />
+       				<span class="error" id="homephoneErr"></span>
+       			</td>
        		</tr>
        		<tr>
        			<td>Business Phone </td>
-       			<td><input type="text" name="busphone" value="<%=cust.getCustBusPhone() == null ? "" : cust.getCustBusPhone() %>" /></td>
+       			<td><input type="text" name="busphone" value="<%=cust.getCustBusPhone() == null ? "" : cust.getCustBusPhone() %>" />
+       				<span class="error" id="busphoneErr"></span>
+       			</td>
        		</tr>
        		<tr>
        			<td>Email </td>
-       			<td><input type="text" name="email" value="<%=cust.getCustEmail() == null ? "" : cust.getCustEmail() %>" /></td>
+       			<td><input type="text" name="email" value="<%=cust.getCustEmail() == null ? "" : cust.getCustEmail() %>" />
+       				<span class="error" id="emailErr"></span>
+       			</td>
        		</tr>
        		<tr>
        			<td>AgentId </td>
-       			<td><input type="text" name="agentid" value="<%=cust.getAgentId() == 0 ? 0 : cust.getAgentId() %>" /></td>
+       			<td><input type="text" name="agentid" value="<%=cust.getAgentId() == 0 ? 0 : cust.getAgentId() %>" />
+       				<span class="error" id="agentidErr"></span>
+       			</td>
        		</tr>
        		<tr>
        			<td>UserName </td>
@@ -74,17 +104,25 @@
        		</tr>
        		<tr>
        			<td>Password </td>
-       			<td><input type="password" name="password" value="<%=cust.getPassword() == null ? "" : cust.getPassword() %>" /></td>
+       			<td><input type="password" name="password" value="<%=cust.getPassword() == null ? "" : cust.getPassword() %>" />
+       				<span class="error" id="passwordErr"></span>
+       			</td>
        		</tr>
        		<tr>
        			
-       			<td><input type="submit" name="update" value="Update" /></td>
+       			<td><input type="submit" name="update" value="Update" onclick="return validateCustomer();"/></td>
        			<td><input type="reset" name="reset" value="Reset" /></td>
        		</tr>
        	</table>
        </form>
      <% 
      	}
+     	}
      %>
+     
+     <script>
+     	
+     	
+     </script>
 </body>
 </html>

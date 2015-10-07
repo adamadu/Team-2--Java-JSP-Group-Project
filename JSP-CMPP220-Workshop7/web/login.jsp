@@ -39,7 +39,8 @@
 					<span id="passworderr" class="mandatory"></span>
 			</tr>
 			<tr>
-				<td colspan="2" align="center"><button type="submit" value="Login" onclick="return validateForm();">Login</button>
+				<td colspan="2" align="center"><button type="submit" value="Login" 
+								onclick="return validateForm();">Login</button>
 			</tr>
 		</table>
 	</form>
@@ -56,11 +57,20 @@
 				document.getElementById("usererr").innerHTML = usererror;
 				errormsg = true;
 			}
+			else
+			{
+				document.getElementById("usererr").innerHTML = "";
+			}
+			
 			if(password == "" && password.length<6)
 			{
-				passerror = "Password is required";
+				passerror = "Password is required";true
 				document.getElementById("passworderr").innerHTML = passerror;
 				errormsg = true;
+			}
+			else
+			{
+				document.getElementById("passworderr").innerHTML = "";
 			}
 			if(errormsg)
 				return false;

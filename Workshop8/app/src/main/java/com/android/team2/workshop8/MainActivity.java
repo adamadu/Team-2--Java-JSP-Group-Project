@@ -1,11 +1,13 @@
 package com.android.team2.workshop8;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -29,6 +31,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         //get the list view and assign the click listener
         listViewAgencies = (ListView) findViewById(R.id.listViewAgencies);
         listViewAgencies.setOnItemClickListener(this);
+        TextView myTextView=(TextView)findViewById(R.id.welcomeTextView);
+        Typeface typeFace=Typeface.createFromAsset(getAssets(),"FFF_Tusj.ttf");
+        myTextView.setTypeface(typeFace);
 
         //Instantiate a new agencydb object to send and recieve data from the web service
         AgencyDB agencyDB = new AgencyDB();

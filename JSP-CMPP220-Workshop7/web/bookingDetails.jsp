@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="customer.DbManager,customer.BookingDetail,customer.Package,java.util.List"%>
+    pageEncoding="UTF-8" import="customer.DbManager,customer.Booking,customer.Package,customer.BookingDetail,java.util.List"%>
      <%
      String loginStatus = (String)session.getAttribute("loginStatus");
      
@@ -11,6 +11,7 @@
 	    {
 	     Integer custId = (Integer)session.getAttribute("CustomerId");
 	     int customerId = custId.intValue();
+	     System.out.println("Customerid : " + customerId);
     %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -28,7 +29,7 @@
 						<td><a href="bookingDetails.jsp">Booking Details</a></td>
 					</tr>
 					<tr>
-						<td><a href="/JSP-CMPP220-Workshop7/PackageServlet">Package Details</a></td>
+						<td><a href="/CPRG220Workshop7/PackageServlet">Package Details</a></td>
 					</tr>
 					<tr>
 						<td><a href="viewCustDetail.jsp"> View Account Details</a>
@@ -46,14 +47,20 @@
     		<%
 				if((loginStatus != null) && (loginStatus.equals("true")))
 			     {
-			     	List<BookingDetail> bookdtlList = DbManager.getBookingDetails(customerId);
+			     System.out.println("LoginStatus : " + loginStatus);
+			     	List<Booking> bookdtlList = DbManager.getBookingDetails(customerId);
 			     	if(bookdtlList != null && bookdtlList.size() != 0)
 			     	{
-				     	for(BookingDetail bookdtl : bookdtlList)
+			     		System.out.println("Booklist size: " + bookdtlList.size());
+				     	for(Booking bookdtl : bookdtlList)
 				     	{
 				     		int packageId = bookdtl.getPackageId();
+				     		int bookingId = bookdtl.getBookingId();
+				     		String tripTypeId = bookdtl.getTripTypeId();
 				     		Package pkgDtl = DbManager.getPackageDetails(packageId);
-
+							System.out.println("Pkgname : " + pkgDtl.getPkgName());
+							BookingDetail tripDetails = DbManager.getTripDetails(bookingId);
+							String tripName = DbManager.getTripName(tripTypeId);
    			 %>
 				   			 <form name="bookDetails">
 				    
@@ -69,10 +76,6 @@
 						    	<tr>
 						    		<td>TravelerCount : </td>
 						    		<td><%=bookdtl.getTravelerCount() != 0 ? bookdtl.getTravelerCount() : 0 %></td>
-						    	</tr>
-						    	<tr>
-						    		<td>PackageId : </td>
-						    		<td><%=bookdtl.getPackageId() != 0 ? bookdtl.getPackageId() : 0 %></td>
 						    	</tr>
 						    	<tr>
 						    		<td>Package Name : </td>
@@ -95,8 +98,32 @@
 						    		<td><%=pkgDtl.getPkgBasePrice() != 0 ? pkgDtl.getPkgBasePrice() : 0 %></td>
 						    	</tr>
 						    	<tr>
-						    		<td>Package Agency Commission : </td>
-						    		<td><%=pkgDtl.getPkgAgencyCommission() != 0 ? pkgDtl.getPkgAgencyCommission() : 0 %></td>
+						    		<td>Trip Itineray No: </td>
+						    		<td><%=tripDetails.getItineraryNo() !=0 ? tripDetails.getItineraryNo() : 0 %></td>
+						    	</tr>
+						    	<tr>
+						    		<td>Trip Start Date:</td>
+						    		<td><%=tripDetails.getTripStart() != null ? tripDetails.getTripStart() : "" %></td>
+						    	</tr>
+						    	<tr>
+						    		<td>Trip End Date:</td>
+						    		<td><%=tripDetails.getTripEnd() != null ? tripDetails.getTripEnd() : "" %></td>
+						    	</tr>
+						    	<tr>
+						    		<td>Description: </td>
+						    		<td><%=tripDetails.getDescription() != null ? tripDetails.getDescription() : "" %></td>
+						    	</tr>
+						    	<tr>
+						    		<td>Destination: </td>
+						    		<td><%=tripDetails.getDestination() != null ? tripDetails.getDestination() : "" %></td>
+						    	</tr>
+						    	<tr>
+						    		<td>Base Price: </td>
+						    		<td><%=tripDetails.getBasePrice() != 0 ? tripDetails.getBasePrice() : 0 %></td>
+						    	</tr>
+						    	<tr>
+						    		<td>TripTypeName: </td>
+						    		<td><%=tripName != null ? tripName : "" %></td>
 						    	</tr>
 						    </table>
 						    <br/><br/>
@@ -104,7 +131,7 @@
 		    <%
 		   		 		}%>
 		   		 	<br/><br/>
-		    		<input type="button" value="Print" onclick="window.print()" align="center" />
+		    		<input type="button" value="Print" onclick="window.print()" />
 		    <%	}
 		    	
 		    	else

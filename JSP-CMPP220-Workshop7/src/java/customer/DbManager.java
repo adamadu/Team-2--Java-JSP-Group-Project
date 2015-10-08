@@ -142,9 +142,9 @@ public class DbManager {
 	}
 	
 	//Method to get the list of booking details of registered customer
-	public static List<BookingDetail> getBookingDetails(int customerId)
+	public static List<Booking> getBookingDetails(int customerId)
 	{
-		List<BookingDetail> bkdtlList = new ArrayList<>();
+		List<Booking> bkdtlList = new ArrayList<>();
 		try
 		{
 			Connection conn = ConnectionManager.getConnection();
@@ -155,11 +155,12 @@ public class DbManager {
 			
 			while(rs.next())
 			{
-				BookingDetail bkdtl = new BookingDetail();
+				Booking bkdtl = new Booking();
 				bkdtl.setBookingId(rs.getInt("BookingId"));
 				bkdtl.setBookingNo(rs.getString("BookingNo"));
 				bkdtl.setPackageId(rs.getInt("PackageId"));
 				bkdtl.setTravelerCount(rs.getInt("TravelerCount"));
+				bkdtl.setTripTypeId(rs.getString("TripTypeId"));
 				bkdtlList.add(bkdtl);
 			}
 		}
@@ -199,6 +200,57 @@ public class DbManager {
 		return pkg;
 	}
 	
+	//Method to get TripDetails
+	public static BookingDetail getTripDetails(int bookingId)
+	{
+		BookingDetail bkdtl = null;
+		try
+		{
+			Connection conn = ConnectionManager.getConnection();
+			String getTripDetails = "SELECT * FROM bookingdetails WHERE BookingId=?";
+			PreparedStatement stmt = conn.prepareStatement(getTripDetails);
+			stmt.setInt(1, bookingId);
+			ResultSet rs = stmt.executeQuery();
+			if(rs.next())
+			{
+				bkdtl = new BookingDetail();
+				bkdtl.setTripStart(rs.getDate("TripStart"));
+				bkdtl.setTripEnd(rs.getDate("TripEnd"));
+				bkdtl.setDescription(rs.getString("Description"));
+				bkdtl.setDestination(rs.getString("Destination"));
+				bkdtl.setBasePrice(rs.getDouble("BasePrice"));
+				bkdtl.setItineraryNo(rs.getInt("ItineraryNo"));
+			}
+		}
+		catch(Exception ex)
+		{
+			ex.printStackTrace();
+		}
+		return bkdtl;
+	}
+	
+	//Method to get TripName
+	public static String getTripName(String tripTypeId)
+	{
+		String tripName = "";
+		try
+		{
+			Connection conn = ConnectionManager.getConnection();
+			String getTripName = "SELECT TTName FROM triptypes WHERE TripTypeId=?";
+			PreparedStatement stmt = conn.prepareStatement(getTripName);
+			stmt.setString(1, tripTypeId);
+			ResultSet rs = stmt.executeQuery();
+			if(rs.next())
+			{
+				tripName = rs.getString("TTName");
+			}
+		}
+		catch(Exception ex)
+		{
+			ex.printStackTrace();
+		}
+		return tripName;
+	}
 	//Method to check the user availability before registration
 	public static boolean checkUserAvailablity(Customer cust)
 	{

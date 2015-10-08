@@ -10,7 +10,9 @@
 	<table>
 		<tr>
 			<td><a href="bookingDetails.jsp">Booking Details</a></td>
-			
+		</tr>
+		<tr>
+			<td><a href="/JSP-CMPP220-Workshop7/PackageServlet">Package Details</a></td>
 		</tr>
 		<tr>
 			<td><a href="viewCustDetail.jsp"> View Account Details</a>

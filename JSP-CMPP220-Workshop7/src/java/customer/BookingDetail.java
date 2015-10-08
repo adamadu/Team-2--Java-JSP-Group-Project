@@ -1,40 +1,58 @@
-/*
-Author: Geetha
-Date: October 5, 2015
-File: Plain Old java objects for BookingDetails
-*/
 package customer;
+
+import java.util.Date;
 
 public class BookingDetail {
 	
-	private int bookingId;
-	private String bookingNo;
-	private int packageId;
-	private int travelerCount;
+	private int bookingDetailId;
+	private int itineraryNo;
+	private Date tripStart;
+	private Date tripEnd;
+	private String description;
+	private String destination;
+	private double basePrice;
 	
-	public int getBookingId() {
-		return bookingId;
+	public int getBookingDetailId() {
+		return bookingDetailId;
 	}
-	public void setBookingId(int bookingId) {
-		this.bookingId = bookingId;
+	public void setBookingDetailId(int bookingDetailId) {
+		this.bookingDetailId = bookingDetailId;
 	}
-	public String getBookingNo() {
-		return bookingNo;
+	public int getItineraryNo() {
+		return itineraryNo;
 	}
-	public void setBookingNo(String bookingNo) {
-		this.bookingNo = bookingNo;
+	public void setItineraryNo(int itineraryNo) {
+		this.itineraryNo = itineraryNo;
 	}
-	public int getPackageId() {
-		return packageId;
+	public Date getTripStart() {
+		return tripStart;
 	}
-	public void setPackageId(int packageId) {
-		this.packageId = packageId;
+	public void setTripStart(Date tripStart) {
+		this.tripStart = tripStart;
 	}
-	public int getTravelerCount() {
-		return travelerCount;
+	public Date getTripEnd() {
+		return tripEnd;
 	}
-	public void setTravelerCount(int travelerCount) {
-		this.travelerCount = travelerCount;
+	public void setTripEnd(Date tripEnd) {
+		this.tripEnd = tripEnd;
 	}
-	
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	public String getDestination() {
+		return destination;
+	}
+	public void setDestination(String destination) {
+		this.destination = destination;
+	}
+	public double getBasePrice() {
+		return basePrice;
+	}
+	public void setBasePrice(double basePrice) {
+		this.basePrice = basePrice;
+	}
+
 }

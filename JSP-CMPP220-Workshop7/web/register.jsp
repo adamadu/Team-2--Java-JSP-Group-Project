@@ -11,6 +11,7 @@
 <link rel="stylesheet" type="text/css" href="css/main.css">
 </head>
 <body>
+    <%@include file="header.jsp" %>
 	<h5 style="color:red">
 	<% 
 	if(message == null)
@@ -23,9 +24,15 @@
 	}
 	%> 
 	</h5>
+        <div class ="content">
+        <div class="container">
 <form name="regCustDetail" id="regCustDetail" method="post" action="CustomerServlet">
        <input type="hidden" name="pagename" value="registerCustDetail"/>
        	<table align="center">
+            <th colspan="2">
+                <h2>Please enter the information below:</h2>
+            </th>
+            
        		<tr>
        			<td>UserName </td>
        			<td><input type="text" name="username" /></td>
@@ -108,5 +115,7 @@
        		</tr>
        	</table>
        </form>
+        </div>
+        </div>
 </body>
 </html>

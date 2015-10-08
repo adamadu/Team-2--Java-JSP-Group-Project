@@ -17,119 +17,93 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" type="text/css" href="css/main.css">
 <title>Customer Profile</title>
 </head>
 <body>
-	
-    <table>
-    	<tr>
-    		<td>
-    			<table>
-					<tr>
-						<td><a href="bookingDetails.jsp">Booking Details</a></td>
-					</tr>
-					<tr>
-						<td><a href="/CPRG220Workshop7/PackageServlet">Package Details</a></td>
-					</tr>
-					<tr>
-						<td><a href="viewCustDetail.jsp"> View Account Details</a>
-					</tr>
-					<tr>
-						<td><a href="editCustDetail.jsp">Edit Account Details</a></td>
-					</tr>
-					<tr>
-						<td><a href="logout.jsp">Logout</a></td>
-					</tr>
-				</table>
-    		</td>
-    		<td>
-    		
+	  <%@include file="header.jsp" %>
+          <div class="content">
+              <div class="container">
+    
     		<%
 				if((loginStatus != null) && (loginStatus.equals("true")))
 			     {
-			     System.out.println("LoginStatus : " + loginStatus);
 			     	List<Booking> bookdtlList = DbManager.getBookingDetails(customerId);
+			     	
 			     	if(bookdtlList != null && bookdtlList.size() != 0)
 			     	{
 			     		System.out.println("Booklist size: " + bookdtlList.size());
+			     		%>
+    						<form name="bookDetails">
+				    
+						     <table>
+						     	<tr>
+						     		<th>Booking Id</th>
+						     		<th>Booking No</th>
+						     		<th>TravelerCount</th>
+						     		<th>Package Name</th>
+						     		<th>Package Desc</th>
+						     		<th>Package Start Date</th>
+						     		<th>Package End Date</th>
+						     		<th>Package Base Price</th>
+						     		<th>Trip Itineray No</th>
+						     		<th>Trip Start Date</th>
+						     		<th>Trip End Date</th>
+						     		<th>Description</th>
+						     		<th>Destination</th>
+						     		<th>Base Price</th>
+						     		<th>TripTypeName</th>
+						     	</tr>
+    		
+    		<%
+    				try
+    					{
 				     	for(Booking bookdtl : bookdtlList)
 				     	{
 				     		int packageId = bookdtl.getPackageId();
 				     		int bookingId = bookdtl.getBookingId();
 				     		String tripTypeId = bookdtl.getTripTypeId();
+				     		if(packageId != 0)
+				     		{
 				     		Package pkgDtl = DbManager.getPackageDetails(packageId);
-							System.out.println("Pkgname : " + pkgDtl.getPkgName());
+				     		
 							BookingDetail tripDetails = DbManager.getTripDetails(bookingId);
+							
 							String tripName = DbManager.getTripName(tripTypeId);
    			 %>
-				   			 <form name="bookDetails">
-				    
-						     <table>
+				   			 
 						    	<tr>
-						    		<td>Booking Id : </td>
+						    		
 						    		<td><%=bookdtl.getBookingId() != 0 ? bookdtl.getBookingId() : 0 %></td>
-						    	</tr>
-						    	<tr>
-						    		<td>BookingNo : </td>
 						    		<td><%=bookdtl.getBookingNo() != null ? bookdtl.getBookingNo() : "" %></td>
-						    	</tr>
-						    	<tr>
-						    		<td>TravelerCount : </td>
 						    		<td><%=bookdtl.getTravelerCount() != 0 ? bookdtl.getTravelerCount() : 0 %></td>
-						    	</tr>
-						    	<tr>
-						    		<td>Package Name : </td>
+						    		<%if(pkgDtl != null) 
+						    			{%>
 						    		<td><%=pkgDtl.getPkgName() != null ? pkgDtl.getPkgName() : "" %></td>
-						    	</tr>
-						    	<tr>
-						    		<td>Package Desc : </td>
 						    		<td><%=pkgDtl.getPkgDesc() != null ? pkgDtl.getPkgDesc() : "" %></td>
-						    	</tr>
-						    	<tr>
-						    		<td>Package Start Date : </td>
 						    		<td><%=pkgDtl.getPkgStartDate() != null ? pkgDtl.getPkgStartDate() : "" %></td>
-						    	</tr>
-						    	<tr>
-						    		<td>Package End Date : </td>
 						    		<td><%=pkgDtl.getPkgEndDate() != null ? pkgDtl.getPkgEndDate() : "" %></td>
-						    	</tr>
-						    	<tr>
-						    		<td>Package Base Price : </td>
 						    		<td><%=pkgDtl.getPkgBasePrice() != 0 ? pkgDtl.getPkgBasePrice() : 0 %></td>
-						    	</tr>
-						    	<tr>
-						    		<td>Trip Itineray No: </td>
 						    		<td><%=tripDetails.getItineraryNo() !=0 ? tripDetails.getItineraryNo() : 0 %></td>
-						    	</tr>
-						    	<tr>
-						    		<td>Trip Start Date:</td>
 						    		<td><%=tripDetails.getTripStart() != null ? tripDetails.getTripStart() : "" %></td>
-						    	</tr>
-						    	<tr>
-						    		<td>Trip End Date:</td>
 						    		<td><%=tripDetails.getTripEnd() != null ? tripDetails.getTripEnd() : "" %></td>
-						    	</tr>
-						    	<tr>
-						    		<td>Description: </td>
 						    		<td><%=tripDetails.getDescription() != null ? tripDetails.getDescription() : "" %></td>
-						    	</tr>
-						    	<tr>
-						    		<td>Destination: </td>
 						    		<td><%=tripDetails.getDestination() != null ? tripDetails.getDestination() : "" %></td>
-						    	</tr>
-						    	<tr>
-						    		<td>Base Price: </td>
 						    		<td><%=tripDetails.getBasePrice() != 0 ? tripDetails.getBasePrice() : 0 %></td>
-						    	</tr>
-						    	<tr>
-						    		<td>TripTypeName: </td>
 						    		<td><%=tripName != null ? tripName : "" %></td>
+						    		<%} %>
 						    	</tr>
+				<%			
+				     		}
+		   		 		}
+		   		 		
+		   		 		}catch(Exception e){
+		   		 			e.printStackTrace();
+		   		 		}%>
 						    </table>
 						    <br/><br/>
 						    </form>
-		    <%
-		   		 		}%>
+		    
 		   		 	<br/><br/>
 		    		<input type="button" value="Print" onclick="window.print()" />
 		    <%	}
@@ -141,8 +115,7 @@
 		    	}
 		     }
 		    %>
-    		</td>
-    	</tr>
-    </table>
+              </div>
+          </div>
 </body>
 </html>

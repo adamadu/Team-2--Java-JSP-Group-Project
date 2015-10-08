@@ -16,10 +16,21 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Available Travel Packages</title>
+        <link rel="stylesheet" type="text/css" href="css/main.css">
     </head>
     <body>
+        <%@include file="header.jsp" %>
+        <div class="content">
+            <div class="container">
         <table>
-            <tr><th>Current Travel Packages</th></tr>
+            <th colspan="5"> <h2>Current Travel Packages </h2></th>
+        <tr>
+           <th>Package Name</th>
+           <th>Package Description</th>
+           <th>Package Start Date</th>
+           <th>Package End Date</th>
+           <th>Package Base Price</th>
+ </tr>
             <%
                 
                 List<Package> pkgs = new ArrayList<Package>();
@@ -39,6 +50,7 @@
                 }  
                 %>
         </table>
-        
+        </div>
+        </div>
     </body>
 </html>

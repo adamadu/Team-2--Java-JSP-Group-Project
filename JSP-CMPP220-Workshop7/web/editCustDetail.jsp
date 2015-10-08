@@ -22,16 +22,21 @@
 <link rel="stylesheet" type="text/css" href="css/main.css">
 </head>
 <body>
-	<%
+    <%@include file="header.jsp" %>
+    <div class="content">
+        <div class="container">
+
+     
+      <form name="editCustDetail" id="editCustDetail" method="post" action="CustomerServlet">
+       <input type="hidden" name="pagename" value="editCustDetail"/>
+       	<table align="center">
+            	<%
 	if((loginStatus != null) && (loginStatus.equals("true")))
      {
      	Customer cust = DbManager.getCustomer(customerId);
      	
     %>
-      Hello <%=cust.getCustFirstName() + "" + cust.getCustLastName()%>!
-     <form name="editCustDetail" id="editCustDetail" method="post" action="CustomerServlet">
-       <input type="hidden" name="pagename" value="editCustDetail"/>
-       	<table align="center">
+    <th colspan="2"> <h2>Hello <%=cust.getCustFirstName() + " " + cust.getCustLastName()%>! </h2></th>
        		<tr>
        			<td>First Name  </td>
        			<td><input type="text" name="fname" value="<%=cust.getCustFirstName() == null? "" : cust.getCustFirstName() %>" />
@@ -115,11 +120,13 @@
        		</tr>
        	</table>
        </form>
+                                
      <% 
      	}
      	}
      %>
-     
+        </div>
+    </div>
      <script>
      	
      	

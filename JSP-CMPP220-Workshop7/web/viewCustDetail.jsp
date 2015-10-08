@@ -10,10 +10,17 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="css/main.css">
 </head>
 <body>
-
-	<%
+<%@include file="header.jsp" %>
+	
+<div class="content">
+    <div class="container">
+	<form name="viewCustDetail" method="post" action="CustomerServlet">
+		<input type="hidden" name="pagename" value="viewCustDetail" />
+		<table align="center">
+                    <%
 	if((loginStatus != null) && (loginStatus.equals("true")))
      {
      	Integer custId = (Integer)session.getAttribute("CustomerId");
@@ -21,11 +28,7 @@
      	Customer cust = DbManager.getCustomer(customerId);
      	
       %>
-	Hello 	<%=cust.getCustFirstName() + " " + cust.getCustLastName() %>
-
-	<form name="viewCustDetail" method="post" action="CustomerServlet">
-		<input type="hidden" name="pagename" value="viewCustDetail" />
-		<table align="center">
+      <th colspan="2"> <h2>Hello 	<%=cust.getCustFirstName() + " " + cust.getCustLastName() %> </h2> </th>
 			<tr>
 				<td>First Name :</td>
 				<td><%=cust.getCustFirstName() == null? "" : cust.getCustFirstName() %></td>
@@ -87,5 +90,7 @@
      	response.sendRedirect("login.jsp");
      }
 	%>
+    </div>
+</div>
 </body>
 </html>

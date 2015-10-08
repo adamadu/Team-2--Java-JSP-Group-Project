@@ -2,7 +2,14 @@
     pageEncoding="UTF-8"%>
     
 <%! String message = ""; %>    
-<% message = request.getParameter("message"); %>
+<% message = request.getParameter("message"); 
+    String loginStatus = (String)session.getAttribute("loginStatus");
+    if(loginStatus != null)
+    {
+        response.sendRedirect("index.jsp");
+    }
+     
+ %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -12,6 +19,7 @@
 <title>Test JSP</title>
 </head>
 <body>
+    <%@include file="header.jsp" %>
 	<h5 style="color:red">
 	<% 
 	if(message == null)
@@ -24,9 +32,14 @@
 	}
 	%> 
 	</h5>
+        <div class="content">
+            <div class="container">
 	<form name="login" id="login" action="CustomerServlet" method="post">
 	<input type="hidden" name="pagename" value="login"/>
 		<table>
+                    <th colspan="2">
+                        <h2>Please enter your username and password:</h2>
+                    </th>
 			<tr>
 				<td><label>UserName <span class="mandatory"> * </span></label>  </td>
 				<td><input type="text" name="txtUserName" />
@@ -39,12 +52,14 @@
 					<span id="passworderr" class="mandatory"></span>
 			</tr>
 			<tr>
-				<td colspan="2" align="center"><button type="submit" value="Login" 
+                            <td colspan="2" style="text-align: center"><button type="submit" value="Login" 
 								onclick="return validateForm();">Login</button>
 			</tr>
-			<tr><td colspan="2"><a href="register.jsp" align="center">Register here!</a></td></tr>
+                        <tr><td colspan="2" style="text-align: center"><a href="register.jsp" align="center">Register here!</a></td></tr>
 		</table>
 	</form>
+            </div>
+        </div>
 	<script>
 		function validateForm()
 		{
@@ -79,5 +94,6 @@
 				return true;
 		}
 	</script>
+                
 </body>
 </html>

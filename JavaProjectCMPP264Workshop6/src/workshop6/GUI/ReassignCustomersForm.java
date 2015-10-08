@@ -40,7 +40,7 @@ public class ReassignCustomersForm extends javax.swing.JInternalFrame {
 
      private void updateAgentComboBox() {
         //populate the combo box
-        agents = AgentDB.GetAllAgents();
+        agents = AgentDB.GetAllActiveAgents();
         for(Agent a : agents)
             cbAgents.addItem(a.getAgtLastName() + ", " + a.getAgtFirstName()
                     + " (Agent ID: " + a.getAgentId() + ")");

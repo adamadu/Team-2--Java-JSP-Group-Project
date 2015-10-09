@@ -1,5 +1,6 @@
 
 
+
 function validateCustomer()
      	{
      		var errmsg = false;
@@ -128,11 +129,16 @@ function validateCustomer()
 				document.getElementById('emailErr').innerHTML = "";
 			}
 			
-			if(custform.agentid.value !== parseInt(custform.agentid.value, 10))
+			if(custform.agentid.value == "")
 			{
-				document.getElementById('agentidErr').innerHTML = "<br/>AgentId must be an integer.";
+				document.getElementById('agentidErr').innerHTML = "<br/>AgentId is required";
 				errmsg = true;
 			}
+			else
+			{
+				document.getElementById('agentidErr').innerHTML = "";
+			}			
+
 			if(custform.password.value == "")
 			{
 				document.getElementById('passwordErr').innerHTML = "<br/>Password is required";
@@ -146,11 +152,11 @@ function validateCustomer()
 			else
 			{
 				document.getElementById('passwordErr').innerHTML = "";
-			}			
+			}
+			
 			if(errmsg)
 				return false;
 			else
      			return true;
      	}
      	
-

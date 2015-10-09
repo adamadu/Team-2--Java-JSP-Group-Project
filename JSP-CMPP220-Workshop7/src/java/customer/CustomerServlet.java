@@ -98,7 +98,7 @@ public class CustomerServlet extends HttpServlet {
 			String homephone = request.getParameter("homephone");
 			String busphone = request.getParameter("busphone");
 			String email = request.getParameter("email");
-			int agentId = Integer.parseInt(request.getParameter("agentid"));
+			int agentId = Integer.parseInt(request.getParameter("agentid").trim());
 			String username = request.getParameter("username");
 			String password = request.getParameter("password");
 			
@@ -166,7 +166,7 @@ public class CustomerServlet extends HttpServlet {
 			boolean useravailability = DbManager.checkUserAvailablity(cust);
 			if(useravailability)
 			{
-				String message = "UserName already available. Try another!";
+				String message = "UserName already taken. Please try another!";
 				response.sendRedirect("register.jsp?message=" + message);
 			}
 			else

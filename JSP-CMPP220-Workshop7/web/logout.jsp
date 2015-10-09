@@ -14,7 +14,7 @@
 <title>Welcome to Travel Experts</title>
 </head>
 <body>
-	<h1> You have successfully logout.</h1>
+	<h1> You have successfully logged out.</h1>
 	<a href="login.jsp">Login Here!</a>
 </body>
 </html>

@@ -114,7 +114,6 @@
        			</td>
        		</tr>
        		<tr>
-       			
        			<td><input type="submit" name="update" value="Update" onclick="return validateCustomer();"/></td>
        			<td><input type="reset" name="reset" value="Reset" /></td>
        		</tr>

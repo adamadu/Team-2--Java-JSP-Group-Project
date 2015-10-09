@@ -19,11 +19,12 @@ public class PackageDB {
     public static List<Package> listPackages() throws SQLException{
         
         List<Package> packages = new ArrayList<Package>();
-        try(
+        try{
             Connection conn = ConnectionManager.getConnection();
             PreparedStatement st = conn.prepareStatement("select * from packages");
             ResultSet rs = st.executeQuery();
-                )
+                
+        
         {
             while(rs.next())
             {
@@ -37,6 +38,11 @@ public class PackageDB {
             pkg.setPkgId(rs.getInt("PackageId"));    
             packages.add(pkg);
             }
+        }
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
         }
         return packages;
     }

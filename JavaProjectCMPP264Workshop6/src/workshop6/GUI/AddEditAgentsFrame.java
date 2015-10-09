@@ -17,7 +17,7 @@ import workshop6.Entity.Customer;
 import workshop6.utils.Validator;
 
 /**
- *
+ * All code here except the adding and removing of the customers for the agents was done by Max 
  * 
  */
 public class AddEditAgentsFrame extends javax.swing.JInternalFrame {

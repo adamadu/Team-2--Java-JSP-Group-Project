@@ -144,7 +144,7 @@ public class DbManager {
 	//Method to get the list of booking details of registered customer
 	public static List<Booking> getBookingDetails(int customerId)
 	{
-		List<Booking> bkdtlList = new ArrayList<>();
+		List<Booking> bkdtlList = new ArrayList();
 		try
 		{
 			Connection conn = ConnectionManager.getConnection();

@@ -9,8 +9,6 @@ import java.util.Vector;
 import workshop6.Entity.Agent;
 
 public class AgentDB {
-                
-    
                 //used to populate combo box of agency id in the add/edit agency form - Max
                 public static Vector GetAgencyIds() {
                     //declare vector to hold the agent Id's

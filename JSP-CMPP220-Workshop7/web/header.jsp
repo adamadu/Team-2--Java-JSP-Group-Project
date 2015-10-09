@@ -20,6 +20,7 @@
                         <li><a href="/JSP-CMPP220-Workshop7/PackageServlet">PACKAGES</a>  </li>
                         <li><a href="viewCustDetail.jsp">VIEW ACCOUNT</a>  </li>
                         <li><a href="editCustDetail.jsp">EDIT ACCOUNT</a>  </li>
+                        <li><a href="bookingDetails.jsp">BOOKING DETAILS</a></li>
                         <li><a href="logout.jsp">LOGOUT</a></li>
                     </ul>
                 </div>
@@ -40,7 +41,7 @@
                     <ul>
                         <li><a href="index.jsp">HOME</a>  </li>
                         <li><a href="register.jsp">REGISTER</a>  </li>
-                        
+                         <li><a href="/JSP-CMPP220-Workshop7/PackageServlet">PACKAGES</a>  </li>
                         <li><a href="login.jsp">LOGIN</a></li>
                     </ul>
                 </div>

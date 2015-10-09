@@ -63,7 +63,7 @@ function validateCustomer()
 				document.getElementById('postalErr').innerHTML = "<br/>Postal is required";
 				errmsg = true;
 			}
-			else if( custform.postal.value != "" && !postalregexp.test(custform.postal.value))
+			else if( custform.postal.value != "" && !postalregexp.test(custform.postal.value.trim()))
 			{
 				document.getElementById('postalErr').innerHTML = "<br/>Postal code is not in valid format";
 				errmsg = true;
@@ -88,7 +88,7 @@ function validateCustomer()
 				document.getElementById('homephoneErr').innerHTML = "<br/>Homephone is required";
 				errmsg = true;
 			}
-			else if(custform.homephone.value != "" && !phonenoregexp.test(custform.homephone.value))
+			else if(custform.homephone.value != "" && !phonenoregexp.test(custform.homephone.value.trim()))
 			{
 				document.getElementById('homephoneErr').innerHTML = "<br/>Homephone is not in valid format";
 				errmsg = true;
@@ -98,7 +98,7 @@ function validateCustomer()
 				document.getElementById('homephoneErr').innerHTML = "";
 			}
 			
-			if(custform.busphone.value != "" && !phonenoregexp.test(custform.busphone.value))
+			if(custform.busphone.value != "" && !phonenoregexp.test(custform.busphone.value.trim()))
 			{
 				document.getElementById('busphoneErr').innerHTML = "<br/>Business Phone Number is not in valid format";
 				errmsg = true;
@@ -118,7 +118,7 @@ function validateCustomer()
 				document.getElementById('emailErr').innerHTML = "<br/>Email is required";
 				errmsg = true;
 			}
-			else if(custform.email.value != "" && !emailregexp.test(custform.email.value))
+			else if(custform.email.value != "" && !emailregexp.test(custform.email.value.trim()))
 			{
 				document.getElementById('emailErr').innerHTML = "<br/>Email is not in valid format";
 				errmsg = true;

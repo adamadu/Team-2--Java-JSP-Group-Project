@@ -18,11 +18,10 @@ import workshop6.Entity.Agent;
 import workshop6.Entity.Customer;
 
 /**
- *
+ *All code not done by Darya was done by Max 
  * 
  */
 public class AgentMainFrame extends javax.swing.JInternalFrame {
-
     public Agent agt;
     private static ComboBoxModel cbAgentIdModel;
     
@@ -315,7 +314,7 @@ public class AgentMainFrame extends javax.swing.JInternalFrame {
         cmbAgentId.setSelectedIndex(0);
         
     }
-
+    
     private void cmbAgentIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbAgentIdActionPerformed
         String agentId = (String)cmbAgentId.getSelectedItem();
         agt = AgentDB.GetAgentById(agentId);

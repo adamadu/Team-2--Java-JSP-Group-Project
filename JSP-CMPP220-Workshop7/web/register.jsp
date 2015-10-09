@@ -111,7 +111,7 @@
        		</tr>
        		<tr>
        			<td><input type="submit" name="register" value="Register" onclick="return validateCustomer();"/></td>
-       			<td><input type="button" name="clear" value="Clear" /></td>
+       			<td><input type="reset" name="clear" value="Clear" /></td>
        		</tr>
        	</table>
        </form>

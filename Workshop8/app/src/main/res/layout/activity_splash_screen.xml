@@ -23,7 +23,7 @@
         android:text="Where Will You End Up? Let the Adventure Begin!"
         android:id="@+id/tagLine"
         android:textColor="#ffffffff"
-        android:textSize="65sp"
+        android:textSize="34dp"
         android:textAlignment="center"
         android:paddingRight="10dp"
         android:paddingLeft="10dp"
@@ -41,7 +41,6 @@
         android:padding="10dp"
         android:paddingBottom="50dp"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentTop="false" />
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

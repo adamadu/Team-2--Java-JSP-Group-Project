@@ -12,7 +12,7 @@
         android:text="Welcome to the Travel Experts location and agent lookup app! Please start by selecting a location below:"
         android:id="@+id/welcomeTextView"
         android:textColor="@android:color/white"
-        android:textSize="30sp"
+        android:textSize="20sp"
         android:layout_below="@+id/imageView2"
         android:layout_alignParentLeft="false"
         android:layout_alignParentStart="true"
@@ -27,13 +27,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/listViewAgencies"
-        android:layout_below="@+id/welcomeTextView"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="24dp"
         tools:listitem="@layout/agencies_listview_items"
         android:paddingTop="20dp"
-        android:paddingBottom="20dp" />
+        android:paddingBottom="20dp"
+        android:layout_below="@+id/welcomeTextView" />
 
     <ImageView
         android:layout_width="wrap_content"

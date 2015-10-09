@@ -1,10 +1,13 @@
 package com.android.team2.workshop8;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 /**
@@ -25,6 +28,17 @@ public class AgentDetailsActivity extends AppCompatActivity {
         ((TextView)findViewById(R.id.tvAgtDetailLastName)).setText(intent.getStringExtra("AgtLastName"));
         ((TextView)findViewById(R.id.tvAgtDetailPosition)).setText(intent.getStringExtra("AgtPostion"));
         ((TextView)findViewById(R.id.tvAgtDetailEmail)).setText(intent.getStringExtra("AgtEmail"));
-        ((TextView)findViewById(R.id.tvAgtDetailBusPhone)).setText(intent.getStringExtra("AgtBusPhone"));
+        final TextView phoneNumber = ((TextView) findViewById(R.id.tvAgtDetailBusPhone));
+        phoneNumber.setText(intent.getStringExtra("AgtBusPhone"));
+
+        ((Button)findViewById(R.id.btnCallAgent)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String phone = phoneNumber.getText().toString();
+                Intent callIntent = new Intent(Intent.ACTION_DIAL);
+                callIntent.setData(Uri.parse("tel:" + phone));
+                startActivity(callIntent);
+            }
+        });
     }
 }
